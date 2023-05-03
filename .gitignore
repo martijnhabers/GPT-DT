@@ -2,3 +2,4 @@ __pycache__/
 .vscode
 tri-crop
 images/*
+Yolov5_orientation.pt
