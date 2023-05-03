@@ -1,27 +1,12 @@
 from OCR import *
 from YoloSplit import *
 from owlvit import *
+from CLIPstate import *
 
 # path to file
-image = "images/01.jpg"
+image = "01.jpg"
+dir = os.getcwd()
 
-
-### yolo_tri_crop(image) ###
-# splits image into 3 parts, outside-view, rear-view, and speed
-# saves to tri-crop/predict/crops/outside-view
-# saves to tri-crop/predict/crops/rear-view
-# saves to tri-crop/predict/crops/speed
-
-### easyocr_detect(image) ###
-# detects number in file, specified by its path
-
-### object_detect_owlvit(text_weighted, image) ###
-# does a zero shot object detection on
-
-
-yolo_tri_crop(image)
-
-print(easyocr_detect(image))
 
 text_weighted = [
     ["a photo of a person", 0.25],
@@ -44,4 +29,53 @@ text_weighted = [
     ["a photo of a ball", 0.4],
 ]
 
-boxes, labels, scores = object_detect_owlvit(text_weighted, image)
+weather_list = [
+    "a picture of snowy",
+    "a picture of sunny",
+    "a picture of rainy",
+    "a picture of overcast",
+    "a picture of snowy weather",
+    "a picture of sunny weather",
+    "a picture of rainy weather",
+    "a picture of overcast weather",
+]
+
+location_list = [
+    "a picture of a highway",
+    "a picture of a country road",
+    "a picture of a motorway",
+    "a picture of a city",
+    "a picture of a residential area",
+]
+
+### yolo_tri_crop(image) ###
+# splits image into 3 parts, outside-view, rear-view, and speed
+# saves to tri-crop/predict/crops/outside-view
+# saves to tri-crop/predict/crops/rear-view
+# saves to tri-crop/predict/crops/speed
+
+### easyocr_detect(image) ###
+# detects number in file, specified by its path
+
+### object_detect_owlvit(text_weighted, image) ###
+# does a zero shot object detection on
+
+
+yolo_tri_crop("images/" + image)
+
+
+car_speed = easyocr_detect(os.path.join(dir, "tri-crop/predict/crops/speed/" + image))
+
+# labels is a list of all the labels shown above
+labels = [x[0][13:] for x in text_weighted]
+
+
+# owl_boxes, owl_labels, owl_scores = object_detect_owlvit(text_weighted, image)
+
+os.path.join(dir, "tri-crop/predict/crops/outside-view/" + image)
+weather, location = CLIP_state_detect(image, weather_list, location_list)
+
+
+print(location)
+print(weather)
+print(car_speed)
