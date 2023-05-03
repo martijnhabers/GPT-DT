@@ -8,6 +8,9 @@ image = "images/01.jpg"
 
 ### yolo_tri_crop(image) ###
 # splits image into 3 parts, outside-view, rear-view, and speed
+# saves to tri-crop/predict/crops/outside-view
+# saves to tri-crop/predict/crops/rear-view
+# saves to tri-crop/predict/crops/speed
 
 ### easyocr_detect(image) ###
 # detects number in file, specified by its path
@@ -19,7 +22,6 @@ image = "images/01.jpg"
 yolo_tri_crop(image)
 
 print(easyocr_detect(image))
-
 
 text_weighted = [
     ["a photo of a person", 0.25],
