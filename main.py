@@ -7,6 +7,7 @@ from CLIPstate import *
 image = "01.jpg"
 dir = os.getcwd()
 
+#hier sta je dan, met een lucht vol stank
 
 text_weighted = [
     ["a photo of a person", 0.25],
