@@ -3,6 +3,9 @@ from YoloSplit import *
 from owlvit import *
 from CLIPstate import *
 
+# hey hallo dit is een comment
+
+
 # path to file
 image = "01.jpg"
 dir = os.getcwd()
