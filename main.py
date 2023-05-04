@@ -92,11 +92,9 @@ for row in range(df.shape[0]):
 df['foto_naam'] = fotonaam    
 
 
-
+#bepaald de state van het gedetecteerde object
 
 for row in range(df.shape[0]):
-    
-#load orientation model
 
     if str(df.iloc[row]["class_naam"]) == "car":
       Car_orientation(row, df)  
@@ -121,7 +119,7 @@ for row in range(df.shape[0]):
         Traffic_light(row, df)
          
     else:
-        print('ik vind geen borden of lichten in deze oeleh')
+        print('Geen object gedetecteerd')
         df.loc[row, "state"] = " "    
 
 
