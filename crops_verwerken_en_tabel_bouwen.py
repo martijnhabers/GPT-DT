@@ -175,7 +175,7 @@ def crop_and_save_image(row, image_path):
     #     x1 = width
     crop_img = im2[y1:y2, x1:x2]
     # plt.imshow(crop_img)
-    map_pad = "/Crops/"
+    map_pad = "Crops/"
     bestandsnaam = f"Crop_{klas}_{row}.jpg"
     fotonaam.append(map_pad + bestandsnaam)
     cv2.imwrite(map_pad + bestandsnaam, crop_img)

@@ -95,7 +95,7 @@ def crop_and_save_image(row, image_path, texts, df, image):
         x1 = width
     crop_img = im2[y1:y2, x1:x2]
     # plt.imshow(crop_img)
-    map_pad = "/Crops/"
+    map_pad = "Crops/"
     bestandsnaam = f"Crop_{klas}_{row}.jpg"
     fotonaam.append(map_pad + bestandsnaam)
     cv2.imwrite(map_pad + bestandsnaam, crop_img)
@@ -103,6 +103,7 @@ def crop_and_save_image(row, image_path, texts, df, image):
     return(fotonaam)
 
 def Car_orientation(row, df):
+    global state
     model = torch.hub.load('yolov5', 'custom', path='Yolov5_orientation', source='local')
     img = df.iloc[row]["foto_naam"]
     img_data = cv2.imread(img)
@@ -113,9 +114,9 @@ def Car_orientation(row, df):
     df1 = pd.DataFrame(res.numpy(), columns = column1)
     df1["x_midden"] = (df1["x_links"] + df1["x_rechts"])/(2*Width_crop)
     df1["y_midden"] = (df1["y_boven"] + df1["y_onder"])/(2*Height_crop)
+
     for i in range(len(df1['klas1'])):
         if 0.45 < df1['x_midden'][i] < 0.55 and 0.45 < df1["y_midden"][i] < 0.55:
-            
             state = int(df1["klas1"][i])
 
     
@@ -134,6 +135,7 @@ def Car_orientation(row, df):
 
 
 def Bus_orientation(row, df):
+    global state
     model = torch.hub.load('/yolov5', 'custom', path='/Yolov5_orientation', source='local')
     img = df.iloc[row]["foto_naam"]
     img_data = cv2.imread(img)
@@ -165,6 +167,7 @@ def Bus_orientation(row, df):
     
     
 def Truck_orientation(row, df):
+    global state
     model = torch.hub.load('/yolov5', 'custom', path='/Yolov5_orientation', source='local')
     img = df.iloc[row]["foto_naam"]
     img_data = cv2.imread(img)
@@ -196,6 +199,7 @@ def Truck_orientation(row, df):
 
 
 def Motor_orientation(row,df):
+    global state
     model = torch.hub.load('/yolov5', 'custom', path='/Yolov5_orientation', source='local')
     img = df.iloc[row]["foto_naam"]
     img_data = cv2.imread(img)
@@ -225,6 +229,7 @@ def Motor_orientation(row,df):
         df.loc[row, "state"] = "front"
     
 def bike_orientation(row,df):
+    global state
     model = torch.hub.load('/yolov5', 'custom', path='/Yolov5_orientation', source='local')
     img = df.iloc[row]["foto_naam"]
     img_data = cv2.imread(img)
@@ -257,7 +262,7 @@ def bike_orientation(row,df):
     
 def Traffic_sign(row, df):
     bord_crop = df.iloc[row]["foto_naam"]        
-    model = keras.models.load_model('/model.keras')  #juiste plek aangeven!
+    model = keras.models.load_model('model.keras')  #juiste plek aangeven!
     
     data =[]
     
