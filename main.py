@@ -2,6 +2,9 @@ from OCR import *
 from YoloSplit import *
 from owlvit import *
 from CLIPstate import *
+from probeersel_voor_github import *
+
+
 import shutil
 
 # Remove leftover images from previous run of code.
@@ -9,7 +12,10 @@ if os.path.exists("tri-crop"):
     shutil.rmtree("tri-crop")
 
 # Set name of image file to analyse
-image = "01.jpg"
+image = "vraag 16.jpg"
+image_path = image
+
+
 dir = os.getcwd()
 
 
@@ -77,3 +83,45 @@ weather, location = CLIP_state_detect(
     weather_list,
     location_list,
 )
+
+df = dataframe_bouwen(owl_labels, owl_boxes, owl_scores, classes)
+
+# Elke crop maken uit de tabel en foto naam aan tabel toevoegen
+for row in range(df.shape[0]):
+    crop_and_save_image(row, image_path, classes, df, image)
+df['foto_naam'] = fotonaam    
+
+
+
+
+for row in range(df.shape[0]):
+    
+#load orientation model
+
+    if str(df.iloc[row]["class_naam"]) == "car":
+      Car_orientation(row, df)  
+        
+
+    elif str(df.iloc[row]["class_naam"]) == "bus":
+        Bus_orientation(row, df)
+            
+    elif str(df.iloc[row]["class_naam"]) == "truck":
+        Truck_orientation(row, df)
+
+    elif str(df.iloc[row]["class_naam"]) == "motorcycle":
+        Motor_orientation(row, df)
+            
+    elif str(df.iloc[row]["class_naam"]) == "bicycle":
+        bike_orientation(row, df)
+    
+    elif str(df.iloc[row]["class_naam"]) == "traffic sign":
+        Traffic_sign(row, df)
+        
+    elif str(df.iloc[row]["class_naam"]) == "traffic light":       
+        Traffic_light(row, df)
+         
+    else:
+        print('ik vind geen borden of lichten in deze oeleh')
+        df.loc[row, "state"] = " "    
+
+

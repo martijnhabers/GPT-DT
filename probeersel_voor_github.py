@@ -18,9 +18,6 @@ from tensorflow import keras
 from PIL import Image, ImageDraw
 import clip
 import os
-import matplotlib.pyplot as plt
-
-from transformers import OwlViTProcessor, OwlViTForObjectDetection
 
 #import texts van martijn!!
 
@@ -54,7 +51,7 @@ state = None
 
 
 
-def dataframe_bouwen(labels, boxes, scores):
+def dataframe_bouwen(labels, boxes, scores, texts):
 
 
     columns = ["xmin", "ymin","xmax","ymax"]
@@ -82,13 +79,12 @@ def dataframe_bouwen(labels, boxes, scores):
 
 
 
-def crop_and_save_image(row, image_path):
-
-    im2 = cv2.imread(image_path)
+def crop_and_save_image(row, image_path, texts, df, image):
+    im2 = cv2.imread("images/" + image)
     height, width, channels = im2.shape
 #    x, y, w, h = (float(lines[row][1])*width),(float(lines[row][2])*height), (float(lines[row][3])*marge*width), (float(lines[row][4])*marge*height)
     klas = texts[df["class"][row]]
-    x1, y1, x2, y2 = int(df['xmin'][row]*marge_min), int(df['ymin'][row]*marge_min), int(df["xmax"][row]* marge_max), int(df["ymax"][row]*marge_max)
+    x1, y1, x2, y2 = int(df['xmin'][row]), int(df['ymin'][row]), int(df["xmax"][row]), int(df["ymax"][row])
     if y1 < 0:
         y1 = 0
     elif y1 > height:
@@ -99,13 +95,15 @@ def crop_and_save_image(row, image_path):
         x1 = width
     crop_img = im2[y1:y2, x1:x2]
     # plt.imshow(crop_img)
-    map_pad = "C:/Users/emmah/Documents/jaar 4/bep/CROPS/"
-    bestandsnaam = f"nieuwe_afbeelding_{klas}_{row}.jpg"
+    map_pad = "/Crops/"
+    bestandsnaam = f"Crop_{klas}_{row}.jpg"
     fotonaam.append(map_pad + bestandsnaam)
     cv2.imwrite(map_pad + bestandsnaam, crop_img)
+#    df["foto_naam"] = fotonaam
+    return(fotonaam)
 
 def Car_orientation(row, df):
-    model = torch.hub.load('C:/Users/emmah/yolov5', 'custom', path='C:/Users/emmah/Documents/jaar 4/bep/Yolov5_orientation', source='local')
+    model = torch.hub.load('yolov5', 'custom', path='Yolov5_orientation', source='local')
     img = df.iloc[row]["foto_naam"]
     img_data = cv2.imread(img)
     Height_crop, Width_crop, channels = img_data.shape        
@@ -136,7 +134,7 @@ def Car_orientation(row, df):
 
 
 def Bus_orientation(row, df):
-    model = torch.hub.load('C:/Users/emmah/yolov5', 'custom', path='C:/Users/emmah/Documents/jaar 4/bep/Yolov5_orientation', source='local')
+    model = torch.hub.load('/yolov5', 'custom', path='/Yolov5_orientation', source='local')
     img = df.iloc[row]["foto_naam"]
     img_data = cv2.imread(img)
     Height_crop, Width_crop, channels = img_data.shape        
@@ -167,38 +165,38 @@ def Bus_orientation(row, df):
     
     
 def Truck_orientation(row, df):
-        model = torch.hub.load('C:/Users/emmah/yolov5', 'custom', path='C:/Users/emmah/Documents/jaar 4/bep/Yolov5_orientation', source='local')
-        img = df.iloc[row]["foto_naam"]
-        img_data = cv2.imread(img)
-        Height_crop, Width_crop, channels = img_data.shape        
-        model.conf = orientation_conf
-        results = model(img)
-        res = results.xyxy[0]
-        df1 = pd.DataFrame(res.numpy(), columns = column1)
-        df1["x_midden"] = (df1["x_links"] + df1["x_rechts"])/(2*Width_crop)
-        df1["y_midden"] = (df1["y_boven"] + df1["y_onder"])/(2*Height_crop)
-        for i in range(len(df1['klas1'])):
-            if 0.45 < df1['x_midden'][i] < 0.55 and 0.45 < df1["y_midden"][i] < 0.55:
-                
-                state = int(df1["klas1"][i])
-        
-        if state == None or state in state_niet_wagen:
-            print("leeg ouleh")
-            df.loc[row, "state"] = " "
-        elif state == 6:
-            print("achterkant voertuig")
-            df.loc[row, "state"] = "back"
-        elif state == 7 :
-            print("zijkant voertuig")
-            df.loc[row, "state"] = "side"            
-        elif state == 8 :
-            print("voorkant voertuig")
-            df.loc[row, "state"] = "front"    
+    model = torch.hub.load('/yolov5', 'custom', path='/Yolov5_orientation', source='local')
+    img = df.iloc[row]["foto_naam"]
+    img_data = cv2.imread(img)
+    Height_crop, Width_crop, channels = img_data.shape        
+    model.conf = orientation_conf
+    results = model(img)
+    res = results.xyxy[0]
+    df1 = pd.DataFrame(res.numpy(), columns = column1)
+    df1["x_midden"] = (df1["x_links"] + df1["x_rechts"])/(2*Width_crop)
+    df1["y_midden"] = (df1["y_boven"] + df1["y_onder"])/(2*Height_crop)
+    for i in range(len(df1['klas1'])):
+        if 0.45 < df1['x_midden'][i] < 0.55 and 0.45 < df1["y_midden"][i] < 0.55:
+            
+            state = int(df1["klas1"][i])
+    
+    if state == None or state in state_niet_wagen:
+        print("leeg ouleh")
+        df.loc[row, "state"] = " "
+    elif state == 6:
+        print("achterkant voertuig")
+        df.loc[row, "state"] = "back"
+    elif state == 7 :
+        print("zijkant voertuig")
+        df.loc[row, "state"] = "side"            
+    elif state == 8 :
+        print("voorkant voertuig")
+        df.loc[row, "state"] = "front"    
     
 
 
 def Motor_orientation(row,df):
-    model = torch.hub.load('C:/Users/emmah/yolov5', 'custom', path='C:/Users/emmah/Documents/jaar 4/bep/Yolov5_orientation', source='local')
+    model = torch.hub.load('/yolov5', 'custom', path='/Yolov5_orientation', source='local')
     img = df.iloc[row]["foto_naam"]
     img_data = cv2.imread(img)
     Height_crop, Width_crop, channels = img_data.shape        
@@ -227,7 +225,7 @@ def Motor_orientation(row,df):
         df.loc[row, "state"] = "front"
     
 def bike_orientation(row,df):
-    model = torch.hub.load('C:/Users/emmah/yolov5', 'custom', path='C:/Users/emmah/Documents/jaar 4/bep/Yolov5_orientation', source='local')
+    model = torch.hub.load('/yolov5', 'custom', path='/Yolov5_orientation', source='local')
     img = df.iloc[row]["foto_naam"]
     img_data = cv2.imread(img)
     Height_crop, Width_crop, channels = img_data.shape        
@@ -259,7 +257,7 @@ def bike_orientation(row,df):
     
 def Traffic_sign(row, df):
     bord_crop = df.iloc[row]["foto_naam"]        
-    model = keras.models.load_model('C:/Users/emmah/Documents/jaar 4/bep/model.keras')  #juiste plek aangeven!
+    model = keras.models.load_model('/model.keras')  #juiste plek aangeven!
     
     data =[]
     
@@ -295,20 +293,6 @@ def Traffic_light(row, df):
         print(prediction_lights)
         df.loc[row, "state"] = prediction_lights    
     
-
-dataframe_bouwen(labels, boxes, scores)
-
-# Elke crop maken uit de tabel en foto naam aan tabel toevoegen
-for row in range(df.shape[0]):
-    crop_and_save_image(row, image_path)
-df["foto_naam"] = fotonaam
-
-
-
-
-
-#State van het object bepalen
-
 
 
 classes = { 0:'Speed limit (20km/h)',
@@ -357,35 +341,7 @@ classes = { 0:'Speed limit (20km/h)',
 
 
 
-for row in range(df.shape[0]):
-    
-#load orientation model
 
-    if str(df.iloc[row]["class_naam"]) == "car":
-      Car_onrientation(row, df)  
-        
-
-    elif str(df.iloc[row]["class_naam"]) == "bus":
-        Bus_orientation(row, df)
-            
-    elif str(df.iloc[row]["class_naam"]) == "truck":
-        Truck_orientation(row, df)
-
-    elif str(df.iloc[row]["class_naam"]) == "motorcycle":
-        Motor_orientation(row, df)
-            
-    elif str(df.iloc[row]["class_naam"]) == "bicycle":
-        bike_orientation(row, df)
-    
-    elif str(df.iloc[row]["class_naam"]) == "traffic sign":
-        Traffic_sign(row, df)
-        
-    elif str(df.iloc[row]["class_naam"]) == "traffic light":       
-        Traffic_light(row, df)
-         
-    else:
-        print('ik vind geen borden of lichten in deze oeleh')
-        df.loc[row, "state"] = " "    
 
         
 #verkeersborden en lichten identificeren
@@ -401,7 +357,7 @@ for row in range(df.shape[0]):
 
 
 
-df.to_csv("C:/Users/emmah/Desktop/dataframe_voor_depth.csv")
+#df.to_csv("C:/Users/emmah/Desktop/dataframe_voor_depth.csv")
              
 
 """"
