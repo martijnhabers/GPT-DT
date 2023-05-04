@@ -2,12 +2,13 @@ from OCR import *
 from YoloSplit import *
 from owlvit import *
 from CLIPstate import *
+import shutil
 
-# hey hallo dit is een comment
+# Remove leftover images from previous run of code.
+if os.path.exists("tri-crop"):
+    shutil.rmtree("tri-crop")
 
-# HIER KOMT EEN EXTRA COMMENT VOOR TIJDELIJKE BRANCH
-
-# path to file
+# Set name of image file to analyse
 image = "01.jpg"
 dir = os.getcwd()
 
