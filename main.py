@@ -5,6 +5,7 @@ from CLIPstate import *
 
 # hey hallo dit is een comment
 
+# HIER KOMT EEN EXTRA COMMENT VOOR TIJDELIJKE BRANCH
 
 # path to file
 image = "01.jpg"
