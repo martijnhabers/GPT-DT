@@ -11,7 +11,7 @@ processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
 def CLIP_state_detect(image, weather, location, showImg=False):
     context = weather + location
 
-    image = Image.open("tri-crop/predict/crops/outside-view/" + image)
+    image = Image.open(image)
 
     if showImg == True:
         plt.imshow(image)

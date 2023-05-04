@@ -7,7 +7,7 @@ processor = OwlViTProcessor.from_pretrained("google/owlvit-base-patch32")
 model = OwlViTForObjectDetection.from_pretrained("google/owlvit-base-patch32")
 
 
-def object_detect_owlvit(text_weighted, image):
+def owlvit_object_detect(text_weighted, image):
     img = Image.open(image)
     texts = [x[0] for x in text_weighted]
     inputs = processor(text=texts, images=img, return_tensors="pt")

@@ -2,8 +2,13 @@ from OCR import *
 from YoloSplit import *
 from owlvit import *
 from CLIPstate import *
+import shutil
 
-# path to file
+# Remove leftover images from previous run of code.
+if os.path.exists("tri-crop"):
+    shutil.rmtree("tri-crop")
+
+# Set name of image file to analyse
 image = "01.jpg"
 dir = os.getcwd()
 
@@ -48,34 +53,27 @@ location_list = [
     "a picture of a residential area",
 ]
 
-### yolo_tri_crop(image) ###
+# classes is a list of all the classes shown above
+classes = [x[0][13:] for x in text_weighted]
+
+
 # splits image into 3 parts, outside-view, rear-view, and speed
 # saves to tri-crop/predict/crops/outside-view
 # saves to tri-crop/predict/crops/rear-view
 # saves to tri-crop/predict/crops/speed
-
-### easyocr_detect(image) ###
-# detects number in file, specified by its path
-
-### object_detect_owlvit(text_weighted, image) ###
-# does a zero shot object detection on
-
-
 yolo_tri_crop("images/" + image)
 
-
+# detects number with OCR in file, specified by its path
 car_speed = easyocr_detect(os.path.join(dir, "tri-crop/predict/crops/speed/" + image))
 
-# labels is a list of all the labels shown above
-labels = [x[0][13:] for x in text_weighted]
+# does a zero shot object detection on an image and returns boxes, labels, and scores
+owl_boxes, owl_labels, owl_scores = owlvit_object_detect(
+    text_weighted,
+    os.path.join(dir, "tri-crop/predict/crops/outside-view/" + image),
+)
 
-
-# owl_boxes, owl_labels, owl_scores = object_detect_owlvit(text_weighted, image)
-
-os.path.join(dir, "tri-crop/predict/crops/outside-view/" + image)
-weather, location = CLIP_state_detect(image, weather_list, location_list)
-
-
-print(location)
-print(weather)
-print(car_speed)
+weather, location = CLIP_state_detect(
+    os.path.join(dir, "tri-crop/predict/crops/outside-view/" + image),
+    weather_list,
+    location_list,
+)
