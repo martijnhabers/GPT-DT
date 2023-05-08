@@ -3,6 +3,7 @@ from YoloSplit import *
 from owlvit import *
 from CLIPstate import *
 from probeersel_voor_github import *
+from breaking_state_function import *
 
 
 import shutil
@@ -12,7 +13,7 @@ if os.path.exists("tri-crop"):
     shutil.rmtree("tri-crop")
 
 # Set name of image file to analyse
-image = "vraag 16.jpg"
+image = "vraag 2.jpg"
 image_path = image
 
 
@@ -98,7 +99,7 @@ for row in range(df.shape[0]):
 
     if str(df.iloc[row]["class_naam"]) == "car":
       Car_orientation(row, df)  
-        
+      Breaking(row, df)        
 
     elif str(df.iloc[row]["class_naam"]) == "bus":
         Bus_orientation(row, df)
@@ -117,7 +118,7 @@ for row in range(df.shape[0]):
         
     elif str(df.iloc[row]["class_naam"]) == "traffic light":       
         Traffic_light(row, df)
-         
+                 
     else:
         print('Geen object gedetecteerd')
         df.loc[row, "state"] = " "    

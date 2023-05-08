@@ -136,7 +136,7 @@ def Car_orientation(row, df):
 
 def Bus_orientation(row, df):
     global state
-    model = torch.hub.load('/yolov5', 'custom', path='/Yolov5_orientation', source='local')
+    model = torch.hub.load('yolov5', 'custom', path='Yolov5_orientation', source='local')
     img = df.iloc[row]["foto_naam"]
     img_data = cv2.imread(img)
     Height_crop, Width_crop, channels = img_data.shape        
@@ -168,7 +168,7 @@ def Bus_orientation(row, df):
     
 def Truck_orientation(row, df):
     global state
-    model = torch.hub.load('/yolov5', 'custom', path='/Yolov5_orientation', source='local')
+    model = torch.hub.load('yolov5', 'custom', path='Yolov5_orientation', source='local')
     img = df.iloc[row]["foto_naam"]
     img_data = cv2.imread(img)
     Height_crop, Width_crop, channels = img_data.shape        
@@ -200,7 +200,7 @@ def Truck_orientation(row, df):
 
 def Motor_orientation(row,df):
     global state
-    model = torch.hub.load('/yolov5', 'custom', path='/Yolov5_orientation', source='local')
+    model = torch.hub.load('yolov5', 'custom', path='Yolov5_orientation', source='local')
     img = df.iloc[row]["foto_naam"]
     img_data = cv2.imread(img)
     Height_crop, Width_crop, channels = img_data.shape        
@@ -230,7 +230,7 @@ def Motor_orientation(row,df):
     
 def bike_orientation(row,df):
     global state
-    model = torch.hub.load('/yolov5', 'custom', path='/Yolov5_orientation', source='local')
+    model = torch.hub.load('yolov5', 'custom', path='Yolov5_orientation', source='local')
     img = df.iloc[row]["foto_naam"]
     img_data = cv2.imread(img)
     Height_crop, Width_crop, channels = img_data.shape        
