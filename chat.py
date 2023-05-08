@@ -53,21 +53,24 @@ P = 0.4
 
 #------------------------------------SEGMENTING TABLES------------------------------------------
 
-
-
-for k in range(0, len(df.index)):
-    if df.loc[k,'%s'%(pred_name)] < P:
-        df = df.drop(k)
-
-
-df = df.reset_index(drop=True)       
-
+def position(df,image):
+        
+    for k in range(0, len(df.index)):
+        if df.loc[k,'%s'%(pred_name)] < P:
+            df = df.drop(k)
+    
+    df = df.reset_index(drop=True)       
+    
 #---------        --------      ---------POSITION----------        ---------         ------------
+    
+    with open("Position.py") as f:
+        exec(f.read())
 
-with open("Position.py") as f:
-    exec(f.read())
+    return df
 
+position(df,image)
 #---------        --------      ---------DESCRIPTION---------        ---------         ------------
+
 print(df)
 
 CARS = []
