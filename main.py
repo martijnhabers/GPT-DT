@@ -7,32 +7,34 @@ from breaking_state_function import *
 from vehicle_detection import *
 
 import shutil
+import os
 
 df1 = None
 df2 = None
 df = None
-
+# fotonaam = None
 
 # Remove leftover images from previous run of code.
 if os.path.exists("tri-crop"):
     shutil.rmtree("tri-crop")
 
-# Set name of image file to analyse
-image = "vraag 25.jpg"
-image_path = image
-
 
 dir = os.getcwd()
 
-    
+for f in os.listdir(dir + "/Crops"):
+    os.remove(os.path.join(dir + '/Crops',f))
+
+# Set name of image file to analyse
+image = "vraag 19.jpg"
+#image_path = image
+
+
+
+
+
 text_weighted = [
     ["a photo of a person", 0.25],
-#    ["a photo of a car", 0.3],
-#    ["a photo of a bicycle", 0.25],
-#    ["a photo of a motorbike", 0.4],
-#    ["a photo of a bus", 0.4],
     ["a photo of a train", 0.4],
-#    ["a photo of a truck", 0.4],
     ["a photo of a boat", 0.4],
     ["a photo of a traffic light", 0.45],
     ["a photo of a stop sign", 0.4],
@@ -45,6 +47,8 @@ text_weighted = [
     ["a photo of a traffic sign", 0.35],
     ["a photo of a ball", 0.4],
     ["a photo of a tractor", 0.4],
+#    ['a photo of a overhead traffic sign', 0.3],
+    ['a photo of a digital traffic sign', 0.3]
 ]
 
 weather_list = [
@@ -87,7 +91,6 @@ classes_orientation = ["car_back",
 
 classes_owl = ([x[0][13:] for x in text_weighted])
 
-
 classes_totaal = classes_orientation
 
 classes_totaal.extend(([x[0] for x in text_weighted]))
@@ -113,18 +116,20 @@ weather, location = CLIP_state_detect(
     location_list,
 )
 
+#detecteerd de voertuigen
+
 x = vehicle_detection("images/" + image)
     
-
+#maakt het dataframe
 df = dataframe_bouwen(owl_labels, owl_boxes, owl_scores, classes_owl, x, classes_orientation)
 
 # Elke crop maken uit de tabel en foto naam aan tabel toevoegen
 for row in range(df.shape[0]):
-    crop_and_save_image(row, image_path, classes_totaal, df, image)
+    crop_and_save_image(row, image, classes_totaal, df, image)
 df['foto_naam'] = fotonaam    
 
 
-#bepaald de state van het gedetecteerde object
+#bepaald de state een verkeersbord of verkeerslicht
 
 for row in range(df.shape[0]):
 
@@ -133,8 +138,6 @@ for row in range(df.shape[0]):
         
     elif str(df.iloc[row]["class_naam"]) == "traffic light":       
         Traffic_light(row, df)
-                 
-    else:
-        print('Geen state gedetecteerd')  
+                  
 
 
