@@ -19,10 +19,6 @@ from PIL import Image, ImageDraw
 import clip
 import os
 
-#import texts van martijn!!
-
-######## aanpassen per foto ########
-image_path = r"C:/Users/emmah/Documents/jaar 4/bep/yolo/vraag 1.jpg"
 
 
 #variabelen
@@ -47,26 +43,25 @@ state = None
 #data framebouwen
 
 
-
-
-
-
-def dataframe_bouwen(labels, boxes, scores, texts,x, classes_orientation):
+def dataframe_bouwen(labels, boxes, scores, texts, x, classes_orientation):
 
 
     columns = ["xmin", "ymin","xmax","ymax","predictions", 'class']
     df1 = pd.DataFrame(x.numpy(), columns=columns)
     df1['class_naam'] = df1['class']
     df1["class_naam"].replace(range(int(len(classes_orientation))),classes_orientation, inplace=True)
-    df1['state'] = df1.str.split('_', n=1, expand = True)
+    df1[['class_naam','state']] = df1['class_naam'].str.split('_', n=1, expand = True)
+    for row in range(df1.shape[0]):
+        if df1['predictions'][row] < 0.9 and df1['class_naam'][row] != 'car' :
+            df1['state'][row] = " "
     column_df2 = ["xmin", "ymin","xmax","ymax"]    
     df2 = pd.DataFrame(boxes, columns = column_df2)
     df2['predictions'] = scores    
     df2['class'] = labels
     df2['class_naam'] = df2['class']
-    df1["class_naam"].replace(range(int(len(texts))),texts, inplace=True)
+    df2["class_naam"].replace(range(int(len(texts))),texts, inplace=True)
     df2["state"] = ''
-    df = pd.concat([df1, df2])
+    df = pd.concat([df1, df2], ignore_index=True)
     df["x_midden"] = (df["xmin"] + df["xmax"])/(2)
     df["y_midden"] = (df["ymin"] + df["ymax"])/(2)
     df['width'] = df["xmax"] - df["xmin"]
@@ -111,163 +106,6 @@ def crop_and_save_image(row, image_path, classes_totaal, df, image):
 #    df["foto_naam"] = fotonaam
     return(fotonaam)
 
-def Car_orientation(row, df):
-    global state
-    model = torch.hub.load('yolov5', 'custom', path='Yolov5_orientation', source='local')
-    img = df.iloc[row]["foto_naam"]
-    img_data = cv2.imread(img)
-    Height_crop, Width_crop, channels = img_data.shape        
-    model.conf = orientation_conf
-    results = model(img)
-    res = results.xyxy[0]
-    df1 = pd.DataFrame(res.numpy(), columns = column1)
-    df1["x_midden"] = (df1["x_links"] + df1["x_rechts"])/(2*Width_crop)
-    df1["y_midden"] = (df1["y_boven"] + df1["y_onder"])/(2*Height_crop)
-
-    for i in range(len(df1['klas1'])):
-        if 0.45 < df1['x_midden'][i] < 0.55 and 0.45 < df1["y_midden"][i] < 0.55:
-            state = int(df1["klas1"][i])
-
-    
-    if state == None or state in state_niet_auto:
-        print("leeg ouleh")
-        df.loc[row, "state"] = " "
-    elif state == 0:
-        print("achterkant voertuig")
-        df.loc[row, "state"] = "back"
-    elif state == 1 :
-        print("zijkant voertuig")
-        df.loc[row, "state"] = "side"            
-    elif state == 2 :
-        print("voorkant voertuig")
-        df.loc[row, "state"] = "front"
-
-
-def Bus_orientation(row, df):
-    global state
-    model = torch.hub.load('yolov5', 'custom', path='Yolov5_orientation', source='local')
-    img = df.iloc[row]["foto_naam"]
-    img_data = cv2.imread(img)
-    Height_crop, Width_crop, channels = img_data.shape        
-    model.conf = orientation_conf
-    results = model(img)
-    res = results.xyxy[0]
-    df1 = pd.DataFrame(res.numpy(), columns = column1)
-    df1["x_midden"] = (df1["x_links"] + df1["x_rechts"])/(2*Width_crop)
-    df1["y_midden"] = (df1["y_boven"] + df1["y_onder"])/(2*Height_crop)
-    for i in range(len(df1['klas1'])):
-        if 0.45 < df1['x_midden'][i] < 0.55 and 0.45 < df1["y_midden"][i] < 0.55:
-            
-            state = int(df1["klas1"][i])
-    
-    if state == None or state in state_niet_bus:
-        print("leeg ouleh")
-        df.loc[row, "state"] = " "
-    elif state == 3:
-        print("achterkant voertuig")
-        df.loc[row, "state"] = "back"
-    elif state == 4 :
-        print("zijkant voertuig")
-        df.loc[row, "state"] = "side"            
-    elif state == 5 :
-        print("voorkant voertuig")
-        df.loc[row, "state"] = "front"
-
-    
-    
-def Truck_orientation(row, df):
-    global state
-    model = torch.hub.load('yolov5', 'custom', path='Yolov5_orientation', source='local')
-    img = df.iloc[row]["foto_naam"]
-    img_data = cv2.imread(img)
-    Height_crop, Width_crop, channels = img_data.shape        
-    model.conf = orientation_conf
-    results = model(img)
-    res = results.xyxy[0]
-    df1 = pd.DataFrame(res.numpy(), columns = column1)
-    df1["x_midden"] = (df1["x_links"] + df1["x_rechts"])/(2*Width_crop)
-    df1["y_midden"] = (df1["y_boven"] + df1["y_onder"])/(2*Height_crop)
-    for i in range(len(df1['klas1'])):
-        if 0.45 < df1['x_midden'][i] < 0.55 and 0.45 < df1["y_midden"][i] < 0.55:
-            
-            state = int(df1["klas1"][i])
-    
-    if state == None or state in state_niet_wagen:
-        print("leeg ouleh")
-        df.loc[row, "state"] = " "
-    elif state == 6:
-        print("achterkant voertuig")
-        df.loc[row, "state"] = "back"
-    elif state == 7 :
-        print("zijkant voertuig")
-        df.loc[row, "state"] = "side"            
-    elif state == 8 :
-        print("voorkant voertuig")
-        df.loc[row, "state"] = "front"    
-    
-
-
-def Motor_orientation(row,df):
-    global state
-    model = torch.hub.load('yolov5', 'custom', path='Yolov5_orientation', source='local')
-    img = df.iloc[row]["foto_naam"]
-    img_data = cv2.imread(img)
-    Height_crop, Width_crop, channels = img_data.shape        
-    model.conf = orientation_conf
-    results = model(img)
-    res = results.xyxy[0]
-    df1 = pd.DataFrame(res.numpy(), columns = column1)
-    df1["x_midden"] = (df1["x_links"] + df1["x_rechts"])/(2*Width_crop)
-    df1["y_midden"] = (df1["y_boven"] + df1["y_onder"])/(2*Height_crop)
-    for i in range(len(df1['klas1'])):
-        if 0.45 < df1['x_midden'][i] < 0.55 and 0.45 < df1["y_midden"][i] < 0.55:
-            
-            state = int(df1["klas1"][i])
-
-    if state == None or state in state_niet_motor:
-        print("leeg ouleh")
-        df.loc[row, "state"] = " "
-    elif state == 9:
-        print("achterkant voertuig")
-        df.loc[row, "state"] = "back"
-    elif state == 10 :
-        print("zijkant voertuig")
-        df.loc[row, "state"] = "side"            
-    elif state == 11 :
-        print("voorkant voertuig")
-        df.loc[row, "state"] = "front"
-    
-def bike_orientation(row,df):
-    global state
-    model = torch.hub.load('yolov5', 'custom', path='Yolov5_orientation', source='local')
-    img = df.iloc[row]["foto_naam"]
-    img_data = cv2.imread(img)
-    Height_crop, Width_crop, channels = img_data.shape        
-    model.conf = orientation_conf
-    results = model(img)
-    res = results.xyxy[0]
-    df1 = pd.DataFrame(res.numpy(), columns = column1)
-    df1["x_midden"] = (df1["x_links"] + df1["x_rechts"])/(2*Width_crop)
-    df1["y_midden"] = (df1["y_boven"] + df1["y_onder"])/(2*Height_crop)
-    for i in range(len(df1['klas1'])):
-        if 0.45 < df1['x_midden'][i] < 0.55 and 0.45 < df1["y_midden"][i] < 0.55:
-            
-            state = int(df1["klas1"][i])
-    
-    
-    if state == None or state in state_niet_fiets:
-        print("leeg ouleh")
-        df.loc[row, "state"] = " "
-    elif state == 12:
-        print("achterkant voertuig")
-        df.loc[row, "state"] = "back"
-    elif state == 13 :
-        print("zijkant voertuig")
-        df.loc[row, "state"] = "side"            
-    elif state == 14 :
-        print("voorkant voertuig")
-        df.loc[row, "state"] = "front"
-    
     
 def Traffic_sign(row, df):
     bord_crop = df.iloc[row]["foto_naam"]        
@@ -357,22 +195,8 @@ classes = { 0:'Speed limit (20km/h)',
             45:'Pedestrian crossing'}
 
 
-
-
-
         
 #verkeersborden en lichten identificeren
-
-
-
-
-        
-        
-
-
-
-
-
 
 #df.to_csv("C:/Users/emmah/Desktop/dataframe_voor_depth.csv")
              

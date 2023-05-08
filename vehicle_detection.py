@@ -26,29 +26,29 @@ def vehicle_detection(image):
     x = results.xyxy[0]
 #    df = pd.DataFrame(x.numpy(), columns=column) 
     return(x)
-#x = vehicle_detection(0)
+# x = vehicle_detection(0)
 
 
 # classes_orientation = ["car_back",
-#            'car_side',
-#            'car_front',
-#            'bus_back',
-#            'bus_side',
-#            'bus_front',
-#            'truck_back',
-#            'truck_side',
-#            'truck_front',
-#            'motorcycle_back',
-#            'motorcycle_side',
-#            'motorcycle_front',
-#            'bicycle_back',
-#            'bicycle_side',
-#            'bicycle_front'
-#            ]
+#             'car_side',
+#             'car_front',
+#             'bus_back',
+#             'bus_side',
+#             'bus_front',
+#             'truck_back',
+#             'truck_side',
+#             'truck_front',
+#             'motorcycle_back',
+#             'motorcycle_side',
+#             'motorcycle_front',
+#             'bicycle_back',
+#             'bicycle_side',
+#             'bicycle_front'
+#             ]
 
 # columns = ["xmin", "ymin","xmax","ymax","predictions", 'class']
 # df1 = pd.DataFrame(x.numpy(), columns=columns)
 # df1['class_naam'] = df1['class']
 # df1["class_naam"].replace(range(int(len(classes_orientation))),classes_orientation, inplace=True)
-
+# df1[['class_naam','state']] = df1['class_naam'].str.split('_', n=1, expand = True)
 

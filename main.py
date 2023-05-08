@@ -2,18 +2,23 @@ from OCR import *
 from YoloSplit import *
 from owlvit import *
 from CLIPstate import *
-from probeersel_voor_github import *
+from state_detection import *
 from breaking_state_function import *
 from vehicle_detection import *
 
 import shutil
+
+df1 = None
+df2 = None
+df = None
+
 
 # Remove leftover images from previous run of code.
 if os.path.exists("tri-crop"):
     shutil.rmtree("tri-crop")
 
 # Set name of image file to analyse
-image = "vraag 4.jpg"
+image = "vraag 25.jpg"
 image_path = image
 
 
@@ -130,7 +135,6 @@ for row in range(df.shape[0]):
         Traffic_light(row, df)
                  
     else:
-        print('Geen state gedetecteerd')
-        df.loc[row, "state"] = " "    
+        print('Geen state gedetecteerd')  
 
 
