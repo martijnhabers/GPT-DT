@@ -51,13 +51,22 @@ state = None
 
 
 
-def dataframe_bouwen(labels, boxes, scores, texts):
+def dataframe_bouwen(labels, boxes, scores, texts,x, classes_orientation):
 
 
-    columns = ["xmin", "ymin","xmax","ymax"]
-    df = pd.DataFrame(boxes, columns = columns)
-    df['class'] = labels
-    df['predictions'] = scores
+    columns = ["xmin", "ymin","xmax","ymax","predictions", 'class']
+    df1 = pd.DataFrame(x.numpy(), columns=columns)
+    df1['class_naam'] = df1['class']
+    df1["class_naam"].replace(range(int(len(classes_orientation))),classes_orientation, inplace=True)
+    df1['state'] = df1.str.split('_', n=1, expand = True)
+    column_df2 = ["xmin", "ymin","xmax","ymax"]    
+    df2 = pd.DataFrame(boxes, columns = column_df2)
+    df2['predictions'] = scores    
+    df2['class'] = labels
+    df2['class_naam'] = df2['class']
+    df1["class_naam"].replace(range(int(len(texts))),texts, inplace=True)
+    df2["state"] = ''
+    df = pd.concat([df1, df2])
     df["x_midden"] = (df["xmin"] + df["xmax"])/(2)
     df["y_midden"] = (df["ymin"] + df["ymax"])/(2)
     df['width'] = df["xmax"] - df["xmin"]
@@ -71,19 +80,19 @@ def dataframe_bouwen(labels, boxes, scores, texts):
     df['ymax'] = df['y_midden'] + 0.5 * df['height']
     
     
-    df["class_naam"] = df["class"]
-    df["class_naam"].replace(range(int(len(texts))),texts, inplace=True)
-    df["state"] = df["class_naam"]
+#    df["class_naam"] = df["class"]
+#   df["class_naam"].replace(range(int(len(texts))),texts, inplace=True)
+
     return(df)
 
 
 
 
-def crop_and_save_image(row, image_path, texts, df, image):
+def crop_and_save_image(row, image_path, classes_totaal, df, image):
     im2 = cv2.imread("images/" + image)
     height, width, channels = im2.shape
 #    x, y, w, h = (float(lines[row][1])*width),(float(lines[row][2])*height), (float(lines[row][3])*marge*width), (float(lines[row][4])*marge*height)
-    klas = texts[df["class"][row]]
+    klas = str([df["class_naam"][row]])
     x1, y1, x2, y2 = int(df['xmin'][row]), int(df['ymin'][row]), int(df["xmax"][row]), int(df["ymax"][row])
     if y1 < 0:
         y1 = 0

@@ -4,7 +4,7 @@ from owlvit import *
 from CLIPstate import *
 from probeersel_voor_github import *
 from breaking_state_function import *
-
+from vehicle_detection import *
 
 import shutil
 
@@ -13,23 +13,23 @@ if os.path.exists("tri-crop"):
     shutil.rmtree("tri-crop")
 
 # Set name of image file to analyse
-image = "vraag 2.jpg"
+image = "vraag 4.jpg"
 image_path = image
 
 
 dir = os.getcwd()
 
-
+    
 text_weighted = [
     ["a photo of a person", 0.25],
-    ["a photo of a car", 0.3],
-    ["a photo of a bicycle", 0.25],
-    ["a photo of a motorbike", 0.4],
-    ["a photo of a bus", 0.4],
+#    ["a photo of a car", 0.3],
+#    ["a photo of a bicycle", 0.25],
+#    ["a photo of a motorbike", 0.4],
+#    ["a photo of a bus", 0.4],
     ["a photo of a train", 0.4],
-    ["a photo of a truck", 0.4],
+#    ["a photo of a truck", 0.4],
     ["a photo of a boat", 0.4],
-    ["a photo of a traffic light", 0.4],
+    ["a photo of a traffic light", 0.45],
     ["a photo of a stop sign", 0.4],
     ["a photo of a cat", 0.4],
     ["a photo of a dog", 0.4],
@@ -37,8 +37,9 @@ text_weighted = [
     ["a photo of a sheep", 0.4],
     ["a photo of a cow", 0.4],
     ["a photo of a traffic cone", 0.4],
-    ["a photo of a traffic sign", 0.2],
+    ["a photo of a traffic sign", 0.35],
     ["a photo of a ball", 0.4],
+    ["a photo of a tractor", 0.4],
 ]
 
 weather_list = [
@@ -61,8 +62,30 @@ location_list = [
 ]
 
 # classes is a list of all the classes shown above
-classes = [x[0][13:] for x in text_weighted]
 
+classes_orientation = ["car_back",
+           'car_side',
+           'car_front',
+           'bus_back',
+           'bus_side',
+           'bus_front',
+           'truck_back',
+           'truck_side',
+           'truck_front',
+           'motorcycle_back',
+           'motorcycle_side',
+           'motorcycle_front',
+           'bicycle_back',
+           'bicycle_side',
+           'bicycle_front'
+           ]
+
+classes_owl = ([x[0][13:] for x in text_weighted])
+
+
+classes_totaal = classes_orientation
+
+classes_totaal.extend(([x[0] for x in text_weighted]))
 
 # splits image into 3 parts, outside-view, rear-view, and speed
 # saves to tri-crop/predict/crops/outside-view
@@ -85,11 +108,14 @@ weather, location = CLIP_state_detect(
     location_list,
 )
 
-df = dataframe_bouwen(owl_labels, owl_boxes, owl_scores, classes)
+x = vehicle_detection("images/" + image)
+    
+
+df = dataframe_bouwen(owl_labels, owl_boxes, owl_scores, classes_owl, x, classes_orientation)
 
 # Elke crop maken uit de tabel en foto naam aan tabel toevoegen
 for row in range(df.shape[0]):
-    crop_and_save_image(row, image_path, classes, df, image)
+    crop_and_save_image(row, image_path, classes_totaal, df, image)
 df['foto_naam'] = fotonaam    
 
 
@@ -97,30 +123,14 @@ df['foto_naam'] = fotonaam
 
 for row in range(df.shape[0]):
 
-    if str(df.iloc[row]["class_naam"]) == "car":
-      Car_orientation(row, df)  
-      Breaking(row, df)        
-
-    elif str(df.iloc[row]["class_naam"]) == "bus":
-        Bus_orientation(row, df)
-            
-    elif str(df.iloc[row]["class_naam"]) == "truck":
-        Truck_orientation(row, df)
-
-    elif str(df.iloc[row]["class_naam"]) == "motorcycle":
-        Motor_orientation(row, df)
-            
-    elif str(df.iloc[row]["class_naam"]) == "bicycle":
-        bike_orientation(row, df)
-    
-    elif str(df.iloc[row]["class_naam"]) == "traffic sign":
+    if str(df.iloc[row]["class_naam"]) == "traffic sign":
         Traffic_sign(row, df)
         
     elif str(df.iloc[row]["class_naam"]) == "traffic light":       
         Traffic_light(row, df)
                  
     else:
-        print('Geen object gedetecteerd')
+        print('Geen state gedetecteerd')
         df.loc[row, "state"] = " "    
 
 

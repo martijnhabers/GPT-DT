@@ -36,5 +36,5 @@ def Breaking(row, df):
     
     pred = np.argmax(model.predict(X), axis=1)
     print(classes_rem[int(pred)])
-    df.loc[row, "state"] = classes_rem[int(pred)]
+    df.loc[row, "state"] = classes_rem[int(pred)] + df.loc[row, "state"]
     
