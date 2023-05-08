@@ -342,7 +342,10 @@ classes = { 0:'Speed limit (20km/h)',
             39:'Keep left', 
             40:'Roundabout mandatory', 
             41:'End of no passing', 
-            42:'End no passing veh > 3.5 tons' }
+            42:'End no passing veh > 3.5 tons',
+            43:'Back of traffic sign',
+            44:'Bicycle lane',
+            45:'Pedestrian crossing'}
 
 
 
