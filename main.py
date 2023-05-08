@@ -3,6 +3,7 @@ from YoloSplit import *
 from owlvit import *
 from CLIPstate import *
 from probeersel_voor_github import *
+from chat import *
 
 
 import shutil
@@ -12,7 +13,7 @@ if os.path.exists("tri-crop"):
     shutil.rmtree("tri-crop")
 
 # Set name of image file to analyse
-image = "vraag 16.jpg"
+image = "01.jpg"
 image_path = image
 
 
@@ -89,37 +90,37 @@ df = dataframe_bouwen(owl_labels, owl_boxes, owl_scores, classes)
 # Elke crop maken uit de tabel en foto naam aan tabel toevoegen
 for row in range(df.shape[0]):
     crop_and_save_image(row, image_path, classes, df, image)
-df['foto_naam'] = fotonaam    
+df["foto_naam"] = fotonaam
 
 
-#bepaald de state van het gedetecteerde object
+# bepaald de state van het gedetecteerde object
 
 for row in range(df.shape[0]):
-
     if str(df.iloc[row]["class_naam"]) == "car":
-      Car_orientation(row, df)  
-        
+        Car_orientation(row, df)
 
     elif str(df.iloc[row]["class_naam"]) == "bus":
         Bus_orientation(row, df)
-            
+
     elif str(df.iloc[row]["class_naam"]) == "truck":
         Truck_orientation(row, df)
 
     elif str(df.iloc[row]["class_naam"]) == "motorcycle":
         Motor_orientation(row, df)
-            
+
     elif str(df.iloc[row]["class_naam"]) == "bicycle":
         bike_orientation(row, df)
-    
+
     elif str(df.iloc[row]["class_naam"]) == "traffic sign":
         Traffic_sign(row, df)
-        
-    elif str(df.iloc[row]["class_naam"]) == "traffic light":       
+
+    elif str(df.iloc[row]["class_naam"]) == "traffic light":
         Traffic_light(row, df)
-         
+
     else:
-        print('Geen object gedetecteerd')
-        df.loc[row, "state"] = " "    
+        print("Geen object gedetecteerd")
+        df.loc[row, "state"] = " "
 
+df = position(df, image)
 
+prompt, response = ChatGPT(df, car_speed, location)
