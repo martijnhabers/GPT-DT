@@ -12,8 +12,6 @@ from tensorflow import keras
 from PIL import Image, ImageDraw
 import clip
 import os
-import matplotlib.pyplot as plt
-
 from transformers import OwlViTProcessor, OwlViTForObjectDetection
 
 classes = ["person",
@@ -36,8 +34,7 @@ classes = ["person",
 "ball"]
 
 ######## aanpassen per foto ########
-image_path = r"C:/Users/emmah/Documents/jaar 4/bep/yolo/vraag 16.jpg"
-# tabel = "C:/Users/Mees/runs/detect/predict27/labels/image0.txt"
+image_path = "images/vraag 16.jpg"
 marge_max = 1 #grote van de crop
 marge_min = 1
 ####################################
@@ -178,8 +175,8 @@ def crop_and_save_image(row, image_path):
     #     x1 = width
     crop_img = im2[y1:y2, x1:x2]
     # plt.imshow(crop_img)
-    map_pad = "C:/Users/emmah/Documents/jaar 4/bep/CROPS/"
-    bestandsnaam = f"nieuwe_afbeelding_{klas}_{row}.jpg"
+    map_pad = "Crops/"
+    bestandsnaam = f"Crop_{klas}_{row}.jpg"
     fotonaam.append(map_pad + bestandsnaam)
     cv2.imwrite(map_pad + bestandsnaam, crop_img)
 
@@ -251,7 +248,7 @@ state = None
 for row in range(df.shape[0]):
     
 #load orientation model
-    model = torch.hub.load('C:/Users/emmah/yolov5', 'custom', path='C:/Users/emmah/Documents/jaar 4/bep/Yolov5_orientation', source='local')
+    model = torch.hub.load('/yolov5', 'custom', path='/Yolov5_orientation', source='local')
 # Load test image, could be any image
     img = df.iloc[row]["foto_naam"]
     img_data = cv2.imread(img)
@@ -263,9 +260,7 @@ for row in range(df.shape[0]):
 ###############################################
     results = model(img)
 # Results 
-    # results.print()
-    # results.save()
-        
+    results.print()
         
     res = results.xyxy[0]
     # print(res)
@@ -380,7 +375,7 @@ for row in range(df.shape[0]):
 
     if str(df.iloc[row]["class_naam"]) == "traffic sign":
         bord_crop = df.iloc[row]["foto_naam"]        
-        model = keras.models.load_model('C:/Users/emmah/Documents/jaar 4/bep/model.keras')  #juiste plek aangeven!
+        model = keras.models.load_model('/model.keras')
 
         data =[]
 
