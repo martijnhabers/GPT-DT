@@ -9,6 +9,14 @@ from vehicle_detection import *
 import shutil
 import os
 
+
+    #TODO: onderscheid maken tussen voor en achterspiegel
+    #TODO: Breaking state toevoegen?
+    #TODO: matrix borden detectie/ uitlezen toevoegen
+    #TODO: weg deel toevoegen --> waar de weg is/ hoe die loopt
+    
+
+
 df1 = None
 df2 = None
 df = None
@@ -25,7 +33,7 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + '/Crops',f))
 
 # Set name of image file to analyse
-image = "vraag 19.jpg"
+image = "vraag 5.jpg"
 #image_path = image
 
 
@@ -142,3 +150,4 @@ for row in range(df.shape[0]):
                   
 
 
+df.to_csv("C:/Users/Mees/Desktop/dataframe_voor_depth.csv")
