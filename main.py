@@ -117,15 +117,16 @@ weather, location = CLIP_state_detect(
 )
 
 #detecteerd de voertuigen
+image_front = "tri-crop/predict/crops/outside-view/" + image
 
-x = vehicle_detection("images/" + image)
+x = vehicle_detection(image_front)
     
 #maakt het dataframe
 df = dataframe_bouwen(owl_labels, owl_boxes, owl_scores, classes_owl, x, classes_orientation)
 
 # Elke crop maken uit de tabel en foto naam aan tabel toevoegen
 for row in range(df.shape[0]):
-    crop_and_save_image(row, image, classes_totaal, df, image)
+    crop_and_save_image(row, classes_totaal, df, image_front)
 df['foto_naam'] = fotonaam    
 
 
