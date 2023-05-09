@@ -142,8 +142,12 @@ df['foto_naam'] = fotonaam
 
 for row in range(df.shape[0]):
 
+    
+
     if str(df.iloc[row]["class_naam"]) == "traffic sign":
         Traffic_sign(row, df)
+    elif str(df.iloc[row]["class_naam"]) == "car":
+        braking(row,df)
         
     elif str(df.iloc[row]["class_naam"]) == "traffic light":       
         Traffic_light(row, df)

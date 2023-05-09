@@ -35,6 +35,8 @@ state_niet_motor = [0,1,2,3,4,5,6,7,8,12,13,14]
 state_niet_fiets = [0,1,2,3,4,5,6,7,8,9,10,11]
 IMG_HEIGHT = 30
 IMG_WIDTH = 30
+IMG_HEIGHT_REM = 120
+IMG_WIDTH_REM = 120
 channels = 3
 state = None
 ####################################
@@ -109,7 +111,7 @@ def crop_and_save_image(row, classes_totaal, df, image_front):
     
 def Traffic_sign(row, df):
     bord_crop = df.iloc[row]["foto_naam"]        
-    model = keras.models.load_model('model.keras')  #juiste plek aangeven!
+    model = keras.models.load_model('model.keras')
     
     data =[]
     
@@ -124,6 +126,7 @@ def Traffic_sign(row, df):
     pred = np.argmax(model.predict(X), axis=1)
     print(classes[int(pred)])
     df.loc[row, "state"] = classes[int(pred)]    
+    return(df)
     
 def Traffic_light(row, df):
     device =  "cpu"
@@ -144,7 +147,32 @@ def Traffic_light(row, df):
         prediction_lights = opties_antwoord[ np.argmax(probs)]
         print(prediction_lights)
         df.loc[row, "state"] = prediction_lights    
+    return(df)
     
+
+def braking(row, df ):
+    bord_crop = df.iloc[row]["foto_naam"]        
+    model = keras.models.load_model('model_remv1.keras')
+    
+    data =[]
+    
+    image = cv2.imread(bord_crop)
+    image_fromarray = Image.fromarray(image, 'RGB')
+    resize_image = image_fromarray.resize((IMG_HEIGHT_REM, IMG_WIDTH_REM))
+    data.append(np.array(resize_image))
+    
+    X = np.array(data)
+    X = X/255
+    
+    pred = np.argmax(model.predict(X), axis=1)
+    print(classes_rem[int(pred)])
+    df.loc[row, "state"] = classes_rem[int(pred)]    
+    return (df)
+
+
+classes_rem = { 0: 'not braking',
+            1:'braking',
+    }
 
 
 classes = { 0:'Speed limit (20km/h)',
