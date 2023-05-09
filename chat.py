@@ -7,7 +7,6 @@ import openai
 
 # -----------------------------------KEYS AND LOCATIONS-------------------------------------------------
 
-img = "C:\\Users\Gebruiker\Documents\BEP\\vraag x.jpg"
 openAI_key = 0
 
 # ---------        --------      ------VARIABLES------        ---------         ------------
@@ -21,7 +20,7 @@ xmid_name = "x_midden"
 ymid_name = "y_midden"
 b_name = "breedte"
 h_name = "hoogte"
-pred_name = "prediction"
+pred_name = "predictions"
 class_name = "class_naam"
 state_name = "state"
 foto_name = "foto_naam"
@@ -38,7 +37,7 @@ P = 0.4
 
 def position(df, image_path):
     image = Image.open(os.path.join(os.getcwd(), "images/" + image_path))
-
+    
     for k in range(0, len(df.index)):
         if df.loc[k, "%s" % (pred_name)] < P:
             df = df.drop(k)
@@ -126,12 +125,12 @@ def position(df, image_path):
                     df.loc[i, "%s" % pos_name] = "close right"  ####
                 elif df.loc[i, "%s" % hp_name] == "Far":
                     df.loc[i, "%s" % pos_name] = "distanced right"  ####
-
+    return df
 
 # ---------        --------      ---------DESCRIPTION---------        ---------         ------------
 
 
-def ChatGPT(df, speed, location):
+def ChatGPT(df, speed, location, weather):
     CARS = []
     TL = []
     TS = []
@@ -216,16 +215,16 @@ def ChatGPT(df, speed, location):
     # Set up the model and prompt
     model_engine = "text-davinci-003"
 
-    prompt = (
-        "Assume you are driving in %s. You are driving in a %s area at %d km/h. You see the following cars: %s. You see the following traffic signs: %s. You see the following traffic lights: %s. You see the following pedestrians: %s. You see the following bicyclist: %s. Additionally, you see: %s. Generate a multiple choice question with the following answer choices: 'Let go of the gas pedal', 'Brake' or 'Do nothing'. After showing the question and answers, pick your answer. Give your thorough reason behind it."
-        % (country, location, speed, CARS, TS, TL, PERSON, BICYCLES, OTHERS)
-    )
+    prompt1 = "Assume you are driving in %s. You are driving in a %s area at %d km/h. The weather conditions is %s " % (country, location, speed, weather)
+    prompt2 = "You see the following cars: %s. You see the following traffic signs: %s. You see the following traffic lights: %s. You see the following pedestrians: %s. You see the following bicyclist: %s. Additionally, you see: %s. " %(CARS, TS, TL, PERSON, BICYCLES, OTHERS)
+    prompt3 = "Given the described situation above, what would you do: 'Let go of the gas pedal', 'Brake' or 'Do nothing'. "
+    prompt4 = "Describe the situation in your own words, show the three options I gave you and pick your answer. Give your thorough reason behind it."
+    prompt = prompt1 +''+ prompt2 +''+ prompt3 +''+ prompt4
     print(prompt)
-
     # Generate a response ChatGPT
     completion = openai.Completion.create(
         engine=model_engine,
-        prompt=prompt,
+        prompt= prompt,
         max_tokens=1024,
         n=1,
         stop=None,
@@ -234,4 +233,4 @@ def ChatGPT(df, speed, location):
 
     response = completion.choices[0].text
 
-    return (prompt, response)
+    return (response)
