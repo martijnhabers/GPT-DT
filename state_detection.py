@@ -150,7 +150,7 @@ def Traffic_light(row, df):
     return(df)
     
 
-def braking(row, df ):
+def Braking(row, df ):
     bord_crop = df.iloc[row]["foto_naam"]        
     model = keras.models.load_model('model_remv1.keras')
     
