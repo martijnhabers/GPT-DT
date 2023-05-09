@@ -7,8 +7,8 @@ import openai
 
 # -----------------------------------KEYS AND LOCATIONS-------------------------------------------------
 
-img = "C:\\Users\Gebruiker\Documents\BEP\\vraag x.jpg"
-openAI_key = 0
+# img = "C:\\Users\Gebruiker\Documents\BEP\\vraag x.jpg"
+openAI_key = "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"
 
 # ---------        --------      ------VARIABLES------        ---------         ------------
 
@@ -21,7 +21,7 @@ xmid_name = "x_midden"
 ymid_name = "y_midden"
 b_name = "breedte"
 h_name = "hoogte"
-pred_name = "prediction"
+pred_name = "predictions"
 class_name = "class_naam"
 state_name = "state"
 foto_name = "foto_naam"
@@ -126,6 +126,7 @@ def position(df, image_path):
                     df.loc[i, "%s" % pos_name] = "close right"  ####
                 elif df.loc[i, "%s" % hp_name] == "Far":
                     df.loc[i, "%s" % pos_name] = "distanced right"  ####
+    return df
 
 
 # ---------        --------      ---------DESCRIPTION---------        ---------         ------------
@@ -215,12 +216,12 @@ def ChatGPT(df, speed, location):
 
     # Set up the model and prompt
     model_engine = "text-davinci-003"
-
+    # TODO: REMOVE SPEED TEMP FIX
+    speed = 25
     prompt = (
         "Assume you are driving in %s. You are driving in a %s area at %d km/h. You see the following cars: %s. You see the following traffic signs: %s. You see the following traffic lights: %s. You see the following pedestrians: %s. You see the following bicyclist: %s. Additionally, you see: %s. Generate a multiple choice question with the following answer choices: 'Let go of the gas pedal', 'Brake' or 'Do nothing'. After showing the question and answers, pick your answer. Give your thorough reason behind it."
         % (country, location, speed, CARS, TS, TL, PERSON, BICYCLES, OTHERS)
     )
-    print(prompt)
 
     # Generate a response ChatGPT
     completion = openai.Completion.create(
