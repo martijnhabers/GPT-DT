@@ -7,7 +7,14 @@ import openai
 
 # -----------------------------------KEYS AND LOCATIONS-------------------------------------------------
 
-openAI_key = 0
+img = "C:\\Users\Gebruiker\Documents\BEP\\vraag 1.jpg"
+loc_sheet = "C:\\Users\Gebruiker\Documents\BEP\dataframe_voor_depth_1.csv"#"C:\\Users\Gebruiker\Documents\BEP\dataframe_voor_ivan.csv"
+df = pd.read_csv(r'%s' %(loc_sheet), index_col = 0) #df = pd.read_excel(r'...') 
+openAI_key = "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"
+image = Image.open(img)
+
+# img = "C:\\Users\Gebruiker\Documents\BEP\\vraag x.jpg"
+# openAI_key = 0
 
 # ---------        --------      ------VARIABLES------        ---------         ------------
 
@@ -28,8 +35,8 @@ hp_name = "height_position"
 wp_name = "width_position"
 pos_name = "position"
 
-rear_name = "rear or front"
-rear = 'rear'
+rear_name = "view"
+
 
 
 # PROBABILITY OF BOUNDING BOXES
@@ -37,10 +44,11 @@ P = 0.4
 
 # ------------------------------------SEGMENTING TABLES------------------------------------------
 
+# print(df)
 
 def position(df, image_path):
-    image = Image.open(os.path.join(os.getcwd(), "images/" + image_path))
-    
+    #image = Image.open(os.path.join(os.getcwd(), "images/" + image_path))
+    image = image_path
     for k in range(0, len(df.index)):
         if df.loc[k, "%s" % (pred_name)] < P:
             df = df.drop(k)
@@ -80,9 +88,13 @@ def position(df, image_path):
     df["%s" % hp_name] = np.zeros(len(df.index))
     df["%s" % wp_name] = np.zeros(len(df.index))
     for b in range(0, len(df.index)):
+        
+        #if df.loc[b,'%s'%rear_name] == 'front':
+        #    continue
+        
         PositionPercW = df.loc[b, "%s" % (xmid_name)] / w
 
-        PositionPercH = df.loc[b, "%s" % (ymid_name)] / h
+        PositionPercH = (h - df.loc[b, "%s" % (ymid_name)]) / h
 
         # #---------        --------      --------LEFT&RIGHT---------        ---------         ------------
 
@@ -142,16 +154,25 @@ def ChatGPT(df, speed, location, weather):
     REAR = []
     OTHERS = []
     
+    
+   
+  
+    
     for k in range(0, len(df.index)):
+        
+        if isinstance(df.loc[k,'%s'%state_name], str) is False: #TODO
+            df.loc[k,'%s'%state_name] = ''
+            
+            
         if df.loc[k, "%s" % (rear_name)] == '%s'%rear:
             if df.loc[k, "%s" % (state_name)] == 'front':
-                REAR.append("A %s %s "%(class_name, pos_name))
+                REAR.append('A %s %s'%(df.loc[k, '%s'%class_name], df.loc[k,'%s'%pos_name]))
             
             df = df.drop(k)
-
+    
     df = df.reset_index(drop=True)
-
-
+    
+    
     for a in range(0, len(df.index)):
         if df.loc[a, "%s" % (class_name)] == "car":
             if df.loc[a, "%s" % (state_name)] == "front":
@@ -229,13 +250,14 @@ def ChatGPT(df, speed, location, weather):
     # Set up the model and prompt
     model_engine = "text-davinci-003"
 
-    prompt1 =  "Assume you are driving in %s. You are driving in a %s area at %d km/h. The weather condition is %s " % (country, location, speed, weather)  #TODO: ee  
+    prompt1 =  "Assume you are driving in %s. You are driving in a %s area at %d km/h. The weather condition is %s " % (country, location, speed, weather)
     prompt2 = f"This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}. "
     prompt3 = f"This is your rear view: You see the following  cars: {', '.join(REAR)}"
     prompt4 = f"Given the described situation above, what would you do: 'Let go of the gas pedal', 'Brake' or 'Do nothing'. "
-    prompt5 = f"Describe the situation in your own words, show the three options I gave you and pick your answer. Give your thorough reason behind it."
-    prompt = prompt1 +''+ prompt2 +''+ prompt3 +''+ prompt4 + prompt5
-    print(prompt)
+    prompt5 = ''#f"Describe the situation in your own words."
+    prompt6 = f"Show the three options I gave you and pick your answer. Give your thorough reason behind it."
+    prompt = prompt1 +''+ prompt2 +''+ prompt3 +''+ prompt4 + prompt5 + prompt6
+    
     # Generate a response ChatGPT
     completion = openai.Completion.create(
         engine=model_engine,
@@ -248,4 +270,7 @@ def ChatGPT(df, speed, location, weather):
 
     response = completion.choices[0].text
 
-    return (response)
+    return (prompt,response)
+
+df = position(df, image)
+print(ChatGPT(df, 30, 'residential', 'sunny'))  
