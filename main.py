@@ -26,7 +26,7 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "27.jpg"
+image = "15.jpg"
 # image_path = image
 
 
@@ -45,6 +45,8 @@ text_weighted = [
     ["a photo of a traffic sign", 0.35],
     ["a photo of a ball", 0.4],
     ["a photo of a tractor", 0.4],
+    #    ['a photo of a overhead traffic sign', 0.3],
+    ["a photo of a digital traffic sign", 0.3],
     #    ['a photo of a overhead traffic sign', 0.3],
     ["a photo of a digital traffic sign", 0.3],
 ]
@@ -87,7 +89,25 @@ classes_orientation = [
     "bicycle_side",
     "bicycle_front",
 ]
+classes_orientation = [
+    "car_back",
+    "car_side",
+    "car_front",
+    "bus_back",
+    "bus_side",
+    "bus_front",
+    "truck_back",
+    "truck_side",
+    "truck_front",
+    "motorcycle_back",
+    "motorcycle_side",
+    "motorcycle_front",
+    "bicycle_back",
+    "bicycle_side",
+    "bicycle_front",
+]
 
+classes_owl = [x[0][13:] for x in text_weighted]
 classes_owl = [x[0][13:] for x in text_weighted]
 
 classes_totaal = classes_orientation
@@ -98,7 +118,7 @@ classes_totaal.extend(([x[0] for x in text_weighted]))
 # saves to tri-crop/predict/crops/outside-view
 # saves to tri-crop/predict/crops/rear-view
 # saves to tri-crop/predict/crops/speed
-yolo_tri_crop("images/" + image)
+tri_crop_results = yolo_tri_crop("images/" + image)
 
 # detects number with OCR in file, specified by its path
 car_speed = easyocr_detect(os.path.join(dir, "tri-crop/predict/crops/speed/" + image))
@@ -116,13 +136,20 @@ weather, location = CLIP_state_detect(
 )
 
 # detecteerd de voertuigen
+# detecteerd de voertuigen
 image_front = "tri-crop/predict/crops/outside-view/" + image
 
 x = vehicle_detection(image_front)
 
 # maakt het dataframe
 df = dataframe_bouwen(
-    owl_labels, owl_boxes, owl_scores, classes_owl, x, classes_orientation
+    owl_labels,
+    owl_boxes,
+    owl_scores,
+    classes_owl,
+    x,
+    classes_orientation,
+    tri_crop_results,
 )
 
 # Elke crop maken uit de tabel en foto naam aan tabel toevoegen
@@ -131,6 +158,7 @@ for row in range(df.shape[0]):
 df["foto_naam"] = fotonaam
 
 
+# bepaald de state een verkeersbord of verkeerslicht
 # bepaald de state een verkeersbord of verkeerslicht
 
 for row in range(df.shape[0]):
