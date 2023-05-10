@@ -34,8 +34,9 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "vraag 55.5.jpg"
+image = "vraag 3.jpg"
 #image_path = image
+
 
 
 text_weighted = [
