@@ -8,7 +8,7 @@ from vehicle_detection import *
 
 import shutil
 import os
-
+ 
 
     #TODO: onderscheid maken tussen voor en achterspiegel
     #TODO: Breaking state toevoegen?
@@ -33,7 +33,7 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + '/Crops',f))
 
 # Set name of image file to analyse
-image = "vraag 5.jpg"
+image = "vraag 55.5.jpg"
 #image_path = image
 
 
@@ -139,7 +139,7 @@ df['foto_naam'] = fotonaam
 
 
 #bepaald de state een verkeersbord of verkeerslicht
-
+ 
 for row in range(df.shape[0]):
 
     
@@ -147,7 +147,7 @@ for row in range(df.shape[0]):
     if str(df.iloc[row]["class_naam"]) == "traffic sign":
         Traffic_sign(row, df)
         
-    elif str(df.iloc[row]["class_naam"]) == "car" and str(df.iloc[row]["state"] == "back"):
+    elif str(df.iloc[row]["state"]) == "back":
         Braking(row,df)
         
     elif str(df.iloc[row]["class_naam"]) == "traffic light":       

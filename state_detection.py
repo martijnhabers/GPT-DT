@@ -150,13 +150,13 @@ def Traffic_light(row, df):
     return(df)
     
 
-def Braking(row, df ):
-    bord_crop = df.iloc[row]["foto_naam"]        
+def Braking(row, df):
+    brake_crop = df.iloc[row]["foto_naam"]        
     model = keras.models.load_model('model_remv1.keras')
     
     data =[]
     
-    image = cv2.imread(bord_crop)
+    image = cv2.imread(brake_crop)
     image_fromarray = Image.fromarray(image, 'RGB')
     resize_image = image_fromarray.resize((IMG_HEIGHT_REM, IMG_WIDTH_REM))
     data.append(np.array(resize_image))
@@ -166,7 +166,7 @@ def Braking(row, df ):
     
     pred = np.argmax(model.predict(X), axis=1)
     print(classes_rem[int(pred)])
-    df.loc[row, "state"] = classes_rem[int(pred)]    
+    df.loc[row, "state"] = df.loc[row, "state"] + ' ' + classes_rem[int(pred)]    
     return (df)
 
 
