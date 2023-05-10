@@ -26,4 +26,4 @@ def easyocr_detect(image, showImg=False):
     if len(result) > 0:
         return result[0][1]
     else:
-        return None
+        return "unknown"
