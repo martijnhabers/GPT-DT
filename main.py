@@ -5,6 +5,7 @@ from CLIPstate import *
 from state_detection import *
 from breaking_state_function import *
 from vehicle_detection import *
+from chat import *
 
 import shutil
 import os
@@ -22,6 +23,7 @@ if os.path.exists("tri-crop"):
 dir = os.getcwd()
 
 for f in os.listdir(dir + "/Crops"):
+    os.remove(os.path.join(dir + "/Crops", f))
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
@@ -44,6 +46,8 @@ text_weighted = [
     ["a photo of a traffic sign", 0.35],
     ["a photo of a ball", 0.4],
     ["a photo of a tractor", 0.4],
+    #    ['a photo of a overhead traffic sign', 0.3],
+    ["a photo of a digital traffic sign", 0.3],
     #    ['a photo of a overhead traffic sign', 0.3],
     ["a photo of a digital traffic sign", 0.3],
 ]
@@ -86,7 +90,25 @@ classes_orientation = [
     "bicycle_side",
     "bicycle_front",
 ]
+classes_orientation = [
+    "car_back",
+    "car_side",
+    "car_front",
+    "bus_back",
+    "bus_side",
+    "bus_front",
+    "truck_back",
+    "truck_side",
+    "truck_front",
+    "motorcycle_back",
+    "motorcycle_side",
+    "motorcycle_front",
+    "bicycle_back",
+    "bicycle_side",
+    "bicycle_front",
+]
 
+classes_owl = [x[0][13:] for x in text_weighted]
 classes_owl = [x[0][13:] for x in text_weighted]
 
 classes_totaal = classes_orientation
@@ -115,6 +137,7 @@ weather, location = CLIP_state_detect(
 )
 
 # detecteerd de voertuigen
+# detecteerd de voertuigen
 image_front = "tri-crop/predict/crops/outside-view/" + image
 
 x = vehicle_detection(image_front)
@@ -134,8 +157,10 @@ df = dataframe_bouwen(
 for row in range(df.shape[0]):
     crop_and_save_image(row, classes_totaal, df, image_front)
 df["foto_naam"] = fotonaam
+df["foto_naam"] = fotonaam
 
 
+# bepaald de state een verkeersbord of verkeerslicht
 # bepaald de state een verkeersbord of verkeerslicht
 
 for row in range(df.shape[0]):
@@ -144,3 +169,17 @@ for row in range(df.shape[0]):
 
     elif str(df.iloc[row]["class_naam"]) == "traffic light":
         Traffic_light(row, df)
+
+
+df = position(df, image)
+
+prompt, response = ChatGPT(df, car_speed, location)
+
+print(prompt)
+print(response)
+
+text_file = open("Output.txt", "w")
+text_file.write(prompt)
+text_file.write("")
+text_file.write(response)
+text_file.close()
