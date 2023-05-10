@@ -1,0 +1,9 @@
+Assume you are driving in The Netherlands. You are driving in a a picture of a motorway area at 25 km/h. You see the following cars: ['A car approaching from close left', 'A car approaching from close left']. You see the following traffic signs: ['There are no traffic signs in sight']. You see the following traffic lights: ['There are no traffic lights in sight']. You see the following pedestrians: ['person', '', 'person', '']. You see the following bicyclist: ['A bicycle straight infront at a distant', 'A bicycle straight infront at a distant']. Additionally, you see: ['there are no more objects than the ones mentioned above']. Generate a multiple choice question with the following answer choices: 'Let go of the gas pedal', 'Brake' or 'Do nothing'. After showing the question and answers, pick your answer. Give your thorough reason behind it.
+
+Question: What should you do when driving in a motorway area in The Netherlands at 25 km/h and you see two cars approaching from close left and two bicycles straight ahead at a distant?
+
+A) Let go of the gas pedal
+B) Brake
+C) Do nothing
+
+Answer: B) Brake. As you are driving in a motorway area and you see two cars approaching from close left and two bicycles straight ahead at a distant, it is important to slow down and brake in order to maintain a safe distance and avoid any potential collisions. Additionally, since there are no traffic signs or traffic lights in sight, you should use caution and reduce your speed as necessary.
