@@ -217,7 +217,7 @@ def ChatGPT(df, speed, location):
     # Set up the model and prompt
     model_engine = "text-davinci-003"
     prompt = (
-        "Assume you are driving in %s. You are driving in a %s area at %d km/h. You see the following cars: %s. You see the following traffic signs: %s. You see the following traffic lights: %s. You see the following pedestrians: %s. You see the following bicyclist: %s. Additionally, you see: %s. Generate a multiple choice question with the following answer choices: 'Let go of the gas pedal', 'Brake' or 'Do nothing'. After showing the question and answers, pick your answer. Give your thorough reason behind it."
+        "Assume you are driving in %s. You are driving in a %s area at %s km/h. You see the following cars: %s. You see the following traffic signs: %s. You see the following traffic lights: %s. You see the following pedestrians: %s. You see the following bicyclist: %s. Additionally, you see: %s. Generate a multiple choice question with the following answer choices: 'Let go of the gas pedal', 'Brake' or 'Do nothing'. After showing the question and answers, pick your answer. Give your thorough reason behind it."
         % (country, location, speed, CARS, TS, TL, PERSON, BICYCLES, OTHERS)
     )
 
