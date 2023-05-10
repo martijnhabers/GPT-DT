@@ -1,0 +1,7 @@
+Assume you are driving in The Netherlands. You are driving in a a picture of a motorway area at 720 km/h. You see the following cars: ['A car distanced left', 'A car approaching from distanced left', 'A car approaching from distanced left', 'A car approaching from too close straightly infront', 'A car approaching from distanced left', 'A car approaching from too close straightly infront']. You see the following traffic signs: ['There are no traffic signs in sight']. You see the following traffic lights: ['There are no traffic lights in sight']. You see the following pedestrians: ['There are no pedestrians in sight']. You see the following bicyclist: ['There are no bicycles in sight']. Additionally, you see: ['bus', 'back', 'truck', ' ', 'truck', ' ', 'truck', ' ', 'truck', ' ', 'truck', ' ']. Generate a multiple choice question with the following answer choices: 'Let go of the gas pedal', 'Brake' or 'Do nothing'. After showing the question and answers, pick your answer. Give your thorough reason behind it.
+
+Question: What should you do when you see the cars and other vehicles listed above while driving at 720 km/h in The Netherlands?
+
+Answer: Brake. 
+
+Reason: Even though there are no traffic signs, traffic lights, pedestrians, or bicyclists in sight, it is important to stay aware of the other cars and vehicles on the road. At 720 km/h, it is easy to lose control of the car and cause an accident. Therefore, it is important to brake and reduce your speed to a safe level before attempting to pass any of the vehicles.

@@ -7,14 +7,8 @@ import openai
 
 # -----------------------------------KEYS AND LOCATIONS-------------------------------------------------
 
-img = "C:\\Users\Gebruiker\Documents\BEP\\vraag 1.jpg"
-loc_sheet = "C:\\Users\Gebruiker\Documents\BEP\dataframe_voor_depth_1.csv"#"C:\\Users\Gebruiker\Documents\BEP\dataframe_voor_ivan.csv"
-df = pd.read_csv(r'%s' %(loc_sheet), index_col = 0) #df = pd.read_excel(r'...') 
-openAI_key = "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"
-image = Image.open(img)
-
 # img = "C:\\Users\Gebruiker\Documents\BEP\\vraag x.jpg"
-# openAI_key = 0
+openAI_key = "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"
 
 # ---------        --------      ------VARIABLES------        ---------         ------------
 
