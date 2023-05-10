@@ -77,17 +77,16 @@ def dataframe_bouwen(
     # add empty view column for rear and front view
     df["view"] = ""
 
+    # find the index needed to find classes 0 (front view), and 1 (rear view)
+    index_front = tri_crop_result[0].boxes.cls.tolist().index(0)
+    index_rear = tri_crop_result[0].boxes.cls.tolist().index(1)
+
     x_min_front, y_min_front, x_max_front, y_max_front = (
-        tri_crop_result[0].boxes.xyxy[0].numpy()
+        tri_crop_result[0].boxes.xyxy[index_front].numpy()
     )
     x_min_rear, y_min_rear, x_max_rear, y_max_rear = (
-        tri_crop_result[0].boxes.xyxy[1].numpy()
+        tri_crop_result[0].boxes.xyxy[index_rear].numpy()
     )
-
-    x_min_img = 0
-    y_min_img = 0
-    y_max_img = tri_crop_result[0].orig_img.shape[0]
-    x_max_img = tri_crop_result[0].orig_img.shape[1]
 
     # adjusted (adj) x min and y min rear view mirror in reference frame of the cropped front view
     x_min_rear_adj = x_min_rear - x_min_front
@@ -102,12 +101,9 @@ def dataframe_bouwen(
             and df["x_midden"][row] > x_min_rear_adj
             and df["x_midden"][row] < x_max_rear_adj
         ):
-            df["view"] = "rear"
+            df.loc[row, "view"] = "rear"
         else:
-            df["view"] = "front"
-
-    #    df["class_naam"] = df["class"]
-    #   df["class_naam"].replace(range(int(len(texts))),texts, inplace=True)
+            df.loc[row, "view"] = "front"
 
     return df
 

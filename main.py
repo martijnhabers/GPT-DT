@@ -24,10 +24,9 @@ dir = os.getcwd()
 
 for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
-    os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "35.jpg"
+image = "15.jpg"
 # image_path = image
 
 
@@ -156,7 +155,6 @@ df = dataframe_bouwen(
 # Elke crop maken uit de tabel en foto naam aan tabel toevoegen
 for row in range(df.shape[0]):
     crop_and_save_image(row, classes_totaal, df, image_front)
-df["foto_naam"] = fotonaam
 df["foto_naam"] = fotonaam
 
 
