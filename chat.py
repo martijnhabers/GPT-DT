@@ -28,6 +28,9 @@ hp_name = "height_position"
 wp_name = "width_position"
 pos_name = "position"
 
+rear_name = "rear or front"
+rear = 'rear'
+
 
 # PROBABILITY OF BOUNDING BOXES
 P = 0.4
@@ -136,7 +139,18 @@ def ChatGPT(df, speed, location, weather):
     TS = []
     PERSON = []
     BICYCLES = []
+    REAR = []
     OTHERS = []
+    
+    for k in range(0, len(df.index)):
+        if df.loc[k, "%s" % (rear_name)] == '%s'%rear:
+            if df.loc[k, "%s" % (state_name)] == 'front':
+                REAR.append("A %s %s "%(class_name, pos_name))
+            
+            df = df.drop(k)
+
+    df = df.reset_index(drop=True)
+
 
     for a in range(0, len(df.index)):
         if df.loc[a, "%s" % (class_name)] == "car":
@@ -215,11 +229,12 @@ def ChatGPT(df, speed, location, weather):
     # Set up the model and prompt
     model_engine = "text-davinci-003"
 
-    prompt1 = "Assume you are driving in %s. You are driving in a %s area at %d km/h. The weather conditions is %s " % (country, location, speed, weather)
-    prompt2 = "You see the following cars: %s. You see the following traffic signs: %s. You see the following traffic lights: %s. You see the following pedestrians: %s. You see the following bicyclist: %s. Additionally, you see: %s. " %(CARS, TS, TL, PERSON, BICYCLES, OTHERS)
-    prompt3 = "Given the described situation above, what would you do: 'Let go of the gas pedal', 'Brake' or 'Do nothing'. "
-    prompt4 = "Describe the situation in your own words, show the three options I gave you and pick your answer. Give your thorough reason behind it."
-    prompt = prompt1 +''+ prompt2 +''+ prompt3 +''+ prompt4
+    prompt1 =  "Assume you are driving in %s. You are driving in a %s area at %d km/h. The weather condition is %s " % (country, location, speed, weather)  #TODO: ee  
+    prompt2 = f"This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}. "
+    prompt3 = f"This is your rear view: You see the following  cars: {', '.join(REAR)}"
+    prompt4 = f"Given the described situation above, what would you do: 'Let go of the gas pedal', 'Brake' or 'Do nothing'. "
+    prompt5 = f"Describe the situation in your own words, show the three options I gave you and pick your answer. Give your thorough reason behind it."
+    prompt = prompt1 +''+ prompt2 +''+ prompt3 +''+ prompt4 + prompt5
     print(prompt)
     # Generate a response ChatGPT
     completion = openai.Completion.create(
