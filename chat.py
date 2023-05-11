@@ -31,6 +31,7 @@ pos_name = "position"
 
 rear_name = "view"
 
+xrange = 20
 
 
 
@@ -148,12 +149,17 @@ def ChatGPT(df, speed, location, weather):
     REAR = []
     OTHERS = []
     
+    B = []
+    P = []
+    XB = []
+    XP = []
+    
     for k in range(0, len(df.index)):
         
         if isinstance(df.loc[k,'%s'%state_name], str) is False: #TODO
             df.loc[k,'%s'%state_name] = ''
             
-            
+                
         if df.loc[k, "%s" % (rear_name)] == 'rear':
             if df.loc[k, "%s" % (state_name)] == 'front':
                 REAR.append('A %s %s'%(df.loc[k, '%s'%class_name], df.loc[k,'%s'%pos_name]))
@@ -162,6 +168,47 @@ def ChatGPT(df, speed, location, weather):
     
     df = df.reset_index(drop=True)
     
+    for c in range(0, len(df.index)):
+        if df.loc[c,"%s"%class_name] == 'bicycle':
+            B.append(df.loc[c,'%s'%xmid_name])
+            #B.append(df.loc[c,'%s'%xmid_name])
+            
+        elif df.loc[c,"%s"%class_name] == 'person':
+            P.append(df.loc[c,'%s'%xmid_name])
+            
+        
+    bb = len(B)
+    print("bbbbbb %d"%bb)
+    pp = len(P)
+    print("pppppp %d"%pp)
+    for b in range(0, bb):
+        for p in range(0, pp):
+            dx = abs(B[b] - P[p])
+            if dx <= xrange:
+                XB.append(B[b])
+                XP.append(P[p])
+               
+            
+                
+    print(XB)
+    print(XP)
+    
+    for a in range(0,len(df.index)):
+        if df.loc[a,'class_naam'] == 'bicycle':
+            for b in range(0,len(XB)):
+                if int(df.loc[a,'x_midden']) == int(XB[b]):
+                    df.loc[a,'class_naam'] = 'bicyclist'
+        if df.loc[a,'class_naam'] == 'person':
+            for p in range(0,len(XP)):
+                if int(df.loc[a,'x_midden']) == int(XP[p]):
+                    df.loc[a,'class_naam'] = 'drop'
+                    
+    for a in range(0, len(df.index)):
+        if df.loc[a,'class_naam'] == 'drop':
+            df = df.drop(a)
+    df = df.reset_index(drop=True)
+        
+         
     
     for a in range(0, len(df.index)):
         if df.loc[a, "%s" % (class_name)] == "car":
@@ -191,18 +238,18 @@ def ChatGPT(df, speed, location, weather):
             PERSON.append(df.loc[a, "%s" % (class_name)])
             PERSON.append(df.loc[a, "%s" % (state_name)])
 
-        elif df.loc[a, "%s" % (class_name)] == "bicycle":
+        elif df.loc[a, "%s" % (class_name)] == "bicyclist":
             if df.loc[a, "%s" % (state_name)] == "front":
                 BICYCLES.append(
-                    "A bicycle approaching from %s" % (df.loc[a, "%s" % (pos_name)])
+                    "A bicyclist approaching from %s" % (df.loc[a, "%s" % (pos_name)])
                 )
 
             elif df.loc[a, "%s" % (state_name)] == "rear":
-                BICYCLES.append("A bicycle %s" % (df.loc[a, "%s" % (pos_name)]))
+                BICYCLES.append("A bicyclist %s" % (df.loc[a, "%s" % (pos_name)]))
 
             else:
                 BICYCLES.append(
-                    "A bicycle %s" % (df.loc[a, "%s" % (pos_name)])
+                    "A bicyclist %s" % (df.loc[a, "%s" % (pos_name)])
                 )  # SIDE OF THE BICYCLE
 
         else:
