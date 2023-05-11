@@ -9,13 +9,11 @@ from chat import *
 
 import shutil
 import os
- 
- 
-    #TODO: Breaking state toevoegen?
-    #TODO: matrix borden detectie/ uitlezen toevoegen
-    #TODO: weg deel toevoegen --> waar de weg is/ hoe die loopt
-    
 
+
+# TODO: Breaking state toevoegen?
+# TODO: matrix borden detectie/ uitlezen toevoegen
+# TODO: weg deel toevoegen --> waar de weg is/ hoe die loopt
 
 
 # Remove leftover images from previous run of code.
@@ -29,8 +27,8 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "vraag 57.jpg"
-
+image = "vraag 19.jpg"
+# image_path = image
 
 
 text_weighted = [
@@ -139,18 +137,21 @@ for row in range(df.shape[0]):
     crop_and_save_image(row, df, image_front)
 df["foto_naam"] = fotonaam
 
- 
+
 # bepaald de state een verkeersbord of verkeerslicht
 
 for row in range(df.shape[0]):
     if str(df.iloc[row]["class_naam"]) == "traffic sign":
         Traffic_sign(row, df)
-        
-    elif str(df.iloc[row]["class_naam"]) == "traffic light":       
+
+    elif str(df.iloc[row]["class_naam"]) == "traffic light":
         Traffic_light(row, df)
-        
-    elif str(df.iloc[row]["state"]) == "back" and str(df.iloc[row]['class_naam']) == 'car':
-        Braking(row,df)
+
+    elif (
+        str(df.iloc[row]["state"]) == "back"
+        and str(df.iloc[row]["class_naam"]) == "car"
+    ):
+        Braking(row, df)
 
 df = position(df, image)
 
@@ -164,4 +165,4 @@ text_file.write(prompt)
 text_file.write("")
 text_file.write(response)
 text_file.close()
-#df.to_csv("C:/Users/Mees/Desktop/dataframe_voor_depth.csv")
+# df.to_csv("C:/Users/Mees/Desktop/dataframe_voor_depth.csv")
