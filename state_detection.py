@@ -165,8 +165,8 @@ def Traffic_light(row, df):
     image_lights = (
         preprocess(Image.open(df.iloc[row]["foto_naam"])).unsqueeze(0).to(device)
     )
-    opties = ["Red trafficlight", "Green trafficlight", "Yellow trafficlight"]
-    opties_antwoord = ["Red", "Green", "Yellow"]
+    opties = ["A red trafficlight", "a yellow trafficlight", "A green trafficlight"]
+    opties_antwoord = ["Red", "Yellow", "Green"]
     text = clip.tokenize(opties).to(device)
 
     with torch.no_grad():

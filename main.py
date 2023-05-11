@@ -10,7 +10,7 @@ from chat import *
 import shutil
 import os
  
-
+ 
     #TODO: onderscheid maken tussen voor en achterspiegel
     #TODO: Breaking state toevoegen?
     #TODO: matrix borden detectie/ uitlezen toevoegen
@@ -34,9 +34,8 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "vraag 3.jpg"
+image = "vraag 57.jpg"
 #image_path = image
-
 
 
 text_weighted = [
@@ -57,7 +56,7 @@ text_weighted = [
     #    ['a photo of a overhead traffic sign', 0.3],
     ["a photo of a digital traffic sign", 0.3],
     #    ['a photo of a overhead traffic sign', 0.3],
-    ["a photo of a digital traffic sign", 0.3],
+    ["a photo of a digital traffic sign", 0.4],
 ]
 
 weather_list = [
@@ -168,7 +167,7 @@ df["foto_naam"] = fotonaam
 
 
 # bepaald de state een verkeersbord of verkeerslicht
-# bepaald de state een verkeersbord of verkeerslicht
+
 
 for row in range(df.shape[0]):
     if str(df.iloc[row]["class_naam"]) == "traffic sign":

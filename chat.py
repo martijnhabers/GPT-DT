@@ -31,7 +31,7 @@ pos_name = "position"
 
 
 # PROBABILITY OF BOUNDING BOXES
-P = 0.4
+P = 0.0
 
 # ------------------------------------SEGMENTING TABLES------------------------------------------
 

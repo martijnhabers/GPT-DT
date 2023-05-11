@@ -1,11 +1,7 @@
-Assume you are driving in The Netherlands. You are driving in a a picture of a motorway area at 80 km/h. You see the following cars: ['A car distanced left', 'A car distanced left', 'A car approaching from too close straightly infront']. You see the following traffic signs: ['There are no traffic signs in sight']. You see the following traffic lights: ['There are no traffic lights in sight']. You see the following pedestrians: ['There are no pedestrians in sight']. You see the following bicyclist: ['There are no bicycles in sight']. Additionally, you see: ['truck', ' ', 'truck', ' ']. Generate a multiple choice question with the following answer choices: 'Let go of the gas pedal', 'Brake' or 'Do nothing'. After showing the question and answers, pick your answer. Give your thorough reason behind it.
+Assume you are driving in The Netherlands. You are driving in a a picture of a motorway area at unknown km/h. You see the following cars: ['A car distanced left', 'A car approaching from adjacent to the left', 'A car approaching from close left', 'A car too close straightly infront']. You see the following traffic signs: ['There are no traffic signs in sight']. You see the following traffic lights: ['There are no traffic lights in sight']. You see the following pedestrians: ['There are no pedestrians in sight']. You see the following bicyclist: ['There are no bicycles in sight']. Additionally, you see: ['truck', ' ']. Generate a multiple choice question with the following answer choices: 'Let go of the gas pedal', 'Brake' or 'Do nothing'. After showing the question and answers, pick your answer. Give your thorough reason behind it.
 
-Question: Given the situation, what should you do?
+Question: What should you do when you see a truck too close straightly in front of you while driving on a motorway in The Netherlands?
 
-A. Let go of the gas pedal
-B. Brake
-C. Do nothing
+Answer: Brake.
 
-Answer: B. Brake.
-
-Reason: With two cars distanced left and one car approaching from too close straightly in front, it is important to be cautious and reduce your speed. Braking is the best option in this situation as it will help maintain a safe distance between you and the other cars and ensure that you don't have an accident. Additionally, since there are no traffic signs, traffic lights, pedestrians, or bicyclists in sight, there is no need to take any other action.
+Reason: It is important to always drive defensively and be aware of your surroundings while driving on a motorway. If you see a truck too close straightly in front of you, it is important to brake to maintain a safe distance and avoid a potential collision. Additionally, it is important to be aware of other cars, traffic signs, traffic lights and pedestrians that may be in the vicinity.
