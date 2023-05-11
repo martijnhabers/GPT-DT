@@ -21,7 +21,7 @@ def crop_img(img, scale=1.0):
 
 def easyocr_detect(image, showImg=False):
     if not os.path.isfile(image):
-        raise Exception("Input image path is not a file!")
+        return ('unknown')
 
     img = cv2.imread(image, cv2.IMREAD_GRAYSCALE)
     img = crop_img(img, 0.85)

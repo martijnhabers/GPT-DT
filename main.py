@@ -10,10 +10,11 @@ from chat import *
 import shutil
 import os
 
-df1 = None
-df2 = None
-df = None
-# fotonaam = None
+
+# TODO: Breaking state toevoegen?
+# TODO: matrix borden detectie/ uitlezen toevoegen
+# TODO: weg deel toevoegen --> waar de weg is/ hoe die loopt
+
 
 # Remove leftover images from previous run of code.
 if os.path.exists("tri-crop"):
@@ -45,10 +46,8 @@ text_weighted = [
     ["a photo of a traffic sign", 0.35],
     ["a photo of a ball", 0.4],
     ["a photo of a tractor", 0.4],
-    #    ['a photo of a overhead traffic sign', 0.3],
     ["a photo of a digital traffic sign", 0.3],
-    #    ['a photo of a overhead traffic sign', 0.3],
-    ["a photo of a digital traffic sign", 0.3],
+    ["a photo of a digital traffic sign", 0.4],
 ]
 
 weather_list = [
@@ -89,29 +88,9 @@ classes_orientation = [
     "bicycle_side",
     "bicycle_front",
 ]
-classes_orientation = [
-    "car_back",
-    "car_side",
-    "car_front",
-    "bus_back",
-    "bus_side",
-    "bus_front",
-    "truck_back",
-    "truck_side",
-    "truck_front",
-    "motorcycle_back",
-    "motorcycle_side",
-    "motorcycle_front",
-    "bicycle_back",
-    "bicycle_side",
-    "bicycle_front",
-]
 
 classes_owl = [x[0][13:] for x in text_weighted]
 
-classes_totaal = classes_orientation
-
-classes_totaal.extend(([x[0] for x in text_weighted]))
 
 # splits image into 3 parts, outside-view, rear-view, and speed
 # saves to tri-crop/predict/crops/outside-view
@@ -121,6 +100,7 @@ tri_crop_results = yolo_tri_crop("images/" + image)
 
 # detects number with OCR in file, specified by its path
 car_speed = easyocr_detect(os.path.join(dir, "tri-crop/predict/crops/speed/" + image))
+
 
 # does a zero shot object detection on an image and returns boxes, labels, and scores
 owl_boxes, owl_labels, owl_scores = owlvit_object_detect(
@@ -138,7 +118,7 @@ weather, location = CLIP_state_detect(
 # detecteerd de voertuigen
 image_front = "tri-crop/predict/crops/outside-view/" + image
 
-x = vehicle_detection(image_front)
+vehicles_detected = vehicle_detection(image_front)
 
 # maakt het dataframe
 df = dataframe_bouwen(
@@ -146,18 +126,18 @@ df = dataframe_bouwen(
     owl_boxes,
     owl_scores,
     classes_owl,
-    x,
+    vehicles_detected,
     classes_orientation,
     tri_crop_results,
+    image,
 )
 
 # Elke crop maken uit de tabel en foto naam aan tabel toevoegen
 for row in range(df.shape[0]):
-    crop_and_save_image(row, classes_totaal, df, image_front)
+    crop_and_save_image(row, df, image_front)
 df["foto_naam"] = fotonaam
 
 
-# bepaald de state een verkeersbord of verkeerslicht
 # bepaald de state een verkeersbord of verkeerslicht
 
 for row in range(df.shape[0]):
@@ -167,10 +147,15 @@ for row in range(df.shape[0]):
     elif str(df.iloc[row]["class_naam"]) == "traffic light":
         Traffic_light(row, df)
 
+    elif (
+        str(df.iloc[row]["state"]) == "back"
+        and str(df.iloc[row]["class_naam"]) == "car"
+    ):
+        Braking(row, df)
 
 df = position(df, image)
 
-prompt, response = ChatGPT(df, car_speed, location)
+prompt, response = ChatGPT(df, car_speed, location, weather)
 
 print(prompt)
 print(response)
@@ -180,3 +165,4 @@ text_file.write(prompt)
 text_file.write("")
 text_file.write(response)
 text_file.close()
+# df.to_csv("C:/Users/Mees/Desktop/dataframe_voor_depth.csv")
