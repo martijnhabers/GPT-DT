@@ -26,7 +26,7 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "15.jpg"
+image = "vraag 19.jpg"
 # image_path = image
 
 
@@ -107,7 +107,6 @@ classes_orientation = [
     "bicycle_front",
 ]
 
-classes_owl = [x[0][13:] for x in text_weighted]
 classes_owl = [x[0][13:] for x in text_weighted]
 
 classes_totaal = classes_orientation
