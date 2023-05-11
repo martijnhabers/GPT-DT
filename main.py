@@ -7,11 +7,12 @@ from breaking_state_function import *
 from vehicle_detection import *
 from chat import *
 from create_depth_map import *
+from depth_estimation import *
 
 
 import shutil
 import os
- 
+
  
     #TODO: Breaking state toevoegen?
     #TODO: matrix borden detectie/ uitlezen toevoegen
@@ -31,7 +32,7 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "vraag 57.jpg"
+image = "vraag 19.jpg"
 
 
 
@@ -154,12 +155,18 @@ for row in range(df.shape[0]):
     elif str(df.iloc[row]["state"]) == "back" and str(df.iloc[row]['class_naam']) == 'car':
         Braking(row,df)
 
-if os.path.exists("/Depth_map_images/" + image):
-    depth_estimation(image)
+    # change extention from jpg to png for depth estimation
+filename, extension = os.path.splitext(image)
+image_depth = filename + ".png"
+
+    
+if os.path.exists("/Depth_map_images/" + image_depth):
+    df = depth_estimation(df, image_depth)
     
 else:
-    create_depth_map(image)
-    depth_estimation(image)
+    image_depth = create_depth_map(image)
+    
+    df = depth_estimation(df, image_depth)
 
 
 
@@ -175,4 +182,4 @@ text_file.write(prompt)
 text_file.write("")
 text_file.write(response)
 text_file.close()
-#df.to_csv("C:/Users/Mees/Desktop/dataframe_voor_depth.csv")
+# df.to_csv("C:/Users/Mees/Desktop/vraag 5.csv")
