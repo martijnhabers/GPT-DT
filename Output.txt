@@ -1,7 +1,11 @@
-Assume you are driving in The Netherlands. You are driving in a a picture of a motorway area at unknown km/h. You see the following cars: ['A car distanced left', 'A car approaching from adjacent to the left', 'A car approaching from close left', 'A car too close straightly infront']. You see the following traffic signs: ['There are no traffic signs in sight']. You see the following traffic lights: ['There are no traffic lights in sight']. You see the following pedestrians: ['There are no pedestrians in sight']. You see the following bicyclist: ['There are no bicycles in sight']. Additionally, you see: ['truck', ' ']. Generate a multiple choice question with the following answer choices: 'Let go of the gas pedal', 'Brake' or 'Do nothing'. After showing the question and answers, pick your answer. Give your thorough reason behind it.
+Assume you are driving in The Netherlands. You are driving in a a picture of a residential area area at 25 km/h. You see the following cars: ['There are no cars in sight']. You see the following traffic signs: ['There are no traffic signs in sight']. You see the following traffic lights: ['There are no traffic lights in sight']. You see the following pedestrians: ['person', '', 'person', '', 'person', '']. You see the following bicyclist: ['A bicycle adjacently straight infront', 'A bicycle close left', 'A bicycle adjacently straight infront', 'A bicycle close right']. Additionally, you see: ['there are no more objects than the ones mentioned above']. Generate a multiple choice question with the following answer choices: 'Let go of the gas pedal', 'Brake' or 'Do nothing'. After showing the question and answers, pick your answer. Give your thorough reason behind it.
 
-Question: What should you do when you see a truck too close straightly in front of you while driving on a motorway in The Netherlands?
+Question: What should you do when you see bicycles close to your car on either side while driving in The Netherlands at 25 km/h?
 
-Answer: Brake.
+A. Let go of the gas pedal
+B. Brake
+C. Do nothing
 
-Reason: It is important to always drive defensively and be aware of your surroundings while driving on a motorway. If you see a truck too close straightly in front of you, it is important to brake to maintain a safe distance and avoid a potential collision. Additionally, it is important to be aware of other cars, traffic signs, traffic lights and pedestrians that may be in the vicinity.
+Answer: B. Brake.
+
+Reason: In The Netherlands, bicyclists have the right of way and you must be extra cautious when driving near them. Driving 25 km/h in a residential area is already a low speed, so it is important to brake when you see bicyclists close to your car on either side. This will ensure that you maintain a safe distance and give the bicyclists enough time to react if necessary.

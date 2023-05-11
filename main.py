@@ -11,16 +11,15 @@ import shutil
 import os
  
  
-    #TODO: onderscheid maken tussen voor en achterspiegel
     #TODO: Breaking state toevoegen?
     #TODO: matrix borden detectie/ uitlezen toevoegen
     #TODO: weg deel toevoegen --> waar de weg is/ hoe die loopt
     
+    
 
-
-df1 = None
-df2 = None
-df = None
+# df1 = None
+# df2 = None
+# df = None
 # fotonaam = None
 
 # Remove leftover images from previous run of code.
@@ -34,7 +33,7 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "vraag 57.jpg"
+image = "00.jpg"
 #image_path = image
 
 
@@ -97,25 +96,7 @@ classes_orientation = [
     "bicycle_side",
     "bicycle_front",
 ]
-classes_orientation = [
-    "car_back",
-    "car_side",
-    "car_front",
-    "bus_back",
-    "bus_side",
-    "bus_front",
-    "truck_back",
-    "truck_side",
-    "truck_front",
-    "motorcycle_back",
-    "motorcycle_side",
-    "motorcycle_front",
-    "bicycle_back",
-    "bicycle_side",
-    "bicycle_front",
-]
 
-classes_owl = [x[0][13:] for x in text_weighted]
 classes_owl = [x[0][13:] for x in text_weighted]
 
 classes_totaal = classes_orientation
@@ -150,7 +131,7 @@ image_front = "tri-crop/predict/crops/outside-view/" + image
 x = vehicle_detection(image_front)
 
 # maakt het dataframe
-df = dataframe_bouwen(
+df, df1, df2= dataframe_bouwen(
     owl_labels,
     owl_boxes,
     owl_scores,
@@ -165,7 +146,7 @@ for row in range(df.shape[0]):
     crop_and_save_image(row, classes_totaal, df, image_front)
 df["foto_naam"] = fotonaam
 
-
+ 
 # bepaald de state een verkeersbord of verkeerslicht
 
 
@@ -173,7 +154,7 @@ for row in range(df.shape[0]):
     if str(df.iloc[row]["class_naam"]) == "traffic sign":
         Traffic_sign(row, df)
         
-    elif str(df.iloc[row]["state"]) == "back":
+    elif str(df.iloc[row]["state"]) == "back" and str(df.iloc[row]['class_naam']) == 'car':
         Braking(row,df)
         
     elif str(df.iloc[row]["class_naam"]) == "traffic light":       

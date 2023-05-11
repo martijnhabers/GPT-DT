@@ -55,8 +55,8 @@ def dataframe_bouwen(
     )
     df1[["class_naam", "state"]] = df1["class_naam"].str.split("_", n=1, expand=True)
     for row in range(df1.shape[0]):
-        if df1["predictions"][row] < 0.9 and df1["class_naam"][row] != "car":
-            df1["state"][row] = " "
+        if df1["predictions"][row] < 0.9 and df1["class_naam"][row] not in ["car", "bicycle"]:
+            df1.at[row,"state"] = " "
     column_df2 = ["xmin", "ymin", "xmax", "ymax"]
     df2 = pd.DataFrame(boxes, columns=column_df2)
     df2["predictions"] = scores
@@ -107,7 +107,7 @@ def dataframe_bouwen(
         else:
             df.loc[row, "view"] = "front"
 
-    return df
+    return (df, df1, df2)
 
 
 def crop_and_save_image(row, classes_totaal, df, image_front):
