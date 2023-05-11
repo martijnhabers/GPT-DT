@@ -5,3 +5,4 @@ images/*
 Crops/*
 Yolov5_orientation.pt
 Output.txt
+model_remv1.keras

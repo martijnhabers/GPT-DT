@@ -26,7 +26,7 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "15.jpg"
+image = "00.jpg"
 # image_path = image
 
 
@@ -123,6 +123,7 @@ tri_crop_results = yolo_tri_crop("images/" + image)
 # detects number with OCR in file, specified by its path
 car_speed = easyocr_detect(os.path.join(dir, "tri-crop/predict/crops/speed/" + image))
 
+
 # does a zero shot object detection on an image and returns boxes, labels, and scores
 owl_boxes, owl_labels, owl_scores = owlvit_object_detect(
     text_weighted,
@@ -171,7 +172,7 @@ for row in range(df.shape[0]):
 
 df = position(df, image)
 
-prompt, response = ChatGPT(df, car_speed, location)
+prompt, response = ChatGPT(df, car_speed, location, weather)
 
 print(prompt)
 print(response)

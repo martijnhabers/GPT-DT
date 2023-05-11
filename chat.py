@@ -33,16 +33,16 @@ rear_name = "view"
 
 
 
+
 # PROBABILITY OF BOUNDING BOXES
-P = 0.4
+P = 0.0
 
 # ------------------------------------SEGMENTING TABLES------------------------------------------
 
 # print(df)
 
 def position(df, image_path):
-    #image = Image.open(os.path.join(os.getcwd(), "images/" + image_path))
-    image = image_path
+    img = Image.open(os.path.join(os.getcwd(), "images/" + image_path))
     for k in range(0, len(df.index)):
         if df.loc[k, "%s" % (pred_name)] < P:
             df = df.drop(k)
@@ -51,8 +51,8 @@ def position(df, image_path):
 
     # ---------        --------      ---------POSITION----------        ---------         ------------
     # TODO: Make this call a function so that different position methods can be used
-
-    w, h = image.size
+#    Image.open(img)
+    w, h = img.size
     # print(w)
 
     # VERTICAL SECTIONS
@@ -73,8 +73,8 @@ def position(df, image_path):
 
     # GETTING THE IMAGE UPRIGHT
     plt.axis([0, w, 0, h])
-    image = np.flipud(image)
-    plt.imshow(image)
+    img1 = np.flipud(img)
+    plt.imshow(img1)
     plt.show()
 
     # ---------        --------      --------POSITIONING---------        ---------         ------------
@@ -148,17 +148,13 @@ def ChatGPT(df, speed, location, weather):
     REAR = []
     OTHERS = []
     
-    
-   
-  
-    
     for k in range(0, len(df.index)):
         
         if isinstance(df.loc[k,'%s'%state_name], str) is False: #TODO
             df.loc[k,'%s'%state_name] = ''
             
             
-        if df.loc[k, "%s" % (rear_name)] == '%s'%rear:
+        if df.loc[k, "%s" % (rear_name)] == 'rear':
             if df.loc[k, "%s" % (state_name)] == 'front':
                 REAR.append('A %s %s'%(df.loc[k, '%s'%class_name], df.loc[k,'%s'%pos_name]))
             
@@ -183,18 +179,15 @@ def ChatGPT(df, speed, location, weather):
                 )  # SIDE OF THE CAR
 
         elif df.loc[a, "%s" % (class_name)] == "traffic light":
-            # CARS.append(df.loc[a,'0'])
             TL.append(
                 "A %s %s"
                 % (df.loc[a, "%s" % (state_name)], df.loc[a, "%s" % (class_name)])
             )
 
         elif df.loc[a, "%s" % (class_name)] == "traffic sign":
-            # CARS.append(df.loc[a,'0'])
             TS.append('A "%s" traffic sign' % (df.loc[a, "%s" % (state_name)]))
 
         elif df.loc[a, "%s" % (class_name)] == "person":
-            # CARS.append(df.loc[a,'0'])
             PERSON.append(df.loc[a, "%s" % (class_name)])
             PERSON.append(df.loc[a, "%s" % (state_name)])
 
@@ -210,10 +203,9 @@ def ChatGPT(df, speed, location, weather):
             else:
                 BICYCLES.append(
                     "A bicycle %s" % (df.loc[a, "%s" % (pos_name)])
-                )  # SIDE OF THE CAR
+                )  # SIDE OF THE BICYCLE
 
         else:
-            # CARS.append(df.loc[a,'0'])
             OTHERS.append(df.loc[a, "%s" % (class_name)])
             OTHERS.append(df.loc[a, "%s" % (state_name)])
 
@@ -235,6 +227,10 @@ def ChatGPT(df, speed, location, weather):
 
     if bool(OTHERS) == False:
         OTHERS.append("there are no more objects than the ones mentioned above")
+        
+    if bool(REAR) == False:
+        REAR.append("There are no significant objects behind you")
+
 
     # --------------------------------------ChatGPT-------------------------------------------------
 
@@ -243,10 +239,16 @@ def ChatGPT(df, speed, location, weather):
 
     # Set up the model and prompt
     model_engine = "text-davinci-003"
-
-    prompt1 =  "Assume you are driving in %s. You are driving in a %s area at %d km/h. The weather condition is %s " % (country, location, speed, weather)
+    
+    #WEATHER String split for chat gpt
+    weather = weather[13:]
+    
+    #LOCATION String split for chat gpt
+    location = location[13:]
+    
+    prompt1 =  "Assume you are driving in %s. You are driving in %s at %s km/h. The weather condition is %s. " % (country, location, speed, weather)
     prompt2 = f"This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}. "
-    prompt3 = f"This is your rear view: You see the following  cars: {', '.join(REAR)}"
+    prompt3 = f"This is your rear view: You see the following  cars: {', '.join(REAR)}."
     prompt4 = f"Given the described situation above, what would you do: 'Let go of the gas pedal', 'Brake' or 'Do nothing'. "
     prompt5 = ''#f"Describe the situation in your own words."
     prompt6 = f"Show the three options I gave you and pick your answer. Give your thorough reason behind it."
@@ -265,6 +267,3 @@ def ChatGPT(df, speed, location, weather):
     response = completion.choices[0].text
 
     return (prompt,response)
-
-df = position(df, image)
-print(ChatGPT(df, 30, 'residential', 'sunny'))  
