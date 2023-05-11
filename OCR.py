@@ -21,7 +21,7 @@ def crop_img(img, scale=1.0):
 
 def easyocr_detect(image, showImg=False):
     if not os.path.isfile(image):
-        return ('unknown')
+        return "unknown"
 
     img = cv2.imread(image, cv2.IMREAD_GRAYSCALE)
     img = crop_img(img, 0.85)
@@ -39,7 +39,7 @@ def easyocr_detect(image, showImg=False):
         plt.show()
 
     result = reader.readtext(img, allowlist="0123456789")
-    if len(result) > 0:
+    if len(result) > 0 and int(result) < 135:
         return result[0][1]
     else:
         return "unknown"
