@@ -8,7 +8,7 @@ reader = easyocr.Reader(["en"])
 
 def easyocr_detect(image, showImg=False):
     if not os.path.isfile(image):
-        raise Exception("Input image path is not a file!")
+        return ('unknown')
 
     img = cv2.imread(image, cv2.IMREAD_GRAYSCALE)
     img = cv2.GaussianBlur(img, (5, 5), 1)
