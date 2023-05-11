@@ -17,10 +17,10 @@ import os
     
     
 
-# df1 = None
-# df2 = None
-# df = None
-# fotonaam = None
+df1 = None
+df2 = None
+df = None
+fotonaam = None
 
 # Remove leftover images from previous run of code.
 if os.path.exists("tri-crop"):
@@ -131,7 +131,7 @@ image_front = "tri-crop/predict/crops/outside-view/" + image
 x = vehicle_detection(image_front)
 
 # maakt het dataframe
-df, df1, df2= dataframe_bouwen(
+df = dataframe_bouwen(
     owl_labels,
     owl_boxes,
     owl_scores,

@@ -107,7 +107,7 @@ def dataframe_bouwen(
         else:
             df.loc[row, "view"] = "front"
 
-    return (df, df1, df2)
+    return (df)
 
 
 def crop_and_save_image(row, classes_totaal, df, image_front):
