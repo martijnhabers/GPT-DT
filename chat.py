@@ -150,7 +150,7 @@ def ChatGPT(df, speed, location, weather):
     
     for k in range(0, len(df.index)):
         
-        if isinstance(df.loc[k,'%s'%state_name], str) is False: #TODO
+        if isinstance(df.loc[k,'%s'%state_name], str) is False:
             df.loc[k,'%s'%state_name] = ''
             
             

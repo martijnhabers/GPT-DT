@@ -15,12 +15,8 @@ import os
     #TODO: matrix borden detectie/ uitlezen toevoegen
     #TODO: weg deel toevoegen --> waar de weg is/ hoe die loopt
     
-    
 
-df1 = None
-df2 = None
-df = None
-fotonaam = None
+
 
 # Remove leftover images from previous run of code.
 if os.path.exists("tri-crop"):
@@ -33,8 +29,8 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "00.jpg"
-# image_path = image
+image = "vraag 57.jpg"
+
 
 
 text_weighted = [
@@ -52,9 +48,7 @@ text_weighted = [
     ["a photo of a traffic sign", 0.35],
     ["a photo of a ball", 0.4],
     ["a photo of a tractor", 0.4],
-    #    ['a photo of a overhead traffic sign', 0.3],
     ["a photo of a digital traffic sign", 0.3],
-    #    ['a photo of a overhead traffic sign', 0.3],
     ["a photo of a digital traffic sign", 0.4],
 ]
 
@@ -99,9 +93,6 @@ classes_orientation = [
 
 classes_owl = [x[0][13:] for x in text_weighted]
 
-classes_totaal = classes_orientation
-
-classes_totaal.extend(([x[0] for x in text_weighted]))
 
 # splits image into 3 parts, outside-view, rear-view, and speed
 # saves to tri-crop/predict/crops/outside-view
@@ -129,7 +120,7 @@ weather, location = CLIP_state_detect(
 # detecteerd de voertuigen
 image_front = "tri-crop/predict/crops/outside-view/" + image
 
-x = vehicle_detection(image_front)
+vehicles_detected = vehicle_detection(image_front)
 
 # maakt het dataframe
 df = dataframe_bouwen(
@@ -137,30 +128,29 @@ df = dataframe_bouwen(
     owl_boxes,
     owl_scores,
     classes_owl,
-    x,
+    vehicles_detected,
     classes_orientation,
     tri_crop_results,
+    image,
 )
 
 # Elke crop maken uit de tabel en foto naam aan tabel toevoegen
 for row in range(df.shape[0]):
-    crop_and_save_image(row, classes_totaal, df, image_front)
+    crop_and_save_image(row, df, image_front)
 df["foto_naam"] = fotonaam
 
  
 # bepaald de state een verkeersbord of verkeerslicht
 
-
 for row in range(df.shape[0]):
     if str(df.iloc[row]["class_naam"]) == "traffic sign":
         Traffic_sign(row, df)
         
-    elif str(df.iloc[row]["state"]) == "back" and str(df.iloc[row]['class_naam']) == 'car':
-        Braking(row,df)
-        
     elif str(df.iloc[row]["class_naam"]) == "traffic light":       
         Traffic_light(row, df)
-
+        
+    elif str(df.iloc[row]["state"]) == "back" and str(df.iloc[row]['class_naam']) == 'car':
+        Braking(row,df)
 
 df = position(df, image)
 
@@ -174,4 +164,4 @@ text_file.write(prompt)
 text_file.write("")
 text_file.write(response)
 text_file.close()
-df.to_csv("C:/Users/Mees/Desktop/dataframe_voor_depth.csv")
+#df.to_csv("C:/Users/Mees/Desktop/dataframe_voor_depth.csv")
