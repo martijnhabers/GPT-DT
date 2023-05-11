@@ -6,6 +6,8 @@ from state_detection import *
 from breaking_state_function import *
 from vehicle_detection import *
 from chat import *
+from create_depth_map import *
+
 
 import shutil
 import os
@@ -151,6 +153,15 @@ for row in range(df.shape[0]):
         
     elif str(df.iloc[row]["state"]) == "back" and str(df.iloc[row]['class_naam']) == 'car':
         Braking(row,df)
+
+if os.path.exists("/Depth_map_images/" + image):
+    depth_estimation(image)
+    
+else:
+    create_depth_map(image)
+    depth_estimation(image)
+
+
 
 df = position(df, image)
 
