@@ -6,6 +6,9 @@ from state_detection import *
 from breaking_state_function import *
 from vehicle_detection import *
 from chat import *
+from create_depth_map import *
+from depth_estimation import *
+
 
 import shutil
 import os
@@ -28,7 +31,7 @@ for f in os.listdir(dir + "/Crops"):
 
 # Set name of image file to analyse
 image = "vraag 19.jpg"
-# image_path = image
+
 
 
 text_weighted = [
@@ -133,8 +136,9 @@ df = dataframe_bouwen(
 )
 
 # Elke crop maken uit de tabel en foto naam aan tabel toevoegen
+fotonaam = []
 for row in range(df.shape[0]):
-    crop_and_save_image(row, df, image_front)
+    fotonaam = crop_and_save_image(row, df, image_front, fotonaam)
 df["foto_naam"] = fotonaam
 
 
@@ -152,6 +156,21 @@ for row in range(df.shape[0]):
         and str(df.iloc[row]["class_naam"]) == "car"
     ):
         Braking(row, df)
+
+    # change extention from jpg to png for depth estimation
+filename, extension = os.path.splitext(image)
+image_depth = filename + ".png"
+
+    
+if os.path.exists("/Depth_map_images/" + image_depth):
+    df = depth_estimation(df, image_depth)
+    
+else:
+    image_depth = create_depth_map(image)
+    
+    df = depth_estimation(df, image_depth)
+
+
 
 df = position(df, image)
 
