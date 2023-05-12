@@ -9,7 +9,6 @@ import torch
 import pandas as pd
 
 
-
 def vehicle_detection(image):
 
     model = torch.hub.load('yolov5', 'custom', path='Yolov5_orientation', source='local')
@@ -21,3 +20,4 @@ def vehicle_detection(image):
     x = results.xyxy[0]
 
     return(x)
+

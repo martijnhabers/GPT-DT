@@ -34,6 +34,8 @@ state_niet_motor = [0, 1, 2, 3, 4, 5, 6, 7, 8, 12, 13, 14]
 state_niet_fiets = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 IMG_HEIGHT = 30
 IMG_WIDTH = 30
+IMG_HEIGHT_REM = 120
+IMG_WIDTH_REM = 120
 channels = 3
 state = None
 ####################################
@@ -43,7 +45,7 @@ state = None
 
 
 def dataframe_bouwen(
-    labels, boxes, scores, texts, x, classes_orientation, tri_crop_result
+    labels, boxes, scores, texts, x, classes_orientation, tri_crop_result, image
 ):
     columns = ["xmin", "ymin", "xmax", "ymax", "predictions", "class"]
     df1 = pd.DataFrame(x.numpy(), columns=columns)
@@ -53,8 +55,8 @@ def dataframe_bouwen(
     )
     df1[["class_naam", "state"]] = df1["class_naam"].str.split("_", n=1, expand=True)
     for row in range(df1.shape[0]):
-        if df1["predictions"][row] < 0.9 and df1["class_naam"][row] != "car":
-            df1["state"][row] = " "
+        if df1["predictions"][row] < 0.9 and df1["class_naam"][row] not in ["car", "bicycle"]:
+            df1.at[row,"state"] = " "
     column_df2 = ["xmin", "ymin", "xmax", "ymax"]
     df2 = pd.DataFrame(boxes, columns=column_df2)
     df2["predictions"] = scores
@@ -78,41 +80,51 @@ def dataframe_bouwen(
     df["view"] = ""
 
     # find the index needed to find classes 0 (front view), and 1 (rear view)
-    index_front = tri_crop_result[0].boxes.cls.tolist().index(0)
-    index_rear = tri_crop_result[0].boxes.cls.tolist().index(1)
-
+    index_front = tri_crop_result[0].boxes.cls.tolist().index(0)    
     x_min_front, y_min_front, x_max_front, y_max_front = (
         tri_crop_result[0].boxes.xyxy[index_front].numpy()
     )
-    x_min_rear, y_min_rear, x_max_rear, y_max_rear = (
-        tri_crop_result[0].boxes.xyxy[index_rear].numpy()
-    )
+    df['x_crop_absoluut_midden'] = df['x_midden'] + x_min_front
+    df['y_crop_absoluut_midden'] = df['y_midden'] + y_min_front
 
-    # adjusted (adj) x min and y min rear view mirror in reference frame of the cropped front view
-    x_min_rear_adj = x_min_rear - x_min_front
-    y_min_rear_adj = y_min_rear - y_min_front
-    x_max_rear_adj = x_max_rear - x_min_front
-    y_max_rear_adj = y_max_rear - y_min_front
+    if os.path.exists('tri-crop/predict/crops/rear-view/' + image):
+        
+        index_rear = tri_crop_result[0].boxes.cls.tolist().index(1)
+    
+        x_min_rear, y_min_rear, x_max_rear, y_max_rear = (
+            tri_crop_result[0].boxes.xyxy[index_rear].numpy()
+        )
+    
+        # adjusted (adj) x min and y min rear view mirror in reference frame of the cropped front view
+        x_min_rear_adj = x_min_rear - x_min_front
+        y_min_rear_adj = y_min_rear - y_min_front
+        x_max_rear_adj = x_max_rear - x_min_front
+        y_max_rear_adj = y_max_rear - y_min_front
 
-    for row in range(df.shape[0]):
-        if (
-            df["y_midden"][row] > y_min_rear_adj
-            and df["y_midden"][row] < y_max_rear_adj
-            and df["x_midden"][row] > x_min_rear_adj
-            and df["x_midden"][row] < x_max_rear_adj
-        ):
-            df.loc[row, "view"] = "rear"
-        else:
-            df.loc[row, "view"] = "front"
+    
+        for row in range(df.shape[0]):
 
-    return df
+            if (
+                df["y_midden"][row] > y_min_rear_adj
+                and df["y_midden"][row] < y_max_rear_adj
+                and df["x_midden"][row] > x_min_rear_adj
+                and df["x_midden"][row] < x_max_rear_adj
+            ):
+                df.loc[row, "view"] = "rear"
+            else:
+                df.loc[row, "view"] = "front"
+    else:
+        df["view"] = "front"
+
+    return (df)
 
 
-def crop_and_save_image(row, classes_totaal, df, image_front):
+def crop_and_save_image(row, df, image_front, fotonaam):
     im2 = cv2.imread(image_front)
     height, width, channels = im2.shape
     #    x, y, w, h = (float(lines[row][1])*width),(float(lines[row][2])*height), (float(lines[row][3])*marge*width), (float(lines[row][4])*marge*height)
-    klas = str([df["class_naam"][row]])
+    klas = str([df["class_naam"][row]]).strip('[]')
+    klas = df.loc[row]["class_naam"]
     x1, y1, x2, y2 = (
         int(df["xmin"][row]),
         int(df["ymin"][row]),
@@ -133,7 +145,6 @@ def crop_and_save_image(row, classes_totaal, df, image_front):
     bestandsnaam = f"Crop_{klas}_{row}.jpg"
     fotonaam.append(map_pad + bestandsnaam)
     cv2.imwrite(map_pad + bestandsnaam, crop_img)
-    #    df["foto_naam"] = fotonaam
     return fotonaam
 
 
@@ -153,9 +164,9 @@ def Traffic_sign(row, df):
 
     pred = np.argmax(model.predict(X), axis=1)
     print(classes[int(pred)])
-    df.loc[row, "state"] = classes[int(pred)]
-
-
+    df.loc[row, "state"] = classes[int(pred)]    
+    return(df)
+    
 def Traffic_light(row, df):
     device = "cpu"
     model_lights, preprocess = clip.load("ViT-B/32", device=device)
@@ -163,8 +174,8 @@ def Traffic_light(row, df):
     image_lights = (
         preprocess(Image.open(df.iloc[row]["foto_naam"])).unsqueeze(0).to(device)
     )
-    opties = ["Red trafficlight", "Green trafficlight", "Yellow trafficlight"]
-    opties_antwoord = ["Red", "Green", "Yellow"]
+    opties = ["A red trafficlight", "a yellow trafficlight", "A green trafficlight"]
+    opties_antwoord = ["Red", "Yellow", "Green"]
     text = clip.tokenize(opties).to(device)
 
     with torch.no_grad():
@@ -178,54 +189,77 @@ def Traffic_light(row, df):
         df.loc[row, "state"] = prediction_lights
 
 
-classes = {
-    0: "Speed limit (20km/h)",
-    1: "Speed limit (30km/h)",
-    2: "Speed limit (50km/h)",
-    3: "Speed limit (60km/h)",
-    4: "Speed limit (70km/h)",
-    5: "Speed limit (80km/h)",
-    6: "End of speed limit (80km/h)",
-    7: "Speed limit (100km/h)",
-    8: "Speed limit (120km/h)",
-    9: "No passing",
-    10: "No passing veh over 3.5 tons",
-    11: "Right-of-way at intersection",
-    12: "Priority road",
-    13: "Yield",
-    14: "Stop",
-    15: "No vehicles",
-    16: "Veh > 3.5 tons prohibited",
-    17: "No entry",
-    18: "General caution",
-    19: "Dangerous curve left",
-    20: "Dangerous curve right",
-    21: "Double curve",
-    22: "Bumpy road",
-    23: "Slippery road",
-    24: "Road narrows on the right",
-    25: "Road work",
-    26: "Traffic signals",
-    27: "Pedestrians",
-    28: "Children crossing",
-    29: "Bicycles crossing",
-    30: "Beware of ice/snow",
-    31: "Wild animals crossing",
-    32: "End speed + passing limits",
-    33: "Turn right ahead",
-    34: "Turn left ahead",
-    35: "Ahead only",
-    36: "Go straight or right",
-    37: "Go straight or left",
-    38: "Keep right",
-    39: "Keep left",
-    40: "Roundabout mandatory",
-    41: "End of no passing",
-    42: "End no passing veh > 3.5 tons",
-    43: "Back of traffic sign",
-    44: "Bicycle lane",
-    45: "Pedestrian crossing",
-}
+def Braking(row, df):
+    brake_crop = df.iloc[row]["foto_naam"]        
+    model = keras.models.load_model('model_remv1.keras')
+    
+    data =[]
+    
+    image = cv2.imread(brake_crop)
+    image_fromarray = Image.fromarray(image, 'RGB')
+    resize_image = image_fromarray.resize((IMG_HEIGHT_REM, IMG_WIDTH_REM))
+    data.append(np.array(resize_image))
+    
+    X = np.array(data)
+    X = X/255
+    
+    pred = np.argmax(model.predict(X), axis=1)
+    print(classes_rem[int(pred)])
+    df.loc[row, "state"] = df.loc[row, "state"] + ' ' + classes_rem[int(pred)]    
+    return (df)
+
+
+classes_rem = { 0: 'not braking',
+            1:'braking',
+    }
+
+
+classes = { 0:'Speed limit (20km/h)',
+            1:'Speed limit (30km/h)', 
+            2:'Speed limit (50km/h)', 
+            3:'Speed limit (60km/h)', 
+            4:'Speed limit (70km/h)', 
+            5:'Speed limit (80km/h)', 
+            6:'End of speed limit (80km/h)', 
+            7:'Speed limit (100km/h)', 
+            8:'Speed limit (120km/h)', 
+            9:'No passing', 
+            10:'No passing veh over 3.5 tons', 
+            11:'Right-of-way at intersection', 
+            12:'Priority road', 
+            13:'Yield', 
+            14:'Stop', 
+            15:'No vehicles', 
+            16:'Veh > 3.5 tons prohibited', 
+            17:'No entry', 
+            18:'General caution', 
+            19:'Dangerous curve left', 
+            20:'Dangerous curve right', 
+            21:'Double curve', 
+            22:'Bumpy road', 
+            23:'Slippery road', 
+            24:'Road narrows on the right', 
+            25:'Road work', 
+            26:'Traffic signals', 
+            27:'Pedestrians', 
+            28:'Children crossing', 
+            29:'Bicycles crossing', 
+            30:'Beware of ice/snow',
+            31:'Wild animals crossing', 
+            32:'End speed + passing limits', 
+            33:'Turn right ahead', 
+            34:'Turn left ahead', 
+            35:'Ahead only', 
+            36:'Go straight or right', 
+            37:'Go straight or left', 
+            38:'Keep right', 
+            39:'Keep left', 
+            40:'Roundabout mandatory', 
+            41:'End of no passing', 
+            42:'End no passing veh > 3.5 tons',
+            43:'Back of traffic sign',
+            44:'Bicycle lane',
+            45:'Pedestrian crossing'}
 
 
 # verkeersborden en lichten identificeren
