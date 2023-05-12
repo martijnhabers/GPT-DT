@@ -83,13 +83,16 @@ def dataframe_bouwen(
     df["view"] = ""
 
     # find the index needed to find classes 0 (front view), and 1 (rear view)
+    index_front = tri_crop_result[0].boxes.cls.tolist().index(0)
+    x_min_front, y_min_front, x_max_front, y_max_front = (
+        tri_crop_result[0].boxes.xyxy[index_front].numpy()
+    )
+    df["x_crop_absoluut_midden"] = df["x_midden"] + x_min_front
+    df["y_crop_absoluut_midden"] = df["y_midden"] + y_min_front
+
     if os.path.exists("tri-crop/predict/crops/rear-view/" + image):
-        index_front = tri_crop_result[0].boxes.cls.tolist().index(0)
         index_rear = tri_crop_result[0].boxes.cls.tolist().index(1)
 
-        x_min_front, y_min_front, x_max_front, y_max_front = (
-            tri_crop_result[0].boxes.xyxy[index_front].numpy()
-        )
         x_min_rear, y_min_rear, x_max_rear, y_max_rear = (
             tri_crop_result[0].boxes.xyxy[index_rear].numpy()
         )

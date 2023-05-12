@@ -15,23 +15,6 @@ openAI_key = "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"
 # COLUMN NAMES THAT MAY VARY
 country = "The Netherlands"
 
-# TABLE WITH COLUMN NAMES
-classnum_name = "class"
-xmid_name = "x_midden"
-ymid_name = "y_midden"
-b_name = "breedte"
-h_name = "hoogte"
-pred_name = "predictions"
-class_name = "class_naam"
-state_name = "state"
-foto_name = "foto_naam"
-hp_name = "height_position"
-wp_name = "width_position"
-pos_name = "position"
-
-rear_name = "view"
-
-
 # PROBABILITY OF BOUNDING BOXES
 P = 0.0
 
@@ -43,7 +26,7 @@ P = 0.0
 def position(df, image_path):
     img = Image.open(os.path.join(os.getcwd(), "images/" + image_path))
     for k in range(0, len(df.index)):
-        if df.loc[k, "%s" % (pred_name)] < P:
+        if df.loc[k, "predictions"] < P:
             df = df.drop(k)
 
     df = df.reset_index(drop=True)
@@ -78,15 +61,15 @@ def position(df, image_path):
 
     # ---------        --------      --------POSITIONING---------        ---------         ------------
 
-    df["%s" % hp_name] = np.zeros(len(df.index))
-    df["%s" % wp_name] = np.zeros(len(df.index))
+    # df["%s" % hp_name] = np.zeros(len(df.index))
+    # df["%s" % wp_name] = np.zeros(len(df.index))
     for b in range(0, len(df.index)):
         # if df.loc[b,'%s'%rear_name] == 'front':
         #    continue
 
-        PositionPercW = df.loc[b, "%s" % (xmid_name)] / w
+        PositionPercW = df.loc[b, "x_midden"] / w
 
-        PositionPercH = (h - df.loc[b, "%s" % (ymid_name)]) / h
+        PositionPercH = (h - df.loc[b, "y_midden"]) / h
 
         # #---------        --------      --------LEFT&RIGHT---------        ---------         ------------
 
@@ -96,7 +79,7 @@ def position(df, image_path):
             Position = "Right"
         else:
             Position = "Middle"
-        df.loc[b, "%s" % wp_name] = Position
+        df.loc[b, "width_position"] = Position
 
         # ---------        --------      ------------DEPTH-----------        ---------         ------------
 
@@ -106,32 +89,32 @@ def position(df, image_path):
             Position = "Close"
         else:
             Position = "Far"
-        df.loc[b, "%s" % hp_name] = Position
+        df.loc[b, "height_position"] = Position
 
         for i in range(0, len(df.index)):
-            if df.loc[i, "%s" % wp_name] == "Left":
-                if df.loc[i, "%s" % hp_name] == "Very close":
-                    df.loc[i, "%s" % pos_name] = "adjacent to the left"  ####
-                elif df.loc[i, "%s" % hp_name] == "Close":
-                    df.loc[i, "%s" % pos_name] = "close left"  ####
-                elif df.loc[i, "%s" % hp_name] == "Far":
-                    df.loc[i, "%s" % pos_name] = "distanced left"  #####
+            if df.loc[i, "width_position"] == "Left":
+                if df.loc[i, "height_position"] == "a few meters away":
+                    df.loc[i, "position"] = "adjacent to the left"  ####
+                elif df.loc[i, "height_position"] == "a few tens of meters away":
+                    df.loc[i, "position"] = "close left"  ####
+                elif df.loc[i, "height_position"] == "in the distance":
+                    df.loc[i, "position"] = "distanced left"  #####
 
-            if df.loc[i, "%s" % wp_name] == "Middle":
-                if df.loc[i, "%s" % hp_name] == "Very close":
-                    df.loc[i, "%s" % pos_name] = "too close straightly infront"  #####
-                elif df.loc[i, "%s" % hp_name] == "Close":
-                    df.loc[i, "%s" % pos_name] = "adjacently straight infront"  #####
-                elif df.loc[i, "%s" % hp_name] == "Far":
-                    df.loc[i, "%s" % pos_name] = "straight infront at a distant"  #####
+            if df.loc[i, "width_position"] == "Middle":
+                if df.loc[i, "height_position"] == "a few meters away":
+                    df.loc[i, "position"] = "too close straightly infront"  #####
+                elif df.loc[i, "height_position"] == "a few tens of meters away":
+                    df.loc[i, "position"] = "adjacently straight infront"  #####
+                elif df.loc[i, "height_position"] == "Far":
+                    df.loc[i, "position"] = "straight infront at a distant"  #####
 
-            if df.loc[i, "%s" % wp_name] == "Right":
-                if df.loc[i, "%s" % hp_name] == "Very close":
-                    df.loc[i, "%s" % pos_name] = "adjacent to the right"  ####
-                elif df.loc[i, "%s" % hp_name] == "Close":
-                    df.loc[i, "%s" % pos_name] = "close right"  ####
-                elif df.loc[i, "%s" % hp_name] == "Far":
-                    df.loc[i, "%s" % pos_name] = "distanced right"  ####
+            if df.loc[i, "width_position"] == "Right":
+                if df.loc[i, "height_position"] == "a few meters away":
+                    df.loc[i, "position"] = "adjacent to the right"  ####
+                elif df.loc[i, "height_position"] == "a few tens of meters away":
+                    df.loc[i, "position"] = "close right"  ####
+                elif df.loc[i, "height_position"] == "in the distance":
+                    df.loc[i, "position"] = "distanced right"  ####
     return df
 
 
@@ -148,14 +131,13 @@ def ChatGPT(df, speed, location, weather):
     OTHERS = []
 
     for k in range(0, len(df.index)):
-        if isinstance(df.loc[k, "%s" % state_name], str) is False:
-            df.loc[k, "%s" % state_name] = ""
+        if isinstance(df.loc[k, "state"], str) is False:
+            df.loc[k, "state"] = ""
 
-        if df.loc[k, "%s" % (rear_name)] == "rear":
-            if df.loc[k, "%s" % (state_name)] == "front":
+        if df.loc[k, "view"] == "rear":
+            if df.loc[k, "state"][:5] == "front":
                 REAR.append(
-                    "A %s %s"
-                    % (df.loc[k, "%s" % class_name], df.loc[k, "%s" % pos_name])
+                    "A %s %s" % (df.loc[k, "class_naam"], df.loc[k, "position"])
                 )
 
             df = df.drop(k)
@@ -163,50 +145,43 @@ def ChatGPT(df, speed, location, weather):
     df = df.reset_index(drop=True)
 
     for a in range(0, len(df.index)):
-        if df.loc[a, "%s" % (class_name)] == "car":
-            if df.loc[a, "%s" % (state_name)] == "front":
-                CARS.append(
-                    "A car approaching from %s" % (df.loc[a, "%s" % (pos_name)])
-                )
+        if df.loc[a, "class_naam"] == "car":
+            if df.loc[a, "state"][:5] == "front":
+                CARS.append("A car approaching from %s" % (df.loc[a, "position"]))
 
-            elif df.loc[a, "%s" % (state_name)] == "rear":
-                CARS.append("A car %s" % (df.loc[a, "%s" % (pos_name)]))
+            elif df.loc[a, "state"][:4] == "back":
+                CARS.append("A car %s" % (df.loc[a, "position"]))
 
             else:
-                CARS.append(
-                    "A car %s" % (df.loc[a, "%s" % (pos_name)])
-                )  # SIDE OF THE CAR
+                CARS.append("A car %s" % (df.loc[a, "position"]))  # SIDE OF THE CAR
 
-        elif df.loc[a, "%s" % (class_name)] == "traffic light":
-            TL.append(
-                "A %s %s"
-                % (df.loc[a, "%s" % (state_name)], df.loc[a, "%s" % (class_name)])
-            )
+        elif df.loc[a, "class_naam"] == "traffic light":
+            TL.append("A %s %s" % (df.loc[a, "state"], df.loc[a, "class_naam"]))
 
-        elif df.loc[a, "%s" % (class_name)] == "traffic sign":
-            TS.append('A "%s" traffic sign' % (df.loc[a, "%s" % (state_name)]))
+        elif df.loc[a, "class_naam"] == "traffic sign":
+            TS.append('A "%s" traffic sign' % (df.loc[a, "state"]))
 
-        elif df.loc[a, "%s" % (class_name)] == "person":
-            PERSON.append(df.loc[a, "%s" % (class_name)])
-            PERSON.append(df.loc[a, "%s" % (state_name)])
+        elif df.loc[a, "class_naam"] == "person":
+            PERSON.append(df.loc[a, "class_naam"])
+            PERSON.append(df.loc[a, "state"])
 
-        elif df.loc[a, "%s" % (class_name)] == "bicycle":
-            if df.loc[a, "%s" % (state_name)] == "front":
+        elif df.loc[a, "class_naam"] == "bicycle":
+            if df.loc[a, "state"] == "front":
                 BICYCLES.append(
-                    "A bicycle approaching from %s" % (df.loc[a, "%s" % (pos_name)])
+                    "A bicycle approaching from %s" % (df.loc[a, "position"])
                 )
 
-            elif df.loc[a, "%s" % (state_name)] == "rear":
-                BICYCLES.append("A bicycle %s" % (df.loc[a, "%s" % (pos_name)]))
+            elif df.loc[a, "state"] == "back":
+                BICYCLES.append("A bicycle %s" % (df.loc[a, "position"]))
 
             else:
                 BICYCLES.append(
-                    "A bicycle %s" % (df.loc[a, "%s" % (pos_name)])
+                    "A bicycle %s" % (df.loc[a, "position"])
                 )  # SIDE OF THE BICYCLE
 
         else:
-            OTHERS.append(df.loc[a, "%s" % (class_name)])
-            OTHERS.append(df.loc[a, "%s" % (state_name)])
+            OTHERS.append(df.loc[a, "class_naam"])
+            OTHERS.append(df.loc[a, "state"])
 
     # IF empty
     if bool(CARS) == False:
