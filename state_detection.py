@@ -119,7 +119,7 @@ def dataframe_bouwen(
     return (df)
 
 
-def crop_and_save_image(row, df, image_front):
+def crop_and_save_image(row, df, image_front, fotonaam):
     im2 = cv2.imread(image_front)
     height, width, channels = im2.shape
     #    x, y, w, h = (float(lines[row][1])*width),(float(lines[row][2])*height), (float(lines[row][3])*marge*width), (float(lines[row][4])*marge*height)

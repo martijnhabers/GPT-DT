@@ -39,7 +39,7 @@ def easyocr_detect(image, showImg=False):
         plt.show()
 
     result = reader.readtext(img, allowlist="0123456789")
-    if len(result) > 0 and int(result) < 135:
+    if len(result) > 0 and int(result[0][1]) < 135:
         return result[0][1]
     else:
         return "unknown"

@@ -136,8 +136,9 @@ df = dataframe_bouwen(
 )
 
 # Elke crop maken uit de tabel en foto naam aan tabel toevoegen
+fotonaam = []
 for row in range(df.shape[0]):
-    crop_and_save_image(row, df, image_front)
+    fotonaam = crop_and_save_image(row, df, image_front, fotonaam)
 df["foto_naam"] = fotonaam
 
 
