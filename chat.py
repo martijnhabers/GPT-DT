@@ -15,25 +15,6 @@ openAI_key = "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"
 # COLUMN NAMES THAT MAY VARY
 country = "The Netherlands"
 
-# TABLE WITH COLUMN NAMES
-# classnum_name = "class"
-# xmid_name = "x_midden"
-# ymid_name = "y_midden"
-# b_name = "breedte"
-# h_name = "hoogte"
-# pred_name = "predictions"
-# class_name = "class_naam"
-# state_name = "state"
-# foto_name = "foto_naam"
-# hp_name = "height_position"
-# wp_name = "width_position"
-# pos_name = "position"
-# rear_name = "view"
-
-
-
-
-
 # PROBABILITY OF BOUNDING BOXES
 P = 0.0
 
