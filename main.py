@@ -13,12 +13,10 @@ from depth_estimation import *
 import shutil
 import os
 
- 
-    #TODO: Breaking state toevoegen?
-    #TODO: matrix borden detectie/ uitlezen toevoegen
-    #TODO: weg deel toevoegen --> waar de weg is/ hoe die loopt
-    
 
+# TODO: Breaking state toevoegen?
+# TODO: matrix borden detectie/ uitlezen toevoegen
+# TODO: weg deel toevoegen --> waar de weg is/ hoe die loopt
 
 
 # Remove leftover images from previous run of code.
@@ -142,18 +140,21 @@ for row in range(df.shape[0]):
     crop_and_save_image(row, df, image_front)
 df["foto_naam"] = fotonaam
 
- 
+
 # bepaald de state een verkeersbord of verkeerslicht
 
 for row in range(df.shape[0]):
     if str(df.iloc[row]["class_naam"]) == "traffic sign":
         Traffic_sign(row, df)
-        
-    elif str(df.iloc[row]["class_naam"]) == "traffic light":       
+
+    elif str(df.iloc[row]["class_naam"]) == "traffic light":
         Traffic_light(row, df)
-        
-    elif str(df.iloc[row]["state"]) == "back" and str(df.iloc[row]['class_naam']) == 'car':
-        Braking(row,df)
+
+    elif (
+        str(df.iloc[row]["state"]) == "back"
+        and str(df.iloc[row]["class_naam"]) == "car"
+    ):
+        Braking(row, df)
 
     # change extention from jpg to png for depth estimation
 filename, extension = os.path.splitext(image)
@@ -182,4 +183,4 @@ text_file.write(prompt)
 text_file.write("")
 text_file.write(response)
 text_file.close()
-# df.to_csv("C:/Users/Mees/Desktop/vraag 5.csv")
+# df.to_csv("C:/Users/Mees/Desktop/dataframe_voor_depth.csv")
