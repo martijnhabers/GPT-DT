@@ -45,28 +45,42 @@ state = None
 
 
 def dataframe_bouwen(
-    labels, boxes, scores, texts, x, classes_orientation, tri_crop_result, image
+    labels,
+    boxes,
+    scores,
+    texts,
+    vehicles_detected,
+    classes_orientation,
+    tri_crop_result,
+    image,
 ):
-    columns = ["xmin", "ymin", "xmax", "ymax", "predictions", "class"]
-    df1 = pd.DataFrame(x.numpy(), columns=columns)
-    df1["class_naam"] = df1["class"]
-    df1["class_naam"].replace(
-        range(int(len(classes_orientation))), classes_orientation, inplace=True
-    )
-    df1[["class_naam", "state"]] = df1["class_naam"].str.split("_", n=1, expand=True)
-    for row in range(df1.shape[0]):
-        if df1["predictions"][row] < 0.9 and df1["class_naam"][row] not in [
-            "car",
-            "bicycle",
-        ]:
-            df1.at[row, "state"] = " "
-    column_df2 = ["xmin", "ymin", "xmax", "ymax"]
-    df2 = pd.DataFrame(boxes, columns=column_df2)
-    df2["predictions"] = scores
-    df2["class"] = labels
-    df2["class_naam"] = df2["class"]
-    df2["class_naam"].replace(range(int(len(texts))), texts, inplace=True)
-    df2["state"] = ""
+    columns_df1 = ["xmin", "ymin", "xmax", "ymax", "predictions", "class"]
+
+    df1 = pd.DataFrame(vehicles_detected.numpy(), columns=columns_df1)
+    if not df1.empty:
+        df1["class_naam"] = df1["class"]
+        df1["class_naam"].replace(
+            range(int(len(classes_orientation))), classes_orientation, inplace=True
+        )
+        df1[["class_naam", "state"]] = df1["class_naam"].str.split(
+            "_", n=1, expand=True
+        )
+        for row in range(df1.shape[0]):
+            if df1["predictions"][row] < 0.9 and df1["class_naam"][row] not in [
+                "car",
+                "bicycle",
+            ]:
+                df1.at[row, "state"] = " "
+
+    columns_df2 = ["xmin", "ymin", "xmax", "ymax"]
+    df2 = pd.DataFrame(boxes, columns=columns_df2)
+    if not df2.empty:
+        df2["predictions"] = scores
+        df2["class"] = labels
+        df2["class_naam"] = df2["class"]
+        df2["class_naam"].replace(range(int(len(texts))), texts, inplace=True)
+        df2["state"] = ""
+
     df = pd.concat([df1, df2], ignore_index=True)
     df["x_midden"] = (df["xmin"] + df["xmax"]) / (2)
     df["y_midden"] = (df["ymin"] + df["ymax"]) / (2)

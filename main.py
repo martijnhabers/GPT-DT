@@ -19,8 +19,6 @@ import os
 # TODO: weg deel toevoegen --> waar de weg is/ hoe die loopt
 
 
-
-
 # Remove leftover images from previous run of code.
 if os.path.exists("tri-crop"):
     shutil.rmtree("tri-crop")
@@ -31,10 +29,10 @@ if os.path.exists("tri-crop"):
         os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "vraag 57.jpg"
+image = "zonder_auto.jpg"
 
 
-
+def run_program(input):
     text_weighted = [
         ["a photo of a person", 0.25],
         ["a photo of a train", 0.4],
@@ -136,34 +134,41 @@ image = "vraag 57.jpg"
         image,
     )
 
-# Elke crop maken uit de tabel en foto naam aan tabel toevoegen
-for row in range(df.shape[0]):
-    crop_and_save_image(row, df, image_front)
-df["foto_naam"] = fotonaam
+    # Elke crop maken uit de tabel en foto naam aan tabel toevoegen
+    fotonaam = []
+    for row in range(df.shape[0]):
+        fotonaam = crop_and_save_image(row, df, image_front, fotonaam)
+    df["foto_naam"] = fotonaam
 
- 
-# bepaald de state een verkeersbord of verkeerslicht
+    # bepaald de state een verkeersbord of verkeerslicht
 
-for row in range(df.shape[0]):
-    if str(df.iloc[row]["class_naam"]) == "traffic sign":
-        Traffic_sign(row, df)
-        
-    elif str(df.iloc[row]["class_naam"]) == "traffic light":       
-        Traffic_light(row, df)
-        
-    elif str(df.iloc[row]["state"]) == "back" and str(df.iloc[row]['class_naam']) == 'car':
-        Braking(row,df)
+    for row in range(df.shape[0]):
+        if str(df.iloc[row]["class_naam"]) == "traffic sign":
+            Traffic_sign(row, df)
 
-df = position(df, image)
+        elif str(df.iloc[row]["class_naam"]) == "traffic light":
+            Traffic_light(row, df)
+
+        elif (
+            str(df.iloc[row]["state"]) == "back"
+            and str(df.iloc[row]["class_naam"]) == "car"
+        ):
+            Braking(row, df)
+
+    df = position(df, image)
 
     prompt, response = ChatGPT(df, car_speed, location, weather)
 
     print(prompt)
     print(response)
 
-text_file = open("Output.txt", "w")
-text_file.write(prompt)
-text_file.write("")
-text_file.write(response)
-text_file.close()
-#df.to_csv("C:/Users/Mees/Desktop/dataframe_voor_depth.csv")
+    text_file = open("Output.txt", "w")
+    text_file.write(prompt)
+    text_file.write("")
+    text_file.write(response)
+    text_file.close()
+
+
+# df.to_csv("C:/Users/Mees/Desktop/dataframe_voor_depth.csv")
+
+run_program(image)
