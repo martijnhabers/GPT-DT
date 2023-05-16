@@ -4,40 +4,9 @@ Created on Thu May 11 12:03:09 2023
 
 @author: Mees
 """
-from PIL import Image
-import pandas as pd
-import os
 
-
-
-
-# df = pd.read_csv(r"C:/Users/Mees/Desktop/vraag 5.csv")
-
-def depth_estimation(df, image_depth, h1, h2):
-    
-    #load image
-    img = Image.open("Depth_map_images/" + image_depth)
-    width, height = img.size
-    
-    # h1 = 80#45
-    # h2 = 170#80
-    # # h3 = 120
-    
-    # get depth value for each object
+def depth_estimation(df,depth_map_df):
     for r in range(0,len(df.index)):
+        df.at[r,'height_position'] = int(depth_map_df.iat[int(df.at[r,'y_crop_absoluut_midden']),int(df.at[r, 'x_crop_absoluut_midden'])])
         
-          R,G,B,O = img.getpixel((df.loc[r]["x_crop_absoluut_midden"], df.loc[r]['y_crop_absoluut_midden']))
-          df.at[r, "RGB"] = R
-          if R <= h1:
-            df.at[r, 'height_position'] = 'in the distance'
-          # elif h1 < R <= h2:
-          #   df.at[r, 'height_position'] = 'almost 100m away'
-          elif h1 < R <= h2:#h2 < R <= h3:
-            df.at[r, 'height_position'] = 'a few tens of meters away'
-          else:
-            df.at[r, 'height_position'] = 'a few meters away'
-          
     return (df)
-
-# image_input = "vraag 5.jpg"    
-# df , image_depth = depth_estimation(df, image_input)

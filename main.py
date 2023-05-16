@@ -30,7 +30,7 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "vraag 6.jpg"
+image = "vraag 4.jpg"
 
 
 text_weighted = [
@@ -48,18 +48,18 @@ text_weighted = [
     ["a photo of a traffic sign", 0.35],
     ["a photo of a ball", 0.4],
     ["a photo of a tractor", 0.4],
-    ["a photo of a digital traffic sign", 0.3],
-    ["a photo of a digital traffic sign", 0.4],
+    # ["a photo of a variable speed sign", 0.15],
+    ["a photo of a digital traffic sign", 0.35],
 ]
 
-weather = [
+weather_list = [
     "a picture of snowy weather",
     "a picture of sunny weather",
     "a picture of rainy weather",
     "a picture of overcast weather",
 ]
 
-location = [
+location_list = [
     "a picture of a highway",
     "a picture of a provincial road",
     "a picture of a country road",
@@ -114,7 +114,6 @@ weather, location = CLIP_state_detect(
 )
 
 # detecteerd de voertuigen
-# detecteerd de voertuigen
 image_front = "tri-crop/predict/crops/outside-view/" + image
 vehicles_detected = vehicle_detection(image_front)
 
@@ -154,15 +153,16 @@ for row in range(df.shape[0]):
 
     # change extention from jpg to png for depth estimation
 filename, extension = os.path.splitext(image)
-image_depth = filename + ".png"
+depth_df_file = filename + ".csv"
 
 
-if os.path.exists("/Depth_map_images/" + image_depth):
-    df = depth_estimation(df, image_depth, 80, 170)
-
+if os.path.exists("Depth_map_csv/" + depth_df_file):
+    depth_df = pd.read_csv("Depth_map_csv/" + depth_df_file)
+    df = depth_estimation(df, depth_df)
+    
 else:
-    image_depth = create_depth_map(image)
-    df = depth_estimation(df, image_depth, 80, 170)
+    depth_df = create_depth_map(image)
+    df = depth_estimation(df, depth_df)
 
 
 df = position(df, image, 0.375, 0.625)
