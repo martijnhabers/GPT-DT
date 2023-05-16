@@ -30,8 +30,7 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "vraag 13.jpg"
-
+image = "vraag 6.jpg"
 
 
 text_weighted = [
@@ -53,23 +52,20 @@ text_weighted = [
     ["a photo of a digital traffic sign", 0.4],
 ]
 
-weather_list = [
-    "a picture of snowy",
-    "a picture of sunny",
-    "a picture of rainy",
-    "a picture of overcast",
+weather = [
     "a picture of snowy weather",
     "a picture of sunny weather",
     "a picture of rainy weather",
     "a picture of overcast weather",
 ]
 
-location_list = [
+location = [
     "a picture of a highway",
+    "a picture of a provincial road",
     "a picture of a country road",
-    "a picture of a motorway",
-    "a picture of a city",
-    "a picture of a residential area",
+    "a picture of a county road",
+    "a picture of a urban road",
+    "a picture of a residential road",
 ]
 
 # classes is a list of all the classes shown above
@@ -160,10 +156,10 @@ for row in range(df.shape[0]):
 filename, extension = os.path.splitext(image)
 image_depth = filename + ".png"
 
-    
+
 if os.path.exists("/Depth_map_images/" + image_depth):
     df = depth_estimation(df, image_depth, 80, 170)
-    
+
 else:
     image_depth = create_depth_map(image)
     df = depth_estimation(df, image_depth, 80, 170)
