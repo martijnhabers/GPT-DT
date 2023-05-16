@@ -30,7 +30,7 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "vraag 19.jpg"
+image = "vraag 13.jpg"
 
 
 
@@ -120,7 +120,6 @@ weather, location = CLIP_state_detect(
 # detecteerd de voertuigen
 # detecteerd de voertuigen
 image_front = "tri-crop/predict/crops/outside-view/" + image
-
 vehicles_detected = vehicle_detection(image_front)
 
 # maakt het dataframe
@@ -163,17 +162,14 @@ image_depth = filename + ".png"
 
     
 if os.path.exists("/Depth_map_images/" + image_depth):
-    df = depth_estimation(df, image_depth)
+    df = depth_estimation(df, image_depth, 80, 170)
     
 else:
     image_depth = create_depth_map(image)
-    
-    df = depth_estimation(df, image_depth)
+    df = depth_estimation(df, image_depth, 80, 170)
 
 
-
-df = position(df, image)
-
+df = position(df, image, 0.375, 0.625)
 prompt, response = ChatGPT(df, car_speed, location, weather)
 
 print(prompt)
