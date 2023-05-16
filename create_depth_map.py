@@ -7,13 +7,17 @@ Created on Thu May 11 11:57:32 2023
 import torch
 from PIL import Image
 import os
-
+# import numpy as np
+import pandas as pd
 
 def create_depth_map(image_input):
-    filename, extension = os.path.splitext(image_input)
-    image_output = filename + ".png"
 
+    filename, extension = os.path.splitext(image_input)
+    image_depth_map = filename + ".csv"
+    file_path = 'Depth_map_csv/' + image_depth_map
+    
     repo = "isl-org/ZoeDepth"
+    
     # Zoe_NK
     model_zoe_nk = torch.hub.load(repo, "ZoeD_NK", pretrained=True)
 
@@ -24,28 +28,12 @@ def create_depth_map(image_input):
     # Local file
     image = Image.open("images/" + image_input).convert("RGB")  # load
 
-    # image = get_image_from_url(URL)  # fetch
+    #Create depth estimation, save as csv and return as a dataframe
     depth = zoe.infer_pil(image)
+    depth_df = pd.DataFrame(depth)
+    depth_df.to_csv(file_path, index=False)
 
-    # Save raw
-    from zoedepth.utils.misc import save_raw_16bit
+    return depth_df
 
-    fpath = "Depth_map_images/" + image_output
-    save_raw_16bit(depth, fpath)
-
-    # Colorize output
-    from zoedepth.utils.misc import colorize
-
-    colored = colorize(depth)
-
-    # save colored output
-    Image.fromarray(colored).save("Depth_map_images/" + image_output)
-
-    # display image
-    image = Image.open("Depth_map_images/" + image_output)
-
-    return image_output, depth
-
-
-image_input = "vraag 13.jpg"
-output, depth = create_depth_map(image_input)
+# image_input = "vraag 5.jpg"
+# depth_map = create_depth_map(image_input)
