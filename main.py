@@ -30,7 +30,7 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "vraag 15.jpg"
+image = "vraag 4.jpg"
 
 
 text_weighted = [
@@ -52,14 +52,14 @@ text_weighted = [
     ["a photo of a digital traffic sign", 0.35],
 ]
 
-weather = [
+weather_list = [
     "a picture of snowy weather",
     "a picture of sunny weather",
     "a picture of rainy weather",
     "a picture of overcast weather",
 ]
 
-location = [
+location_list = [
     "a picture of a highway",
     "a picture of a provincial road",
     "a picture of a country road",

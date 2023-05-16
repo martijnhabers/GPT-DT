@@ -288,7 +288,7 @@ def ChatGPT(df, speed, location, weather, compare=False):
         prompt3 = f"This is your rear view: You see the following: {', '.join(REAR)}. "
         prompt4 = f"Given the described situation above, what would you do: 'A) Brake', 'B) Let go of the gas pedal' or 'C) Do nothing'. "
         prompt5 = f"Choose one of the 3 options I gave you. Show me just your answer."
-        promt6 = f"""Consider the following:
+        prompt6 = f"""Consider the following:
             
 A) Brake (drastically reducing speed for urgent danger)
 When you’re driving the maximum allowed speed, you usually should brake if you encounter:
@@ -310,7 +310,7 @@ C) Do Nothing (continue driving your current speed)
 If there is no direct danger
 If there is a proper amount of distance between you and other road users
 """
-        prompt = prompt1 +''+ prompt2 +''+ prompt3 +''+ prompt4 + prompt5 + '' + promt6
+        prompt = prompt1 +''+ prompt2 +''+ prompt3 +''+ prompt4 + prompt5 + '' + prompt6
         
     else:
         prompt1 = (
@@ -319,9 +319,9 @@ If there is a proper amount of distance between you and other road users
         )
         prompt2 = f"This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}. "
         prompt3 = f"This is your rear view: You see the following: {', '.join(REAR)}. "
-        prompt4 = f"These are your possible answers: 'A)Brake ', 'B) Let go of the gas pedal' or 'C) Do nothing'. "
+        prompt4 = f"These are your possible answers: 'A) Brake ', 'B) Let go of the gas pedal' or 'C) Do nothing'. "
         prompt5 = f"Show me all possible answers as a list. Then, choose one of them. Show me your choice and give a thorough reasoning on why you chose this "
-        promt6 = f"""Consider the following:
+        prompt6 = f"""Consider the following:
             
 A) Brake (drastically reducing speed for urgent danger)
 When you’re driving the maximum allowed speed, you usually should brake if you encounter:
@@ -343,7 +343,7 @@ C) Do Nothing (continue driving your current speed)
 If there is no direct danger
 If there is a proper amount of distance between you and other road users
 """
-        prompt = prompt1 +''+ prompt2 +''+ prompt3 +''+ prompt4 + prompt5 + '' + promt6
+        prompt = prompt1 +''+ prompt2 +''+ prompt3 +''+ prompt4 + prompt5 + '' + prompt6
         
        
     
