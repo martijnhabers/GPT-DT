@@ -8,18 +8,20 @@ from PIL import Image
 import pandas as pd
 import os
 
-h1 = 45
-h2 = 80
-h3 = 120
+
 
 
 # df = pd.read_csv(r"C:/Users/Mees/Desktop/vraag 5.csv")
 
-def depth_estimation(df, image_depth):
+def depth_estimation(df, image_depth, h1, h2):
     
     #load image
     img = Image.open("Depth_map_images/" + image_depth)
     width, height = img.size
+    
+    # h1 = 80#45
+    # h2 = 170#80
+    # # h3 = 120
     
     # get depth value for each object
     for r in range(0,len(df.index)):
@@ -28,9 +30,9 @@ def depth_estimation(df, image_depth):
           df.at[r, "RGB"] = R
           if R <= h1:
             df.at[r, 'height_position'] = 'in the distance'
-          elif h1 < R <= h2:
-            df.at[r, 'height_position'] = 'almost 100m away'
-          elif h2 < R <= h3:
+          # elif h1 < R <= h2:
+          #   df.at[r, 'height_position'] = 'almost 100m away'
+          elif h1 < R <= h2:#h2 < R <= h3:
             df.at[r, 'height_position'] = 'a few tens of meters away'
           else:
             df.at[r, 'height_position'] = 'a few meters away'
