@@ -20,6 +20,7 @@ P = 0.0
 
 # ------------------------------------SEGMENTING TABLES------------------------------------------
 
+
 def position(df, image_path, v1, v2):
     img = Image.open(os.path.join(os.getcwd(), "images/" + image_path))
     # for k in range(0, len(df.index)):
@@ -39,8 +40,8 @@ def position(df, image_path, v1, v2):
     # # HORIZONTAL SECTIONS
     # h1 = 0.2
     # h2 = 0.41
-    
-    #BIKELINE SEGMENTS:
+
+    # BIKELINE SEGMENTS:
     xb1 = 0.09 * w
     xb2 = 0.91 * w
 
@@ -63,7 +64,6 @@ def position(df, image_path, v1, v2):
     # ---------        --------      --------POSITIONING---------        ---------         ------------
 
     for b in range(0, len(df.index)):
-        
         PositionPercW = df.loc[b, "x_midden"] / w
         # PositionPercH = (h - df.loc[b, "y_midden"]) / h
 
@@ -85,13 +85,13 @@ def position(df, image_path, v1, v2):
         #     Position = "Close"
         # else:
         #     Position = "Far"
-            
+
         # df.loc[b, "height_position"] = Position
-        
-#TODO explicit description for rear items
-        
+
+    # TODO explicit description for rear items
+
     for i in range(0, len(df.index)):
-        if df.loc[i, "view"] == 'front':
+        if df.loc[i, "view"] == "front":
             if df.loc[i, "width_position"] == "Left":
                 df.loc[i, 'position'] = str( df.loc[i, 'height_position']) + ' meters infront of you and to your left'
             if df.loc[i, "width_position"] == "Middle":
@@ -127,22 +127,21 @@ def position(df, image_path, v1, v2):
             
                     
     df = df.reset_index(drop=True)
-                
-           
-                    
-    #BICYCLE INTO BICYCLIST WITHOUT PERSON RECOGNITION
-    for a in range(0,len(df.index)):
-        if df.loc[a,'class_naam'] == 'bicycle':
-            if xb1 < df.loc[a,'x_midden'] < xb2:
-                df.loc[a,'class_naam'] = 'bicyclist'
+
+    # BICYCLE INTO BICYCLIST WITHOUT PERSON RECOGNITION
+    for a in range(0, len(df.index)):
+        if df.loc[a, "class_naam"] == "bicycle":
+            if xb1 < df.loc[a, "x_midden"] < xb2:
+                df.loc[a, "class_naam"] = "bicyclist"
             else:
-                df.loc[a,'class_naam'] = 'parked bicycle'
-    return (df)
+                df.loc[a, "class_naam"] = "parked bicycle"
+    return df
+
 
 # ---------        --------      ---------DESCRIPTION---------        ---------         ------------
 
 
-def ChatGPT(df, speed, location, weather, compare = False):
+def ChatGPT(df, speed, location, weather, compare=False):
     CARS = []
     TL = []
     TS = []
@@ -150,110 +149,99 @@ def ChatGPT(df, speed, location, weather, compare = False):
     BICYCLES = []
     REAR = []
     OTHERS = []
-    
+
     B = []
     P = []
     XB = []
     XP = []
-    
+
     xrange = 15
-    
+
     for k in range(0, len(df.index)):
-        
-        if isinstance(df.loc[k,'state'], str) is False:
-            df.loc[k,'state'] = ''
-            
-            
-        if df.loc[k, "view"] == 'rear':
-            if df.loc[k, "state"][:5] == 'front':
-                REAR.append('A %s %s'%(df.loc[k, 'class_naam'], df.loc[k,'position']))
-            
+        if isinstance(df.loc[k, "state"], str) is False:
+            df.loc[k, "state"] = ""
+
+        if df.loc[k, "view"] == "rear":
+            if df.loc[k, "state"][:5] == "front":
+                REAR.append(
+                    "A %s %s" % (df.loc[k, "class_naam"], df.loc[k, "position"])
+                )
+
             df = df.drop(k)
-    
+
     df = df.reset_index(drop=True)
-    
+
     for c in range(0, len(df.index)):
-        if df.loc[c,'class_naam'] == 'bicyclist':
-            B.append(df.loc[c,'x_midden'])
-            
-        elif df.loc[c,'class_naam'] == 'person':
-            P.append(df.loc[c,'x_midden'])
-            
-        
+        if df.loc[c, "class_naam"] == "bicyclist":
+            B.append(df.loc[c, "x_midden"])
+
+        elif df.loc[c, "class_naam"] == "person":
+            P.append(df.loc[c, "x_midden"])
+
     bb = len(B)
     pp = len(P)
-    
+
     for b in range(0, bb):
         for p in range(0, pp):
             dx = abs(B[b] - P[p])
             if dx <= xrange:
                 XB.append(B[b])
                 XP.append(P[p])
-               
-    #BICYCLE INTO BICYCLIST
-    for a in range(0,len(df.index)):
+
+    # BICYCLE INTO BICYCLIST
+    for a in range(0, len(df.index)):
         # if df.loc[a,'class_naam'] == 'bicyclist':
         #     if df.loc[a,'state'] != 'back' or df.loc[a,'state'] != 'front'
-                
-                
-                    
-    #REMOVE PERSON ON TOP OF BICYCLIST        
-        if df.loc[a,'class_naam'] == 'person':
-            for p in range(0,len(XP)):
-                if int(df.loc[a,'x_midden']) == int(XP[p]):
-                    df.loc[a,'class_naam'] = 'drop'
-        
-                    
+
+        # REMOVE PERSON ON TOP OF BICYCLIST
+        if df.loc[a, "class_naam"] == "person":
+            for p in range(0, len(XP)):
+                if int(df.loc[a, "x_midden"]) == int(XP[p]):
+                    df.loc[a, "class_naam"] = "drop"
+
     for a in range(0, len(df.index)):
-        if df.loc[a,'class_naam'] == 'drop':
+        if df.loc[a, "class_naam"] == "drop":
             df = df.drop(a)
     df = df.reset_index(drop=True)
-        
-    #CHOPPING DATAFRAME IN ITEMS
+
+    # CHOPPING DATAFRAME IN ITEMS
     for a in range(0, len(df.index)):
         if df.loc[a, "class_naam"] == "car":
             if df.loc[a, "state"][:5] == "front":
-                CARS.append(
-                    "A car approaching from %s" % (df.loc[a, "position"])
-                )
+                CARS.append("A car approaching from %s" % (df.loc[a, "position"]))
 
             elif df.loc[a, "state"][:4] == "back":
                 CARS.append("A car %s" % (df.loc[a, "position"]))
 
             else:
-                CARS.append(
-                    "A car %s" % (df.loc[a, "position"])
-                )  # SIDE OF THE CAR
+                CARS.append("A car %s" % (df.loc[a, "position"]))  # SIDE OF THE CAR
 
         elif df.loc[a, "class_naam"] == "traffic light":
-            TL.append(
-                "A %s %s"
-                % (df.loc[a, "state"], df.loc[a, "class_naam"])
-            )
+            TL.append("A %s %s" % (df.loc[a, "state"], df.loc[a, "class_naam"]))
 
         elif df.loc[a, "class_naam"] == "traffic sign":
             TS.append('A "%s" traffic sign' % (df.loc[a, "state"]))
 
         elif df.loc[a, "class_naam"] == "person":
-            PERSON.append("A person %s"%df.loc[a, "position"])
+            PERSON.append("A person %s" % df.loc[a, "position"])
 
-        elif df.loc[a, 'class_naam'] == "bicyclist":
+        elif df.loc[a, "class_naam"] == "bicyclist":
             if df.loc[a, "state"] == "front":
                 BICYCLES.append(
-                    "A bicyclist approaching from %s" % (df.loc[a,'position'])
+                    "A bicyclist approaching from %s" % (df.loc[a, "position"])
                 )
 
-            elif df.loc[a, 'state'] == "rear":
-                BICYCLES.append("A bicyclist %s" % (df.loc[a, 'position']))
+            elif df.loc[a, "state"] == "rear":
+                BICYCLES.append("A bicyclist %s" % (df.loc[a, "position"]))
 
             else:
                 BICYCLES.append(
-                    "A bicyclist %s" % (df.loc[a, 'position'])
+                    "A bicyclist %s" % (df.loc[a, "position"])
                 )  # SIDE OF THE BICYCLE
 
         else:
-            if df.loc[a, 'position'] == 'back':
-                OTHERS.append("A %s "%df.loc[a, "class_naam"])
+            if df.loc[a, "position"] == "back":
+                OTHERS.append("A %s " % df.loc[a, "class_naam"])
 
     # IF empty
     if bool(CARS) == False:
@@ -273,10 +261,9 @@ def ChatGPT(df, speed, location, weather, compare = False):
 
     if bool(OTHERS) == False:
         OTHERS.append("there are no more objects than the ones mentioned above")
-        
+
     if bool(REAR) == False:
         REAR.append("There are no significant objects behind you")
-
 
     # --------------------------------------ChatGPT-------------------------------------------------
 
@@ -285,15 +272,18 @@ def ChatGPT(df, speed, location, weather, compare = False):
 
     # Set up the model and prompt
     model_engine = "text-davinci-003"
-    
-    #WEATHER String split for chat gpt
+
+    # WEATHER String split for chat gpt
     weather = weather[13:]
-    
-    #LOCATION String split for chat gpt
+
+    # LOCATION String split for chat gpt
     location = location[13:]
     
     if compare == True:
-        prompt1 =  "Assume you are driving in %s. You are driving in %s at %s km/h. The weather condition is %s. " % (country, location, speed, weather)
+        prompt1 = (
+            "Assume you are driving in %s. You are driving in %s at %s km/h. The weather condition is %s. "
+            % (country, location, speed, weather)
+        )
         prompt2 = f"This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}. "
         prompt3 = f"This is your rear view: You see the following: {', '.join(REAR)}. "
         prompt4 = f"Given the described situation above, what would you do: 'A) Brake', 'B) Let go of the gas pedal' or 'C) Do nothing'. "
@@ -323,7 +313,10 @@ If there is a proper amount of distance between you and other road users
         prompt = prompt1 +''+ prompt2 +''+ prompt3 +''+ prompt4 + prompt5 + '' + promt6
         
     else:
-        prompt1 =  "Assume you are driving in %s. You are driving in %s at %s km/h. The weather condition is %s. " % (country, location, speed, weather)
+        prompt1 = (
+            "Assume you are driving in %s. You are driving in %s at %s km/h. The weather condition is %s. "
+            % (country, location, speed, weather)
+        )
         prompt2 = f"This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}. "
         prompt3 = f"This is your rear view: You see the following: {', '.join(REAR)}. "
         prompt4 = f"These are your possible answers: 'A)Brake ', 'B) Let go of the gas pedal' or 'C) Do nothing'. "
@@ -357,7 +350,7 @@ If there is a proper amount of distance between you and other road users
     # Generate a response ChatGPT
     completion = openai.Completion.create(
         engine=model_engine,
-        prompt= prompt,
+        prompt=prompt,
         max_tokens=1024,
         n=1,
         stop=None,

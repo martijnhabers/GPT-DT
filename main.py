@@ -33,7 +33,6 @@ for f in os.listdir(dir + "/Crops"):
 image = "vraag 15.jpg"
 
 
-
 text_weighted = [
     ["a photo of a person", 0.25],
     ["a photo of a train", 0.4],
@@ -53,23 +52,20 @@ text_weighted = [
     ["a photo of a digital traffic sign", 0.35],
 ]
 
-weather_list = [
-    "a picture of snowy",
-    "a picture of sunny",
-    "a picture of rainy",
-    "a picture of overcast",
+weather = [
     "a picture of snowy weather",
     "a picture of sunny weather",
     "a picture of rainy weather",
     "a picture of overcast weather",
 ]
 
-location_list = [
+location = [
     "a picture of a highway",
+    "a picture of a provincial road",
     "a picture of a country road",
-    "a picture of a motorway",
-    "a picture of a city",
-    "a picture of a residential area",
+    "a picture of a county road",
+    "a picture of a urban road",
+    "a picture of a residential road",
 ]
 
 # classes is a list of all the classes shown above
