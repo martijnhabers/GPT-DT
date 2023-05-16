@@ -30,7 +30,7 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "vraag 19.jpg"
+image = "vraag 13.jpg"
 
 
 
@@ -49,8 +49,8 @@ text_weighted = [
     ["a photo of a traffic sign", 0.35],
     ["a photo of a ball", 0.4],
     ["a photo of a tractor", 0.4],
-    ["a photo of a digital traffic sign", 0.3],
-    ["a photo of a digital traffic sign", 0.4],
+    ["a photo of a variable speed sign", 0.15],
+    ["a photo of a digital traffic sign", 0.35],
 ]
 
 weather_list = [
@@ -116,7 +116,7 @@ weather, location = CLIP_state_detect(
     weather_list,
     location_list,
 )
-
+ 
 # detecteerd de voertuigen
 # detecteerd de voertuigen
 image_front = "tri-crop/predict/crops/outside-view/" + image
@@ -162,7 +162,7 @@ filename, extension = os.path.splitext(image)
 image_depth = filename + ".png"
 
     
-if os.path.exists("/Depth_map_images/" + image_depth):
+if os.path.exists("Depth_map_images/" + image_depth):
     df = depth_estimation(df, image_depth)
     
 else:

@@ -44,8 +44,8 @@ def create_depth_map(image_input):
     # display image
     image = Image.open("Depth_map_images/" + image_output)
 
-    return image_output
+    return image_output, depth
 
 
-# image_input = "vraag 13.jpg"
-# create_depth_map(image_input)
+image_input = "vraag 13.jpg"
+output, depth = create_depth_map(image_input)
