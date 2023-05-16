@@ -29,7 +29,7 @@ if os.path.exists("tri-crop"):
         os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "zonder_auto.jpg"
+image = "vraag 13.jpg"
 
 
 def run_program(input):
@@ -116,11 +116,10 @@ def run_program(input):
         location_list,
     )
 
-    # detecteerd de voertuigen
-    # detecteerd de voertuigen
-    image_front = "tri-crop/predict/crops/outside-view/" + image
-
-    vehicles_detected = vehicle_detection(image_front)
+# detecteerd de voertuigen
+# detecteerd de voertuigen
+image_front = "tri-crop/predict/crops/outside-view/" + image
+vehicles_detected = vehicle_detection(image_front)
 
     # maakt het dataframe
     df = dataframe_bouwen(
@@ -155,9 +154,21 @@ def run_program(input):
         ):
             Braking(row, df)
 
-    df = position(df, image)
+    # change extention from jpg to png for depth estimation
+filename, extension = os.path.splitext(image)
+image_depth = filename + ".png"
 
-    prompt, response = ChatGPT(df, car_speed, location, weather)
+    
+if os.path.exists("/Depth_map_images/" + image_depth):
+    df = depth_estimation(df, image_depth, 80, 170)
+    
+else:
+    image_depth = create_depth_map(image)
+    df = depth_estimation(df, image_depth, 80, 170)
+
+
+df = position(df, image, 0.375, 0.625)
+prompt, response = ChatGPT(df, car_speed, location, weather)
 
     print(prompt)
     print(response)
