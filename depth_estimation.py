@@ -8,18 +8,20 @@ from PIL import Image
 import pandas as pd
 import os
 
-h1 = 80#45
-h2 = 170#80
-# h3 = 120
+
 
 
 # df = pd.read_csv(r"C:/Users/Mees/Desktop/vraag 5.csv")
 
-def depth_estimation(df, image_depth):
+def depth_estimation(df, image_depth, h1, h2):
     
     #load image
     img = Image.open("Depth_map_images/" + image_depth)
     width, height = img.size
+    
+    # h1 = 80#45
+    # h2 = 170#80
+    # # h3 = 120
     
     # get depth value for each object
     for r in range(0,len(df.index)):

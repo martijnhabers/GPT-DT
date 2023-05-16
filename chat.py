@@ -20,7 +20,7 @@ P = 0.0
 
 # ------------------------------------SEGMENTING TABLES------------------------------------------
 
-def position(df, image_path):
+def position(df, image_path, v1, v2):
     img = Image.open(os.path.join(os.getcwd(), "images/" + image_path))
     for k in range(0, len(df.index)):
         if df.loc[k, "predictions"] < P:
@@ -32,13 +32,13 @@ def position(df, image_path):
     # TODO: Make this call a function so that different position methods can be used
     w, h = img.size
 
-    # VERTICAL SECTIONS
-    v1 = 0.45
-    v2 = 0.675
+    # # VERTICAL SECTIONS
+    # v1 = 0.375
+    # v2 = 0.625
 
-    # HORIZONTAL SECTIONS
-    h1 = 0.2
-    h2 = 0.41
+    # # HORIZONTAL SECTIONS
+    # h1 = 0.2
+    # h2 = 0.41
     
     #BIKELINE SEGMENTS:
     xb1 = 0.09 * w
@@ -50,9 +50,9 @@ def position(df, image_path):
     plt.axvline(x=xb1 * w, color="b", linestyle="--")
     plt.axvline(x=xb2 * w, color="b", linestyle="--")
 
-    # PLOTTING HORIZONTAL SECTIONS
-    plt.axhline(y=h1 * h, color="b", linestyle=":")
-    plt.axhline(y=h2 * h, color="b", linestyle=":")
+    # # PLOTTING HORIZONTAL SECTIONS
+    # plt.axhline(y=h1 * h, color="b", linestyle=":")
+    # plt.axhline(y=h2 * h, color="b", linestyle=":")
 
     # GETTING THE IMAGE UPRIGHT
     plt.axis([0, w, 0, h])
@@ -65,7 +65,7 @@ def position(df, image_path):
     for b in range(0, len(df.index)):
         
         PositionPercW = df.loc[b, "x_midden"] / w
-        PositionPercH = (h - df.loc[b, "y_midden"]) / h
+        # PositionPercH = (h - df.loc[b, "y_midden"]) / h
 
         # #---------        --------      --------LEFT&RIGHT---------        ---------         ------------
 
@@ -87,8 +87,11 @@ def position(df, image_path):
         #     Position = "Far"
             
         # df.loc[b, "height_position"] = Position
-
-        for i in range(0, len(df.index)):
+        
+#TODO explicit description for rear items
+        
+    for i in range(0, len(df.index)):
+        if df.loc[i, "view"] == 'front':
             if df.loc[i, "width_position"] == "Left":
                 if df.loc[i, 'height_position'] == "a few meters away":
                     df.loc[i, "position"] = "adjacent to the left"  ####
@@ -101,7 +104,7 @@ def position(df, image_path):
                 if df.loc[i, 'height_position'] == "a few meters away":
                     df.loc[i, "position"] = "straightly infront and very close"  #####
                 elif df.loc[i, 'height_position'] == "a few tens of meters away":
-                    df.loc[i, "position"] = "adjacently straight infront"  #####
+                    df.loc[i, "position"] = "straight infront"  #####
                 elif df.loc[i, 'height_position'] == "in the distance":
                     df.loc[i, "position"] = "straight infront at a distance"  #####
 
@@ -112,6 +115,18 @@ def position(df, image_path):
                     df.loc[i, "position"] = "close right"  ####
                 elif df.loc[i, 'height_position'] == "in the distance":
                     df.loc[i, "position"] = "distanced right"  ####
+        else:
+            if df.loc[i,'height_position'] == ' a few meters away':
+                df.loc[i, "position"] = 'closely behind you'
+            else:
+                df.loc[i, "position"] = 'farfar'
+                
+            
+        if df.loc[i, "position"] == 'farfar':
+            df = df.drop(i)
+                    
+    df = df.reset_index(drop=True)
+                
            
                     
     #BICYCLE INTO BICYCLIST WITHOUT PERSON RECOGNITION
@@ -275,7 +290,7 @@ def ChatGPT(df, speed, location, weather, compare = False):
     
     #LOCATION String split for chat gpt
     location = location[13:]
-    
+    speed = 100
     if compare == True:
         prompt1 =  "Assume you are driving in %s. You are driving in %s at %s km/h. The weather condition is %s. " % (country, location, speed, weather)
         prompt2 = f"This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}. "
@@ -288,11 +303,11 @@ def ChatGPT(df, speed, location, weather, compare = False):
         prompt1 =  "Assume you are driving in %s. You are driving in %s at %s km/h. The weather condition is %s. " % (country, location, speed, weather)
         prompt2 = f"This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}. "
         prompt3 = f"This is your rear view: You see the following: {', '.join(REAR)}. "
-        prompt4 = f"Given the described situation above, what would you do: 'A) Let go of the gas pedal', 'B) Brake' or 'C) Do nothing'. "
-        prompt5 = ''#f"Describe the situation in your own words."
-        prompt6 = f"Show the three options I gave you as a multiple choice. Pick the letter of the answer you chose. Give your thorough reasoning behind your choice."
-        prompt = prompt1 +''+ prompt2 +''+ prompt3 +''+ prompt4 + prompt5 + prompt6
+        prompt4 = f"These are your possible answers: 'A) Let go of the gas pedal', 'B) Brake' or 'C) Do nothing'. "
+        prompt5 = f"Show me all possible answers as a list. Then, choose one of them. Show me your choice and give a thorough reasoning on why you chose this "
+        prompt = prompt1 +''+ prompt2 +''+ prompt3 +''+ prompt4 + prompt5
         
+       
     
     # Generate a response ChatGPT
     completion = openai.Completion.create(
