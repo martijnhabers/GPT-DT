@@ -30,7 +30,7 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "vraag 14.jpg"
+image = "vraag 5.jpg"
 
 
 
@@ -167,7 +167,7 @@ else:
 
 
 df = position(df, image, 0.375, 0.625)
-prompt, response = ChatGPT(df, car_speed, location, weather, compare = True)
+prompt, response = ChatGPT(df, car_speed, location, weather)
 
 print(prompt)
 print(response)

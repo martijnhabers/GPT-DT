@@ -1,25 +1,38 @@
-Assume you are driving in The Netherlands. You are driving in a highway at 70 km/h. The weather condition is overcast weather. This is your front view; You see the following cars: A car approaching from 44.0 meters infront of you and to your left, A car 49.0 meters directly infront of you, A car approaching from 27.0 meters infront of you and to your left, A car 55.0 meters directly infront of you. You see the following traffic signs: A "Roundabout mandatory" traffic sign, A "Speed limit (70km/h)" traffic sign. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above. This is your rear view: You see the following: There are no significant objects behind you. These are your possible answers: 'A) Brake ', 'B) Let go of the gas pedal' or 'C) Do nothing'. Show me all possible answers as a list. Then, choose one of them. Show me your choice and give a thorough reasoning on why you chose this Consider the following:
-            
-A) Brake (drastically reducing speed for urgent danger)
-When you’re driving the maximum allowed speed, you usually should brake if you encounter:
-Weaker road users, like children or pedestrians
-There is oncoming traffic on narrow roads
-You’re driving past road work or other obstacles
-You’re on a chaotic or dangerous intersection
-You’re in a busy residential area, or near a school
-You’re nearing a sharp or dangerous turn
-Large speed differences between you and other road users
-For yellow and red traffic lights
 
-B) Let go of the gas pedal (reducing some speed)
-When you don’t have a full overview of the situation
-When there is no danger
-If the speed limit changes
+        Assume you are driving in The Netherlands. You are driving in a urban road at 30 km/h. The weather condition is rainy weather.
+        """This is your front view; You see the following cars: A car 32.0 meters infront of you and to your left, A car approaching from 34.0 meters infront of you and to your left, A car approaching from 27.0 meters infront of you and to your left, A car approaching from 31.0 meters infront of you and to your left, A car 56.0 meters infront of you and to your left, A car approaching from 41.0 meters infront of you and to your left, A car 58.0 meters infront of you and to your left, A car approaching from 38.0 meters infront of you and to your left. You see the following traffic signs: A "Priority road" traffic sign. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: A bicyclist 16.0 meters directly infront of you. Additionally, you see: A digital traffic sign 62.0 meters infront of you and to your left .
+        This is your rear view: You see the following: There are no significant objects behind you.
+        Given the described situation above, what would you do: "A) Brake", "B) Let go of the gas pedal" or "C) Do nothing". 
+        Consider the following:
+        
+        A) Brake = drastically reducing speed for urgent danger.
+            -When you’re driving the maximum allowed speed, you usually should brake if you encounter:
+                -Weaker road users, like children or pedestrians.
+                -There is oncoming traffic on narrow roads.
+                -You’re driving past road work or other obstacles.
+                -You’re on a chaotic or dangerous intersection.
+                -You’re in a busy residential area, or near a school.
+                -You’re nearing a sharp or dangerous turn.
+                -Large speed differences between you and other road users.
+                -For yellow and red traffic lights.
+        
+        B) Let go of the gas pedal = reducing some speed.
+            -When you don’t have a full overview of the situation.
+            -When there is no danger.
+            -If the speed limit changes.
+        
+        C) Do Nothing = continue driving your current speed.
+            -If there is no direct danger.
+            -If there is a proper amount of distance between you and other road users.
+        """
+        
+        Show me all possible answers in the following format:
+            A)...
+            B)...
+            C)...
+        Then, choose one of them. Show me your choice and give a thorough reasoning on why you chose this. Use the following format:
+            Answer: ...
+            Reasoning: ...
 
-C) Do Nothing (continue driving your current speed)
-If there is no direct danger
-If there is a proper amount of distance between you and other road users
-If you are aware of the speed limit and you are driving within it
-
-My choice: B) Let go of the gas pedal (reducing some speed)
-I chose this option because the conditions do not indicate any direct danger, such as pedestrians, obstacles, or sharp turns. There are also no traffic lights and the speed limit is the same as the one you're currently driving at. Therefore, it is safe to reduce some speed in order to maintain a proper distance between you and other road users.
+Answer: B) Let go of the gas pedal
+Reasoning: The weather condition is rainy, so it is important to reduce speed in order to maintain control of the vehicle and increase safety. There are no traffic lights in sight, and the cars ahead of me are not too close. Therefore, it is safe to reduce some speed by letting go of the gas pedal.
