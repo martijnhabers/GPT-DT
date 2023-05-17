@@ -290,7 +290,7 @@ def ChatGPT(df, speed, location, weather, compare = False):
     
     #LOCATION String split for chat gpt
     location = location[13:]
-    speed = 100
+    
     if compare == True:
         prompt1 =  "Assume you are driving in %s. You are driving in %s at %s km/h. The weather condition is %s. " % (country, location, speed, weather)
         prompt2 = f"This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}. "
