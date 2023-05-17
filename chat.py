@@ -93,12 +93,21 @@ def position(df, image_path, v1, v2):
     for i in range(0, len(df.index)):
         if df.loc[i, "view"] == "front":
             if df.loc[i, "width_position"] == "Left":
-                df.loc[i, 'position'] = str( df.loc[i, 'height_position']) + ' meters infront of you and to your left'
+                df.loc[i, "position"] = (
+                    str(df.loc[i, "height_position"])
+                    + " meters infront of you and to your left"
+                )
             if df.loc[i, "width_position"] == "Middle":
-                df.loc[i, 'position'] =str( df.loc[i, 'height_position']) + ' meters directly infront of you'
+                df.loc[i, "position"] = (
+                    str(df.loc[i, "height_position"])
+                    + " meters directly infront of you"
+                )
             if df.loc[i, "width_position"] == "Right":
-                df.loc[i, 'position'] = str(df.loc[i, 'height_position']) + ' meters infront of you and to your right'
-                
+                df.loc[i, "position"] = (
+                    str(df.loc[i, "height_position"])
+                    + " meters infront of you and to your right"
+                )
+
                 # if df.loc[i, 'height_position'] == "a few meters away":
                 #     df.loc[i, "position"] = "adjacent to the left"  ####
                 # elif df.loc[i, 'height_position'] == "a few tens of meters away":
@@ -120,12 +129,11 @@ def position(df, image_path, v1, v2):
                 # elif df.loc[i, 'height_position'] == "in the distance":
                 #     df.loc[i, "position"] = "distanced right"  ####
         else:
-            if df.loc[i,'height_position'] < 10:
-                df.loc[i, "position"] = 'closely behind you'
-            elif df.loc[i, "view"] == 'rear':
+            if df.loc[i, "height_position"] < 10:
+                df.loc[i, "position"] = "closely behind you"
+            elif df.loc[i, "view"] == "rear":
                 df = df.drop(i)
-            
-                    
+
     df = df.reset_index(drop=True)
 
     # BICYCLE INTO BICYCLIST WITHOUT PERSON RECOGNITION
@@ -240,7 +248,7 @@ def ChatGPT(df, speed, location, weather, compare=False):
                 )  # SIDE OF THE BICYCLE
 
         else:
-            OTHERS.append("A %s %s " %(df.loc[a, "class_naam"],df.loc[a, "position"]))
+            OTHERS.append("A %s %s " % (df.loc[a, "class_naam"], df.loc[a, "position"]))
 
     # IF empty
     if bool(CARS) == False:
@@ -277,7 +285,7 @@ def ChatGPT(df, speed, location, weather, compare=False):
 
     # LOCATION String split for chat gpt
     location = location[13:]
-    
+
     if compare == True:
         prompt = f'''
         Assume you are driving in {country}. You are driving in {location} at {speed} km/h. The weather condition is {weather}.
@@ -311,7 +319,7 @@ def ChatGPT(df, speed, location, weather, compare=False):
         
         Choose one of the three options mentioned above. 
         Give your answer in the format of one letter.'''
-        
+
     else:
         prompt = f'''
         Assume you are driving in {country}. You are driving in {location} at {speed} km/h. The weather condition is {weather}.
@@ -348,7 +356,7 @@ def ChatGPT(df, speed, location, weather, compare=False):
         Then, choose one of them. Show me your choice and give a thorough reasoning on why you chose this. Use the following format:
             Answer: ...
             Reasoning: ...'''
-    
+
     # Generate a response ChatGPT
     completion = openai.Completion.create(
         engine=model_engine,
@@ -360,7 +368,5 @@ def ChatGPT(df, speed, location, weather, compare=False):
     )
 
     response = completion.choices[0].text
-    if compare == True:
-        prompt = " "
 
     return (prompt, response)
