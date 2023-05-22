@@ -287,41 +287,17 @@ def ChatGPT(df, speed, location, weather, compare=False):
     location = location[13:]
 
     if compare == True:
-        prompt = f'''
-        Assume you are driving in {country}. You are driving in {location} at {speed} km/h. The weather condition is {weather}.
-        """This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}.
-        This is your rear view: You see the following: {', '.join(REAR)}.
-        Given the described situation above, what would you do: "A) Brake", "B) Let go of the gas pedal" or "C) Do nothing". 
-        Consider the following definitions of each possible option:
-           
-        Brake means reducing a significant amount speed.
-        When driving the maximum allowed speed, you should brake if:
-            - You encounter weaker road users, such as children or pedestrians.
-            - There is oncoming traffic on narrow roads.
-            - You’re driving past road work or other obstacles.
-            - You’re on a chaotic or dangerous intersection.
-            - You’re in a busy residential area, or near a school.
-            - You’re nearing a sharp or dangerous turn.
-            - There are large speed differences between you and other road users.
-            - There are yellow and red traffic lights.
-    
-        Let go of the gas pedal means reducing some speed.
-        You should let go of the gas pedal:
-            - When you don’t have a full overview of the situation.
-            - When there is no danger.
-            - If the speed limit changes.
-        
-        Do Nothing means continue driving at your current speed.
-        You should do Nothing:
-            - When there is no direct danger.
-            - When there is a proper amount of distance between you and other road users.
+        prompt = f'''Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+
         """
+        Context: 
+        Assume you are driving in {country}. You are driving in {location} at {speed} km/h. The weather condition is {weather}.
+        This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}.
+        This is your rear view: You see the following: {', '.join(REAR)}.
+        """
+        Give your answer in one letter, after which you should provide thorough reasoning.
         
-        Choose one of the three options mentioned above. 
-        Give your answer in one letter.
-        
-        Letter:
-        '''
+        Letter:'''
 
     else:
         prompt = f'''
@@ -367,7 +343,7 @@ def ChatGPT(df, speed, location, weather, compare=False):
         max_tokens=1024,
         n=1,
         stop=None,
-        temperature=0.5,
+        temperature=0.0,
     )
 
     response = completion.choices[0].text

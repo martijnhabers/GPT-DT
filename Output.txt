@@ -1,35 +1,12 @@
+Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
 
-        Assume you are driving in The Netherlands. You are driving in a urban road at 35 km/h. The weather condition is rainy weather.
-        """This is your front view; You see the following cars: There are no cars in sight. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: A digital traffic sign 35.0 meters directly infront of you .
-        This is your rear view: You see the following: There are no significant objects behind you.
-        Given the described situation above, what would you do: "A) Brake", "B) Let go of the gas pedal" or "C) Do nothing". 
-        Consider the following definitions of each possible option:
-           
-        Brake means reducing a significant amount speed.
-        When driving the maximum allowed speed, you should brake if:
-            - You encounter weaker road users, such as children or pedestrians.
-            - There is oncoming traffic on narrow roads.
-            - You’re driving past road work or other obstacles.
-            - You’re on a chaotic or dangerous intersection.
-            - You’re in a busy residential area, or near a school.
-            - You’re nearing a sharp or dangerous turn.
-            - There are large speed differences between you and other road users.
-            - There are yellow and red traffic lights.
-    
-        Let go of the gas pedal means reducing some speed.
-        You should let go of the gas pedal:
-            - When you don’t have a full overview of the situation.
-            - When there is no danger.
-            - If the speed limit changes.
-        
-        Do Nothing means continue driving at your current speed.
-        You should do Nothing:
-            - When there is no direct danger.
-            - When there is a proper amount of distance between you and other road users.
         """
+        Context: 
+        Assume you are driving in The Netherlands. You are driving in a residential road at 30 km/h. The weather condition is rainy weather.
+        This is your front view; You see the following cars: A car 44.0 meters infront of you and to your right, A car 43.0 meters infront of you and to your right. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
+        This is your rear view: You see the following: There are no significant objects behind you.
+        """
+        Give your answer in one letter, after which you should provide thorough reasoning.
         
-        Choose one of the three options mentioned above. 
-        Give your answer in one letter.
-        
-        Letter:
-         B
+        Letter: A
+Reasoning: Since there are no traffic signs, traffic lights, pedestrians, or bicycles in sight, it is safe to assume that the speed limit is 30 km/h. Since the car in front of you is 44.0 meters away, it is best to brake in order to maintain a safe distance and avoid any potential collisions.
