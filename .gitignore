@@ -2,6 +2,7 @@ __pycache__/
 .vscode
 tri-crop
 images/*
+Crops/*
 Yolov5_orientation.pt
 model_remv1.keras
 Output.txt
