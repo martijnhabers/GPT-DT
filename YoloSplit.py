@@ -1,7 +1,7 @@
 from ultralytics import YOLO
 import os
 
-model = YOLO("yolov8ncustom.pt")
+model = YOLO("models/yolov8ncustom.pt")
 
 
 def yolo_tri_crop(image):

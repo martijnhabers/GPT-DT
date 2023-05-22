@@ -164,7 +164,7 @@ def crop_and_save_image(row, df, image_front, fotonaam):
 
 def Traffic_sign(row, df):
     bord_crop = df.iloc[row]["foto_naam"]
-    model = keras.models.load_model("model.keras")  # juiste plek aangeven!
+    model = keras.models.load_model("models/model.keras")  # juiste plek aangeven!
 
     data = []
 
@@ -206,7 +206,7 @@ def Traffic_light(row, df):
 
 def Braking(row, df):
     brake_crop = df.iloc[row]["foto_naam"]
-    model = keras.models.load_model("model_remv1.keras")
+    model = keras.models.load_model("models/model_remv1.keras")
 
     data = []
 
