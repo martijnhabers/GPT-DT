@@ -294,31 +294,34 @@ def ChatGPT(df, speed, location, weather, compare=False):
         Given the described situation above, what would you do: "A) Brake", "B) Let go of the gas pedal" or "C) Do nothing". 
         Consider the following definitions of each possible option:
            
-        Brake means drastically reducing speed for urgent danger.
-        When you’re driving the maximum allowed speed, you usually should brake if you encounter:
-            -Weaker road users, like children or pedestrians.
-            -There is oncoming traffic on narrow roads.
-            -You’re driving past road work or other obstacles.
-            -You’re on a chaotic or dangerous intersection.
-            -You’re in a busy residential area, or near a school.
-            -You’re nearing a sharp or dangerous turn.
-            -Large speed differences between you and other road users.
-            -For yellow and red traffic lights.
+        Brake means reducing a significant amount speed.
+        When driving the maximum allowed speed, you should brake if:
+            - You encounter weaker road users, such as children or pedestrians.
+            - There is oncoming traffic on narrow roads.
+            - You’re driving past road work or other obstacles.
+            - You’re on a chaotic or dangerous intersection.
+            - You’re in a busy residential area, or near a school.
+            - You’re nearing a sharp or dangerous turn.
+            - There are large speed differences between you and other road users.
+            - There are yellow and red traffic lights.
     
         Let go of the gas pedal means reducing some speed.
         You should let go of the gas pedal:
-            -When you don’t have a full overview of the situation.
-            -When there is no danger.
-            -If the speed limit changes.
+            - When you don’t have a full overview of the situation.
+            - When there is no danger.
+            - If the speed limit changes.
         
         Do Nothing means continue driving at your current speed.
-        This is when:
-            -If there is no direct danger.
-            -If there is a proper amount of distance between you and other road users.
+        You should do Nothing:
+            - When there is no direct danger.
+            - When there is a proper amount of distance between you and other road users.
         """
         
         Choose one of the three options mentioned above. 
-        Give your answer in the format of one letter.'''
+        Give your answer in one letter.
+        
+        Letter:
+        '''
 
     else:
         prompt = f'''
