@@ -56,7 +56,7 @@ def dataframe_bouwen(
 ):
     columns_df1 = ["xmin", "ymin", "xmax", "ymax", "predictions", "class"]
 
-    if torch.cuda.is_availabe():
+    if torch.cuda.is_available():
         tri_crop_result[0].boxes = tri_crop_result[0].boxes.cpu()
 
     df1 = pd.DataFrame(vehicles_detected.numpy(), columns=columns_df1)
