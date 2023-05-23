@@ -20,4 +20,7 @@ def vehicle_detection(image):
     #    results.save()
     x = results.xyxy[0]
 
-    return x
+    if torch.cuda.is_available():
+        return x.cpu()
+    else:
+        return x
