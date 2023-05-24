@@ -46,4 +46,6 @@ def owlvit_object_detect(text_weighted, image):
     scores = scores_new
     labels = labels_new
 
+    img.close()
+
     return boxes, labels, scores

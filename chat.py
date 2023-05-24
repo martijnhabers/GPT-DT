@@ -143,6 +143,8 @@ def position(df, image_path, v1, v2):
                 df.loc[a, "class_naam"] = "bicyclist"
             else:
                 df.loc[a, "class_naam"] = "parked bicycle"
+
+    img.close()
     return df
 
 
@@ -289,8 +291,8 @@ def ChatGPT(df, speed, location, weather, compare=False):
     if compare == True:
         prompt = f'''Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
 
-        """
         Context: 
+        """
         Assume you are driving in {country}. You are driving in {location} at {speed} km/h. The weather condition is {weather}.
         This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}.
         This is your rear view: You see the following: {', '.join(REAR)}.
@@ -334,7 +336,7 @@ def ChatGPT(df, speed, location, weather, compare=False):
             C)...
         Then, choose one of them. Show me your choice and give a thorough reasoning on why you chose this. Use the following format:
             Answer: ...
-            Reasoning: ...'''
+            Reasoni ng: ...'''
 
     # Generate a response ChatGPT
     completion = openai.Completion.create(
