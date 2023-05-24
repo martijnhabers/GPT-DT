@@ -55,12 +55,6 @@ def position(df, image_path, v1, v2):
     # plt.axhline(y=h1 * h, color="b", linestyle=":")
     # plt.axhline(y=h2 * h, color="b", linestyle=":")
 
-    # GETTING THE IMAGE UPRIGHT
-    plt.axis([0, w, 0, h])
-    img1 = np.flipud(img)
-    plt.imshow(img1)
-    plt.show()
-
     # ---------        --------      --------POSITIONING---------        ---------         ------------
 
     for b in range(0, len(df.index)):

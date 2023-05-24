@@ -212,9 +212,11 @@ def Traffic_light(row, df):
         df.loc[row, "state"] = prediction_lights
 
 
+model = keras.models.load_model("models/model_remv1.keras")
+
+
 def Braking(row, df):
     brake_crop = df.iloc[row]["foto_naam"]
-    model = keras.models.load_model("models/model_remv1.keras")
 
     data = []
 

@@ -15,16 +15,15 @@ repo = "isl-org/ZoeDepth"
 model_zoe_nk = torch.hub.load(repo, "ZoeD_NK", pretrained=True)
 
 
+##### sample prediction
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+zoe = model_zoe_nk.to(DEVICE)
+
+
 def create_depth_map(image_input):
     filename, extension = os.path.splitext(image_input)
     image_depth_map = filename + ".csv"
     file_path = "Depth_map_csv/" + image_depth_map
-
-    # Zoe_NK
-
-    ##### sample prediction
-    DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-    zoe = model_zoe_nk.to(DEVICE)
 
     # Local file
     image = Image.open("images/" + image_input).convert("RGB")  # load
