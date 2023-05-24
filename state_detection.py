@@ -165,9 +165,13 @@ def crop_and_save_image(row, df, image_front, fotonaam):
     return fotonaam
 
 
+model_traffic_sign = keras.models.load_model(
+    "models/model.keras"
+)  # juiste plek aangeven!
+
+
 def Traffic_sign(row, df):
     bord_crop = df.iloc[row]["foto_naam"]
-    model = keras.models.load_model("models/model.keras")  # juiste plek aangeven!
 
     data = []
 
@@ -179,16 +183,17 @@ def Traffic_sign(row, df):
     X = np.array(data)
     X = X / 255
 
-    pred = np.argmax(model.predict(X), axis=1)
+    pred = np.argmax(model_traffic_sign.predict(X), axis=1)
     print(classes[int(pred)])
     df.loc[row, "state"] = classes[int(pred)]
     return df
 
 
-def Traffic_light(row, df):
-    device = "cpu"
-    model_lights, preprocess = clip.load("ViT-B/32", device=device)
+device = "cpu"
+model_lights, preprocess = clip.load("ViT-B/32", device=device)
 
+
+def Traffic_light(row, df):
     image_lights = (
         preprocess(Image.open(df.iloc[row]["foto_naam"])).unsqueeze(0).to(device)
     )

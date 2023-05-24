@@ -36,4 +36,7 @@ def CLIP_state_detect(image, weather, location, showImg=False):
 
     max_weather = np.argmax(probs_weather)
     max_location = np.argmax(probs_location) + len(probs_weather)
+
+    image.close()
+
     return context[max_weather], context[max_location]

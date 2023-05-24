@@ -21,10 +21,11 @@ classes_rem = {
     1: "remt",
 }
 
+model = keras.models.load_model("models/model_remv1.keras")  # juiste plek aangeven!
+
 
 def Breaking(row, df):
     bord_crop = df.iloc[row]["foto_naam"]
-    model = keras.models.load_model("models/model_rem.keras")  # juiste plek aangeven!
 
     data = []
 
