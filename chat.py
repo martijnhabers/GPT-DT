@@ -321,7 +321,7 @@ def ChatGPT(df, speed, location, weather, compare=False):
 
     @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
     def completion_with_backoff(**kwargs):
-        return openai.Completion.create(**kwargs)
+        return openai.ChatCompletion.create(**kwargs)
 
     completion = completion_with_backoff(
         model="gpt-3.5-turbo",
