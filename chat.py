@@ -210,15 +210,15 @@ def ChatGPT(df, speed, location, weather, compare=False):
 
     # CHOPPING DATAFRAME IN ITEMS
     for a in range(0, len(df.index)):
-        if df.loc[a, "class_naam"] == "car":
+        if df.loc[a, "class_naam"] == "car" or df.loc[a, "class_naam"] == "truck" or df.loc[a, "class_naam"] == "bus" :
             if df.loc[a, "state"][:5] == "front":
-                CARS.append("A car approaching from %s" % (df.loc[a, "position"]))
+                CARS.append("A %s approaching from %s" % (df.loc[a, "class_naam"], df.loc[a, "position"]))
 
             elif df.loc[a, "state"][:4] == "back":
-                CARS.append("A car %s" % (df.loc[a, "position"]))
+                CARS.append("A %s %s" % (df.loc[a, "class_naam"], df.loc[a, "position"]))
 
             else:
-                CARS.append("A car %s" % (df.loc[a, "position"]))  # SIDE OF THE CAR
+                CARS.append("A %s %s" % (df.loc[a, "class_naam"],df.loc[a, "position"]))  # SIDE OF THE CAR
 
         elif df.loc[a, "class_naam"] == "traffic light":
             TL.append("A %s %s" % (df.loc[a, "state"], df.loc[a, "class_naam"]))
