@@ -1,15 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu May  4 12:14:17 2023
-
-@author: emmah
-"""
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Apr 24 10:49:07 2023
-
-@author: Mees
-"""
 import numpy as np
 import cv2
 import pandas as pd
