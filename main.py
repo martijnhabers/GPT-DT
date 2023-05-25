@@ -165,16 +165,19 @@ def run_program(image):
         df = depth_estimation(df, depth_df)
 
     df = position(df, image, 0.375, 0.625)
-    prompt, response = ChatGPT(df, car_speed, location, weather, compare=True)
+    # prompt, response = ChatGPT(df, car_speed, location, weather, compare=True)
 
-    print(prompt)
-    print(response)
+    # print(prompt)
+    # print(response)
 
-    text_file = open("Output.txt", "w")
-    text_file.write(prompt)
-    text_file.write("")
-    text_file.write(response)
-    text_file.close()
+    prompt = "a"
+    response = "A"
+
+    # text_file = open("Output.txt", "w")
+    # text_file.write(prompt)
+    # text_file.write("")
+    # text_file.write(response)
+    # text_file.close()
     # df.to_csv("C:/Users/Mees/Desktop/dataframe_voor_depth.csv")
 
     return prompt, response, car_speed
