@@ -55,12 +55,6 @@ def position(df, image_path, v1, v2):
     # plt.axhline(y=h1 * h, color="b", linestyle=":")
     # plt.axhline(y=h2 * h, color="b", linestyle=":")
 
-    # GETTING THE IMAGE UPRIGHT
-    plt.axis([0, w, 0, h])
-    img1 = np.flipud(img)
-    plt.imshow(img1)
-    plt.show()
-
     # ---------        --------      --------POSITIONING---------        ---------         ------------
 
     for b in range(0, len(df.index)):
@@ -143,6 +137,8 @@ def position(df, image_path, v1, v2):
                 df.loc[a, "class_naam"] = "bicyclist"
             else:
                 df.loc[a, "class_naam"] = "parked bicycle"
+
+    img.close()
     return df
 
 
@@ -287,38 +283,17 @@ def ChatGPT(df, speed, location, weather, compare=False):
     location = location[13:]
 
     if compare == True:
-        prompt = f'''
-        Assume you are driving in {country}. You are driving in {location} at {speed} km/h. The weather condition is {weather}.
-        """This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}.
-        This is your rear view: You see the following: {', '.join(REAR)}.
-        Given the described situation above, what would you do: "A) Brake", "B) Let go of the gas pedal" or "C) Do nothing". 
-        Consider the following definitions of each possible option:
-           
-        Brake means drastically reducing speed for urgent danger.
-        When you’re driving the maximum allowed speed, you usually should brake if you encounter:
-            -Weaker road users, like children or pedestrians.
-            -There is oncoming traffic on narrow roads.
-            -You’re driving past road work or other obstacles.
-            -You’re on a chaotic or dangerous intersection.
-            -You’re in a busy residential area, or near a school.
-            -You’re nearing a sharp or dangerous turn.
-            -Large speed differences between you and other road users.
-            -For yellow and red traffic lights.
-    
-        Let go of the gas pedal means reducing some speed.
-        You should let go of the gas pedal:
-            -When you don’t have a full overview of the situation.
-            -When there is no danger.
-            -If the speed limit changes.
-        
-        Do Nothing means continue driving at your current speed.
-        This is when:
-            -If there is no direct danger.
-            -If there is a proper amount of distance between you and other road users.
+        prompt = f'''Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+
+        Context: 
         """
+        Assume you are driving in {country}. You are driving in {location} at {speed} km/h. The weather condition is {weather}.
+        This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}.
+        This is your rear view: You see the following: {', '.join(REAR)}.
+        """
+        Give your answer in one letter, after which you should provide thorough reasoning.
         
-        Choose one of the three options mentioned above. 
-        Give your answer in the format of one letter.'''
+        Letter:'''
 
     else:
         prompt = f'''
@@ -355,7 +330,7 @@ def ChatGPT(df, speed, location, weather, compare=False):
             C)...
         Then, choose one of them. Show me your choice and give a thorough reasoning on why you chose this. Use the following format:
             Answer: ...
-            Reasoning: ...'''
+            Reasoni ng: ...'''
 
     # Generate a response ChatGPT
     completion = openai.Completion.create(
@@ -364,7 +339,7 @@ def ChatGPT(df, speed, location, weather, compare=False):
         max_tokens=1024,
         n=1,
         stop=None,
-        temperature=0.5,
+        temperature=0.0,
     )
 
     response = completion.choices[0].text
