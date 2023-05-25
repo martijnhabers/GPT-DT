@@ -1,16 +1,7 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon May  8 10:34:19 2023
-
-@author: Mees
-"""
-
 import numpy as np
 import cv2
-import pandas as pd
-import torch
 from tensorflow import keras
-from PIL import Image, ImageDraw
+from PIL import Image
 
 IMG_HEIGHT = 30
 IMG_WIDTH = 30
