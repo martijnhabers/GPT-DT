@@ -4,11 +4,16 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import os
 import openai
+from tenacity import (
+    retry,
+    stop_after_attempt,
+    wait_random_exponential,
+)
 
 # -----------------------------------KEYS AND LOCATIONS-------------------------------------------------
 
 # img = "C:\\Users\Gebruiker\Documents\BEP\\vraag x.jpg"
-openAI_key = "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"
+openAI_key = "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"
 
 # ---------        --------      ------VARIABLES------        ---------         ------------
 
@@ -73,15 +78,6 @@ def position(df, image_path, v1, v2):
 
         # ---------        --------      ------------DEPTH-----------        ---------         ------------
 
-        # if PositionPercH <= h1:
-        #     Position = "Very close"
-        # elif PositionPercH <= h2:
-        #     Position = "Close"
-        # else:
-        #     Position = "Far"
-
-        # df.loc[b, "height_position"] = Position
-
     # TODO explicit description for rear items
 
     for i in range(0, len(df.index)):
@@ -101,27 +97,6 @@ def position(df, image_path, v1, v2):
                     str(df.loc[i, "height_position"])
                     + " meters infront of you and to your right"
                 )
-
-                # if df.loc[i, 'height_position'] == "a few meters away":
-                #     df.loc[i, "position"] = "adjacent to the left"  ####
-                # elif df.loc[i, 'height_position'] == "a few tens of meters away":
-                #     df.loc[i, "position"] = "close left"  ####
-                # elif df.loc[i, 'height_position'] == "in the distance":
-                #     df.loc[i, "position"] = "distanced left"  #####
-
-                # if df.loc[i, 'height_position'] == "a few meters away":
-                #     df.loc[i, "position"] = "straightly infront and very close"  #####
-                # elif df.loc[i, 'height_position'] == "a few tens of meters away":
-                #     df.loc[i, "position"] = "straight infront"  #####
-                # elif df.loc[i, 'height_position'] == "in the distance":
-                #     df.loc[i, "position"] = "straight infront at a distance"  #####
-
-                # if df.loc[i, 'height_position'] == "a few meters away":
-                #     df.loc[i, "position"] = "adjacent to the right"  ####
-                # elif df.loc[i, 'height_position'] == "a few tens of meters away":
-                #     df.loc[i, "position"] = "close right"  ####
-                # elif df.loc[i, 'height_position'] == "in the distance":
-                #     df.loc[i, "position"] = "distanced right"  ####
         else:
             if df.loc[i, "height_position"] < 10:
                 df.loc[i, "position"] = "closely behind you"
@@ -330,18 +305,39 @@ def ChatGPT(df, speed, location, weather, compare=False):
             C)...
         Then, choose one of them. Show me your choice and give a thorough reasoning on why you chose this. Use the following format:
             Answer: ...
-            Reasoni ng: ...'''
+            Reasoning: ...'''
 
     # Generate a response ChatGPT
-    completion = openai.Completion.create(
-        engine=model_engine,
-        prompt=prompt,
+    # completion = openai.Completion.create(
+    #     engine=model_engine,
+    #     prompt=prompt,
+    #     max_tokens=1024,
+    #     n=1,
+    #     stop=None,
+    #     temperature=0.0,
+    # )
+
+    # response = completion.choices[0].text
+
+    @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
+    def completion_with_backoff(**kwargs):
+        return openai.Completion.create(**kwargs)
+
+    completion = completion_with_backoff(
+        model="gpt-3.5-turbo",
         max_tokens=1024,
         n=1,
         stop=None,
-        temperature=0.0,
+        temperature=0,
+        messages=[
+            {
+                "role": "system",
+                "content": "You are ChatGPT, a large language model trained by OpenAI. You are taking the dutch driving exam and wil be presented with what you see around you. Answer as concisely as possible and only take the dutch traffic rules in to consideration.",
+            },
+            {"role": "user", "content": prompt},
+        ],
     )
 
-    response = completion.choices[0].text
+    response = completion["choices"][0]["message"]["content"].strip()
 
     return (prompt, response)
