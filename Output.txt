@@ -1,29 +1,30 @@
-Assume you are driving in The Netherlands. You are driving in a residential road at 30 km/h. The weather condition is snowy weather. This is your front view; You see the following cars: A car 31.0 meters infront of you and to your left, A car 16.0 meters infront of you and to your right. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: A person 17.0 meters infront of you and to your right, A person 17.0 meters infront of you and to your right, A person 17.0 meters infront of you and to your right, A person 15.0 meters directly infront of you, A person 16.0 meters infront of you and to your right, A person 13.0 meters infront of you and to your right. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above. 
 
-Given the described situation above, what would you do: "A) Brake", "B) Let go of the gas pedal" or "C) Do nothing". 
+        Assume you are driving in The Netherlands. You are driving in a urban road at 30 km/h. The weather condition is rainy weather.
+        """This is your front view; You see the following cars: A car 32.0 meters infront of you and to your left, A car approaching from 34.0 meters infront of you and to your left, A car approaching from 27.0 meters infront of you and to your left, A car approaching from 31.0 meters infront of you and to your left, A car 56.0 meters infront of you and to your left, A car approaching from 41.0 meters infront of you and to your left, A car 58.0 meters infront of you and to your left, A car approaching from 38.0 meters infront of you and to your left. You see the following traffic signs: A "Priority road" traffic sign. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: A bicyclist 16.0 meters directly infront of you. Additionally, you see: A digital traffic sign 62.0 meters infront of you and to your left .
+        This is your rear view: You see the following: There are no significant objects behind you.
+        Given the described situation above, what would you do: "A) Brake", "B) Let go of the gas pedal" or "C) Do nothing". 
         Consider the following:
         
         A) Brake = drastically reducing speed for urgent danger.
-            -When you’re driving the maximum allowed speed, you usually should brake if you encounter:
+            -When youï¿½re driving the maximum allowed speed, you usually should brake if you encounter:
                 -Weaker road users, like children or pedestrians.
                 -There is oncoming traffic on narrow roads.
-                -You’re driving past road work or other obstacles.
-                -You’re on a chaotic or dangerous intersection.
-                -You’re in a busy residential area, or near a school.
-                -You’re nearing a sharp or dangerous turn.
+                -Youï¿½re driving past road work or other obstacles.
+                -Youï¿½re on a chaotic or dangerous intersection.
+                -Youï¿½re in a busy residential area, or near a school.
+                -Youï¿½re nearing a sharp or dangerous turn.
                 -Large speed differences between you and other road users.
                 -For yellow and red traffic lights.
         
         B) Let go of the gas pedal = reducing some speed.
+            -When you donï¿½t have a full overview of the situation.
+            -When there is no danger.
             -If the speed limit changes.
         
         C) Do Nothing = continue driving your current speed.
             -If there is no direct danger.
-            -I'm already driving at a safe and appropriate speed for the road and weather conditions.
-            -All the cars around me are maintaining a safe distance and not making any sudden moves.
-            -There are no pedestrians, bicyclists, or other obstacles in my path that require me to slow down or change lanes.
-            -There are no traffic signs or lights indicating that I need to take any specific action
-
+            -If there is a proper amount of distance between you and other road users.
+        """
         
         Show me all possible answers in the following format:
             A)...
@@ -31,13 +32,7 @@ Given the described situation above, what would you do: "A) Brake", "B) Let go o
             C)...
         Then, choose one of them. Show me your choice and give a thorough reasoning on why you chose this. Use the following format:
             Answer: ...
-            Reasoning: ...
+            Reasoning: ...
 
-Also keep in mind that the speedlimit for trucks and busses on the highway is 80km/h and that highways in the netherlands have multiple lanes so vehicles to the left and right are likely to be on another lane. 
-    Answer:
-A) Brake
-B) Let go of the gas pedal
-C) Do nothing
-
-Reasoning: 
-Given the snowy weather conditions and the presence of pedestrians in close proximity, it is important to maintain a safe speed and distance. Therefore, option B) Let go of the gas pedal seems appropriate as it allows for a reduction in speed without the need for sudden braking. Additionally, the absence of traffic signs or lights indicates that there are no immediate dangers that require urgent action.
+Answer: B) Let go of the gas pedal
+Reasoning: The weather condition is rainy, so it is important to reduce speed in order to maintain control of the vehicle and increase safety. There are no traffic lights in sight, and the cars ahead of me are not too close. Therefore, it is safe to reduce some speed by letting go of the gas pedal.
