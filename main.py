@@ -30,7 +30,7 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "vraag 4.jpg"
+image = "vraag 24.jpg"
 
 
 text_weighted = [
@@ -39,11 +39,11 @@ text_weighted = [
     ["a photo of a boat", 0.4],
     ["a photo of a traffic light", 0.45],
     ["a photo of a stop sign", 0.4],
-    ["a photo of a cat", 0.4],
-    ["a photo of a dog", 0.4],
-    ["a photo of a horse", 0.4],
-    ["a photo of a sheep", 0.4],
-    ["a photo of a cow", 0.4],
+    ["a photo of a animal", 0.2],
+    #["a photo of a dog", 0.4],
+    #["a photo of a horse", 0.4],
+    #["a photo of a sheep", 0.4],
+    #["a photo of a cow", 0.4],
     ["a photo of a traffic cone", 0.4],
     ["a photo of a traffic sign", 0.35],
     ["a photo of a ball", 0.4],
@@ -159,7 +159,7 @@ depth_df_file = filename + ".csv"
 if os.path.exists("Depth_map_csv/" + depth_df_file):
     depth_df = pd.read_csv("Depth_map_csv/" + depth_df_file)
     df = depth_estimation(df, depth_df)
-    
+    print("er is geen nieuwe map gemaakt")
 else:
     depth_df = create_depth_map(image)
     df = depth_estimation(df, depth_df)

@@ -206,15 +206,15 @@ def ChatGPT(df, speed, location, weather, compare=False):
 
     # CHOPPING DATAFRAME IN ITEMS
     for a in range(0, len(df.index)):
-        if df.loc[a, "class_naam"] == "car":
+        if df.loc[a, "class_naam"] == "car" or df.loc[a, "class_naam"] == "truck" or df.loc[a, "class_naam"] == "bus" :
             if df.loc[a, "state"][:5] == "front":
-                CARS.append("A car approaching from %s" % (df.loc[a, "position"]))
+                CARS.append("A %s approaching from %s" % (df.loc[a, "class_naam"], df.loc[a, "position"]))
 
             elif df.loc[a, "state"][:4] == "back":
-                CARS.append("A car %s" % (df.loc[a, "position"]))
+                CARS.append("A %s %s" % (df.loc[a, "class_naam"], df.loc[a, "position"]))
 
             else:
-                CARS.append("A car %s" % (df.loc[a, "position"]))  # SIDE OF THE CAR
+                CARS.append("A %s %s" % (df.loc[a, "class_naam"],df.loc[a, "position"]))  # SIDE OF THE CAR
 
         elif df.loc[a, "class_naam"] == "traffic light":
             TL.append("A %s %s" % (df.loc[a, "state"], df.loc[a, "class_naam"]))
@@ -240,8 +240,8 @@ def ChatGPT(df, speed, location, weather, compare=False):
                 )  # SIDE OF THE BICYCLE
 
         else:
-            if df.loc[a, "position"] == "back":
-                OTHERS.append("A %s " % df.loc[a, "class_naam"])
+            # if df.loc[a, "position"] == "back":
+            OTHERS.append("A %s %s " % (df.loc[a, "class_naam"], df.loc[a, "position"]))
 
     # IF empty
     if bool(CARS) == False:
@@ -271,7 +271,7 @@ def ChatGPT(df, speed, location, weather, compare=False):
     openai.api_key = openAI_key
 
     # Set up the model and prompt
-    model_engine = "text-davinci-003"
+    model_engine = "gpt-3.5-turbo"
 
     # WEATHER String split for chat gpt
     weather = weather[13:]
@@ -288,28 +288,7 @@ def ChatGPT(df, speed, location, weather, compare=False):
         prompt3 = f"This is your rear view: You see the following: {', '.join(REAR)}. "
         prompt4 = f"Given the described situation above, what would you do: 'A) Brake', 'B) Let go of the gas pedal' or 'C) Do nothing'. "
         prompt5 = f"Choose one of the 3 options I gave you. Show me just your answer."
-        prompt6 = f"""Consider the following:
-            
-A) Brake (drastically reducing speed for urgent danger)
-When you’re driving the maximum allowed speed, you usually should brake if you encounter:
-Weaker road users, like children or pedestrians
-There is oncoming traffic on narrow roads
-You’re driving past road work or other obstacles
-You’re on a chaotic or dangerous intersection
-You’re in a busy residential area, or near a school
-You’re nearing a sharp or dangerous turn
-Large speed differences between you and other road users
-For yellow and red traffic lights
-
-B) Let go of the gas pedal (reducing some speed)
-When you don’t have a full overview of the situation
-When there is no danger
-If the speed limit changes
-
-C) Do Nothing (continue driving your current speed)
-If there is no direct danger
-If there is a proper amount of distance between you and other road users
-"""
+        prompt6 = f" "
         prompt = prompt1 +''+ prompt2 +''+ prompt3 +''+ prompt4 + prompt5 + '' + prompt6
         
     else:
@@ -319,45 +298,58 @@ If there is a proper amount of distance between you and other road users
         )
         prompt2 = f"This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}. "
         prompt3 = f"This is your rear view: You see the following: {', '.join(REAR)}. "
-        prompt4 = f"These are your possible answers: 'A) Brake ', 'B) Let go of the gas pedal' or 'C) Do nothing'. "
+        prompt4 = f"What should you do? These are your possible answers: 'A) Brake ', 'B) Let go of the gas pedal' or 'C) Do nothing'. "
         prompt5 = f"Show me all possible answers as a list. Then, choose one of them. Show me your choice and give a thorough reasoning on why you chose this "
-        prompt6 = f"""Consider the following:
-            
-A) Brake (drastically reducing speed for urgent danger)
-When you’re driving the maximum allowed speed, you usually should brake if you encounter:
-Weaker road users, like children or pedestrians
-There is oncoming traffic on narrow roads
-You’re driving past road work or other obstacles
-You’re on a chaotic or dangerous intersection
-You’re in a busy residential area, or near a school
-You’re nearing a sharp or dangerous turn
-Large speed differences between you and other road users
-For yellow and red traffic lights
+        prompt6 = f'''
 
-B) Let go of the gas pedal (reducing some speed)
-When you don’t have a full overview of the situation
-When there is no danger
-If the speed limit changes
-
-C) Do Nothing (continue driving your current speed)
-If there is no direct danger
-If there is a proper amount of distance between you and other road users
-"""
-        prompt = prompt1 +''+ prompt2 +''+ prompt3 +''+ prompt4 + prompt5 + '' + prompt6
+Given the described situation above, what would you do: "A) Brake", "B) Let go of the gas pedal" or "C) Do nothing". 
+        Consider the following:
         
-       
-    
-    # Generate a response ChatGPT
-    completion = openai.Completion.create(
-        engine=model_engine,
-        prompt=prompt,
-        max_tokens=1024,
-        n=1,
-        stop=None,
-        temperature=0.5,
-    )
+        A) Brake = drastically reducing speed for urgent danger.
+            -When you’re driving the maximum allowed speed, you usually should brake if you encounter:
+                -Weaker road users, like children or pedestrians.
+                -There is oncoming traffic on narrow roads.
+                -You’re driving past road work or other obstacles.
+                -You’re on a chaotic or dangerous intersection.
+                -You’re in a busy residential area, or near a school.
+                -You’re nearing a sharp or dangerous turn.
+                -Large speed differences between you and other road users.
+                -For yellow and red traffic lights.
+        
+        B) Let go of the gas pedal = reducing some speed.
+            -If the speed limit changes.
+        
+        C) Do Nothing = continue driving your current speed.
+            -If there is no direct danger.
+            -I'm already driving at a safe and appropriate speed for the road and weather conditions.
+            -All the cars around me are maintaining a safe distance and not making any sudden moves.
+            -There are no pedestrians, bicyclists, or other obstacles in my path that require me to slow down or change lanes.
+            -There are no traffic signs or lights indicating that I need to take any specific action
 
-    response = completion.choices[0].text
+        
+        Show me all possible answers in the following format:
+            A)...
+            B)...
+            C)...
+        Then, choose one of them. Show me your choice and give a thorough reasoning on why you chose this. Use the following format:
+            Answer: ...
+            Reasoning: ...
+
+Also keep in mind that the speedlimit for trucks and busses on the highway is 80km/h and that highways in the netherlands have multiple lanes so vehicles to the left and right are likely to be on another lane. 
+    '''
+        prompt = prompt1 + '' + prompt2 + '' + prompt6
+        
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo", 
+            max_tokens=1024,
+            n=1,
+            stop=None,
+            temperature=0,
+            messages = [{"role": "system", "content" : "You are making the dutch driving exam and wil be presented with what you see around you. Answer as concisely as possible and only take the dutch traffic laws in to consideration."},
+            {"role": "user", "content" : prompt}]
+            )
+
+    response = completion['choices'][0]['message']['content'].strip()
     if compare == True:
         prompt = " "
 
