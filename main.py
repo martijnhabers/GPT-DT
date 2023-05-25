@@ -103,12 +103,12 @@ def run_program(image):
     )
 
     # does a zero shot object detection on an image and returns boxes, labels, and scores
-    # owl_boxes, owl_labels, owl_scores = owlvit_object_detect(
-    #     text_weighted,
-    #     os.path.join(dir, "tri-crop/predict/crops/outside-view/" + image),
-    # )
+    owl_boxes, owl_labels, owl_scores = owlvit_object_detect(
+        text_weighted,
+        os.path.join(dir, "tri-crop/predict/crops/outside-view/" + image),
+    )
 
-    owl_boxes, owl_labels, owl_scores = [[], [], []]
+    # owl_boxes, owl_labels, owl_scores = [[], [], []]
 
     weather, location = CLIP_state_detect(
         os.path.join(dir, "tri-crop/predict/crops/outside-view/" + image),
