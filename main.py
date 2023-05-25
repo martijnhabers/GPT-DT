@@ -30,7 +30,7 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-image = "vraag 5.jpg"
+image = "stoplicht_groen.jpg"
 
 
 
