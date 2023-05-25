@@ -148,11 +148,11 @@ def run_program(image):
         elif str(df.iloc[row]["class_naam"]) == "traffic light":
             Traffic_light(row, df)
 
-        # elif (
-        #     str(df.iloc[row]["state"]) == "back"
-        #     and str(df.iloc[row]["class_naam"]) == "car"
-        # ):
-        #     Braking(row, df)
+        elif (
+            str(df.iloc[row]["state"]) == "back"
+            and str(df.iloc[row]["class_naam"]) == "car"
+        ):
+            Braking(row, df)
 
         # change extention from jpg to png for depth estimation
     filename, extension = os.path.splitext(image)
