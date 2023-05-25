@@ -274,7 +274,7 @@ def ChatGPT(df, speed, location, weather, compare=False):
     openai.api_key = openAI_key
 
     # Set up the model and prompt
-    model_engine = "gpt-3.5-turbo"
+    model_engine = "text-davinci-003"
 
     # WEATHER String split for chat gpt
     weather = weather[13:]
