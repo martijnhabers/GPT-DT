@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu May 11 11:57:32 2023
-
-@author: Mees
-"""
 import torch
 from PIL import Image
 import os

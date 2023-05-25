@@ -116,7 +116,8 @@ def run_program(image):
 
     # detecteerd de voertuigen
     image_front = "tri-crop/predict/crops/outside-view/" + image
-    vehicles_detected = vehicle_detection(image_front)
+    # vehicles_detected = vehicle_detection(image_front)
+    vehicles_detected = torch.empty(0, 6)
 
     # maakt het dataframe
     df = dataframe_bouwen(

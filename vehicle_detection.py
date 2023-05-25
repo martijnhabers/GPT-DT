@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon May  8 11:33:27 2023
-
-@author: Mees
-"""
-
 import torch
 import pandas as pd
 
