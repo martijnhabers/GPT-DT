@@ -183,6 +183,3 @@ def run_program(image):
     # df.to_csv("C:/Users/Mees/Desktop/dataframe_voor_depth.csv")
 
     return prompt, response, car_speed
-
-
-run_program("vraag 14.jpg")
