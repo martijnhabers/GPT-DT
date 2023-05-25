@@ -176,15 +176,15 @@ def Traffic_sign(row, df):
     df.loc[row, "state"] = classes[int(pred)]
     return df
 
+def round_up_to_odd(f):
+        f = int(np.ceil(f))
+        return f + 1 if f % 2 == 0 else f
 
 def Traffic_light(row, df):
     
     img = df.iloc[row]["foto_naam"]
     image = cv2.imread(img, cv2.IMREAD_GRAYSCALE)
     height, width = image.shape
-    def round_up_to_odd(f):
-        f = int(np.ceil(f))
-        return f + 1 if f % 2 == 0 else f
         
     binary_1 = round_up_to_odd(width/2)
     binary_2 = -25
@@ -239,9 +239,6 @@ def Traffic_light(row, df):
         # print("licht is groen")
         df.loc[row, "state"] = "Green"
     
-
-model = keras.models.load_model("models/model_remv1.keras")
-
 
 model = keras.models.load_model("models/model_remv1.keras")
 
