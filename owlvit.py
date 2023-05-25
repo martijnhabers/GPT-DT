@@ -26,7 +26,8 @@ def owlvit_object_detect(text_weighted, image):
     img = Image.open(image)
     texts = [x[0] for x in text_weighted]
     inputs = processor(text=texts, images=img, return_tensors="pt")
-    outputs = model(**inputs)
+    with torch.no_grad():
+        outputs = model(**inputs)
 
     # Target image sizes (height, width) to rescale box predictions [batch_size, 2]
     target_sizes = torch.Tensor([img.size[::-1]])
