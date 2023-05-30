@@ -97,6 +97,14 @@ def position(df, image_path, v1, v2):
                     str(df.loc[i, "height_position"])
                     + " meters infront of you and to your right"
                 )
+            
+            if df.loc[i, "class_naam"] == "car" or df.loc[i, "class_naam"] == "truck":
+                if df.loc[i, "state"] == "front":
+                    df.loc[i, "position"] = (
+                        str(df.loc[i, "height_position"])
+                        + " meters"
+                    )
+                    
         else:
             if df.loc[i, "height_position"] < 10:
                 df.loc[i, "position"] = "closely behind you"
@@ -110,8 +118,7 @@ def position(df, image_path, v1, v2):
         if df.loc[a, "class_naam"] == "bicycle":
             if xb1 < df.loc[a, "x_midden"] < xb2:
                 df.loc[a, "class_naam"] = "bicyclist"
-            else:
-                df.loc[a, "class_naam"] = "parked bicycle"
+
 
     img.close()
     return df
@@ -187,7 +194,7 @@ def ChatGPT(df, speed, location, weather, compare=False):
     for a in range(0, len(df.index)):
         if df.loc[a, "class_naam"] == "car" or df.loc[a, "class_naam"] == "truck" or df.loc[a, "class_naam"] == "bus" :
             if df.loc[a, "state"][:5] == "front":
-                CARS.append("A %s approaching from %s" % (df.loc[a, "class_naam"], df.loc[a, "position"]))
+                CARS.append("A %s on the adjacent lane approaching from %s" % (df.loc[a, "class_naam"], df.loc[a, "position"]))
 
             elif df.loc[a, "state"][:4] == "back":
                 CARS.append("A %s %s" % (df.loc[a, "class_naam"], df.loc[a, "position"]))
@@ -198,8 +205,14 @@ def ChatGPT(df, speed, location, weather, compare=False):
         elif df.loc[a, "class_naam"] == "traffic light":
             TL.append("A %s %s" % (df.loc[a, "state"], df.loc[a, "class_naam"]))
 
+            
         elif df.loc[a, "class_naam"] == "traffic sign":
+            if df.loc[a,"state"] == 'Back of traffic sign':
+                break
             TS.append('A "%s" traffic sign' % (df.loc[a, "state"]))
+            
+        elif df.loc[a, "class_naam"] == "stop sign":
+            TS.append('A "Stop" traffic sign')
 
         elif df.loc[a, "class_naam"] == "person":
             PERSON.append("A person %s" % df.loc[a, "position"])
@@ -221,28 +234,6 @@ def ChatGPT(df, speed, location, weather, compare=False):
         else:
             OTHERS.append("A %s %s " % (df.loc[a, "class_naam"], df.loc[a, "position"]))
 
-    # IF empty
-    if bool(CARS) == False:
-        CARS.append("There are no cars in sight")
-
-    if bool(TL) == False:
-        TL.append("There are no traffic lights in sight")
-
-    if bool(TS) == False:
-        TS.append("There are no traffic signs in sight")
-
-    if bool(PERSON) == False:
-        PERSON.append("There are no pedestrians in sight")
-
-    if bool(BICYCLES) == False:
-        BICYCLES.append("There are no bicycles in sight")
-
-    if bool(OTHERS) == False:
-        OTHERS.append("there are no more objects than the ones mentioned above")
-
-    if bool(REAR) == False:
-        REAR.append("There are no significant objects behind you")
-
     # --------------------------------------ChatGPT-------------------------------------------------
 
     # Set up the OpenAI API client
@@ -258,54 +249,120 @@ def ChatGPT(df, speed, location, weather, compare=False):
     location = location[13:]
 
     if compare == True:
-        prompt = f'''Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+        
+#------------------------------------------- NO IF EMPTY ---------------------------------   
+        prompt1 =f'''
+        Choose to either A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+        Context:
+            
+        """
+        Assume you are driving in {country}.
+        You are driving in {location} at {speed} km/h. 
+        The weather condition is {weather}.
+        This is your front view; '''
 
-        Context: 
-        """
-        Assume you are driving in {country}. You are driving in {location} at {speed} km/h. The weather condition is {weather}.
-        This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}.
-        This is your rear view: You see the following: {', '.join(REAR)}.
-        """
+        prompt2 = ''
+        prompt3 = ''
+        prompt4 = ''
+        prompt5 = ''
+        prompt6 = ''
+        prompt7 = ''
+        prompt8 = ''
+        prompt9 = f''' """
         Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:'''
+        Letter: '''
 
-    else:
-        prompt = f'''
-        Assume you are driving in {country}. You are driving in {location} at {speed} km/h. The weather condition is {weather}.
-        """This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}.
-        This is your rear view: You see the following: {', '.join(REAR)}.
-        Given the described situation above, what would you do: "A) Brake", "B) Let go of the gas pedal" or "C) Do nothing". 
-        Consider the following:
+        if bool(CARS) == True:
+            prompt2 = f"You see the following cars: {', '.join(CARS)}." 
+        if bool(TS) == True:
+            prompt3 = f"You see the following traffic signs: {', '.join(TS)}. "
+        if bool(TL) == True:
+            prompt4 = f"You see the following traffic lights: {', '.join(TL)}. "
+        if bool(PERSON) == True:
+            prompt5 = f"You see the following pedestrians: {', '.join(PERSON)}. "
+        if bool(BICYCLES) == True:
+            prompt6 = f"You see the following bicyclist: {', '.join(BICYCLES)}. "
+        if bool(OTHERS) == True:
+            prompt7 = f"Additionally, you see: {', '.join(OTHERS)}. "
+        if bool(REAR) == True:
+            prompt8 = f"This is your rear view: You see the following: {', '.join(REAR)}. "
+
+    
+            
+            
+        prompt = prompt1+prompt2+prompt3+prompt4+prompt5+prompt6+prompt7+prompt8+prompt9
+    
+#---------------------------------------IF EMPTY ----------------------------------------        
+
+    # if bool(CARS) == False:
+    #     CARS.append("There are no cars in sight")
+
+    # if bool(TL) == False:
+    #     TL.append("There are no traffic lights in sight")
+
+    # if bool(TS) == False:
+    #     TS.append("There are no traffic signs in sight")
+
+    # if bool(PERSON) == False:
+    #     PERSON.append("There are no pedestrians in sight")
+
+    # if bool(BICYCLES) == False:
+    #     BICYCLES.append("There are no bicycles in sight")
+
+    # if bool(OTHERS) == False:
+    #     OTHERS.append("there are no more objects than the ones mentioned above")
+
+    # if bool(REAR) == False:
+    #     REAR.append("There are no significant objects behind you")
         
-        A) Brake = drastically reducing speed for urgent danger.
-            -When you’re driving the maximum allowed speed, you usually should brake if you encounter:
-                -Weaker road users, like children or pedestrians.
-                -There is oncoming traffic on narrow roads.
-                -You’re driving past road work or other obstacles.
-                -You’re on a chaotic or dangerous intersection.
-                -You’re in a busy residential area, or near a school.
-                -You’re nearing a sharp or dangerous turn.
-                -Large speed differences between you and other road users.
-                -For yellow and red traffic lights.
+    #     prompt = f'''Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+    #     Context:
+            
+    #     """
+    #     Assume you are driving in {country}. You are driving in {location} at {speed} km/h. The weather condition is {weather}.
+    #     This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}.
+    #     This is your rear view: You see the following: {', '.join(REAR)}.
+    #     """
+    #     Give your answer in one letter, after which you should provide thorough reasoning.
         
-        B) Let go of the gas pedal = reducing some speed.
-            -When you don’t have a full overview of the situation.
-            -When there is no danger.
-            -If the speed limit changes.
+    #     Letter:'''
+
+    # else:
+    #     prompt = f'''
+    #     Assume you are driving in {country}. You are driving in {location} at {speed} km/h. The weather condition is {weather}.
+    #     """This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}.
+    #     This is your rear view: You see the following: {', '.join(REAR)}.
+    #     Given the described situation above, what would you do: "A) Brake", "B) Let go of the gas pedal" or "C) Do nothing". 
+    #     Consider the following:
         
-        C) Do Nothing = continue driving your current speed.
-            -If there is no direct danger.
-            -If there is a proper amount of distance between you and other road users.
-        """
+    #     A) Brake = drastically reducing speed for urgent danger.
+    #         -When you’re driving the maximum allowed speed, you usually should brake if you encounter:
+    #             -Weaker road users, like children or pedestrians.
+    #             -There is oncoming traffic on narrow roads.
+    #             -You’re driving past road work or other obstacles.
+    #             -You’re on a chaotic or dangerous intersection.
+    #             -You’re in a busy residential area, or near a school.
+    #             -You’re nearing a sharp or dangerous turn.
+    #             -Large speed differences between you and other road users.
+    #             -For yellow and red traffic lights.
         
-        Show me all possible answers in the following format:
-            A)...
-            B)...
-            C)...
-        Then, choose one of them. Show me your choice and give a thorough reasoning on why you chose this. Use the following format:
-            Answer: ...
-            Reasoning: ...'''
+    #     B) Let go of the gas pedal = reducing some speed.
+    #         -When you don’t have a full overview of the situation.
+    #         -When there is no danger.
+    #         -If the speed limit changes.
+        
+    #     C) Do Nothing = continue driving your current speed.
+    #         -If there is no direct danger.
+    #         -If there is a proper amount of distance between you and other road users.
+    #     """
+        
+    #     Show me all possible answers in the following format:
+    #         A)...
+    #         B)...
+    #         C)...
+    #     Then, choose one of them. Show me your choice and give a thorough reasoning on why you chose this. Use the following format:
+    #         Answer: ...
+    #         Reasoning: ...'''
 
     # Generate a response ChatGPT
     # completion = openai.Completion.create(

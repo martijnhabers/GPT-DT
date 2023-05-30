@@ -169,14 +169,15 @@ def run_program(image):
     df = position(df, image, 0.375, 0.625)
     prompt, response = ChatGPT(df, car_speed, location, weather, compare=True)
 
-    print(prompt)
-    print(response)
-
     # text_file = open("Output.txt", "w")
     # text_file.write(prompt)
     # text_file.write("")
     # text_file.write(response)
     # text_file.close()
     # df.to_csv("C:/Users/Mees/Desktop/dataframe_voor_depth.csv")
-
+    print(df.loc[:,"state"])
+    print(df.loc[:,"class_naam"])
     return prompt, response, car_speed
+
+d = run_program("Vraag 9.jpg")
+print(d)
