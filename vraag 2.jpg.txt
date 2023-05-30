@@ -1,0 +1,14 @@
+Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+
+        Context: 
+        """
+        Assume you are driving in The Netherlands. You are driving in a highway at 80 km/h. The weather condition is sunny weather.
+        This is your front view; You see the following cars: A car 17.0 meters infront of you and to your left, A car 18.0 meters infront of you and to your left, A truck 33.0 meters infront of you and to your left, A truck 14.0 meters infront of you and to your right. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
+        This is your rear view: You see the following: A car closely behind you.
+        """
+        Give your answer in one letter, after which you should provide thorough reasoning.
+        
+        Letter:A) Brake
+
+Reasoning:
+Based on the given context, there is a car closely behind you, which means that you should maintain a safe distance from the car in front of you to avoid any potential accidents. Additionally, there are several vehicles in front of you, which means that you should be prepared to slow down or stop if necessary. As there are no traffic signs or lights in sight, it is important to be cautious and anticipate any potential hazards. Therefore, it is best to brake to maintain a safe distance from the car in front of you and be prepared for any potential hazards.

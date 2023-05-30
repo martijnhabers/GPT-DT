@@ -1,0 +1,14 @@
+Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+
+        Context: 
+        """
+        Assume you are driving in The Netherlands. You are driving in a highway at 100 km/h. The weather condition is rainy weather.
+        This is your front view; You see the following cars: A truck 27.0 meters directly infront of you, A bus 18.0 meters infront of you and to your left, A car 10.0 meters infront of you and to your left, A truck 10.0 meters infront of you and to your left, A car 46.0 meters directly infront of you. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
+        This is your rear view: You see the following: There are no significant objects behind you.
+        """
+        Give your answer in one letter, after which you should provide thorough reasoning.
+        
+        Letter:A) Brake
+
+Reasoning:
+According to Dutch traffic rules, drivers must maintain a safe following distance from the vehicle in front of them. The recommended safe following distance is at least 2 seconds. However, in rainy weather, this distance should be increased to at least 3 seconds. In this scenario, the driver is following several vehicles at a close distance, which is not safe in rainy weather. Therefore, the driver should brake to increase the following distance and maintain a safe driving distance.

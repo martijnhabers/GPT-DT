@@ -185,15 +185,26 @@ def ChatGPT(df, speed, location, weather, compare=False):
 
     # CHOPPING DATAFRAME IN ITEMS
     for a in range(0, len(df.index)):
-        if df.loc[a, "class_naam"] == "car" or df.loc[a, "class_naam"] == "truck" or df.loc[a, "class_naam"] == "bus" :
+        if (
+            df.loc[a, "class_naam"] == "car"
+            or df.loc[a, "class_naam"] == "truck"
+            or df.loc[a, "class_naam"] == "bus"
+        ):
             if df.loc[a, "state"][:5] == "front":
-                CARS.append("A %s approaching from %s" % (df.loc[a, "class_naam"], df.loc[a, "position"]))
+                CARS.append(
+                    "A %s approaching from %s"
+                    % (df.loc[a, "class_naam"], df.loc[a, "position"])
+                )
 
             elif df.loc[a, "state"][:4] == "back":
-                CARS.append("A %s %s" % (df.loc[a, "class_naam"], df.loc[a, "position"]))
+                CARS.append(
+                    "A %s %s" % (df.loc[a, "class_naam"], df.loc[a, "position"])
+                )
 
             else:
-                CARS.append("A %s %s" % (df.loc[a, "class_naam"],df.loc[a, "position"]))  # SIDE OF THE CAR
+                CARS.append(
+                    "A %s %s" % (df.loc[a, "class_naam"], df.loc[a, "position"])
+                )  # SIDE OF THE CAR
 
         elif df.loc[a, "class_naam"] == "traffic light":
             TL.append("A %s %s" % (df.loc[a, "state"], df.loc[a, "class_naam"]))
@@ -307,8 +318,12 @@ def ChatGPT(df, speed, location, weather, compare=False):
             Answer: ...
             Reasoning: ...'''
 
-    # Generate a response ChatGPT
-    # completion = openai.Completion.create(
+    # @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
+    # def completion_with_backoff(**kwargs):
+    #     return openai.Completion.create(**kwargs)
+
+    # # Generate a response with davinci-003
+    # completion = completion_with_backoff(
     #     engine=model_engine,
     #     prompt=prompt,
     #     max_tokens=1024,
@@ -323,6 +338,7 @@ def ChatGPT(df, speed, location, weather, compare=False):
     def completion_with_backoff(**kwargs):
         return openai.ChatCompletion.create(**kwargs)
 
+    # Response with GPT
     completion = completion_with_backoff(
         model="gpt-3.5-turbo",
         max_tokens=1024,

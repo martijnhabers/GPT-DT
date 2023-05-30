@@ -1,0 +1,14 @@
+Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+
+        Context: 
+        """
+        Assume you are driving in The Netherlands. You are driving in a residential road at 40 km/h. The weather condition is overcast weather.
+        This is your front view; You see the following cars: There are no cars in sight. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
+        This is your rear view: You see the following: There are no significant objects behind you.
+        """
+        Give your answer in one letter, after which you should provide thorough reasoning.
+        
+        Letter:C
+
+Reasoning: 
+Based on the given context, there are no visible objects that require the driver to take any action. The road is clear, and there are no traffic signs, traffic lights, pedestrians, or bicyclists in sight. Therefore, the driver can continue driving at the current speed of 40 km/h without any need to brake or let go of the accelerator. The weather condition is overcast, which may require the driver to be more cautious and attentive, but it does not require any immediate action. The rear view also indicates that there are no significant objects behind the driver, which further confirms that there is no need to take any action at this moment.

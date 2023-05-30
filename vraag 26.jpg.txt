@@ -1,0 +1,14 @@
+Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+
+        Context: 
+        """
+        Assume you are driving in The Netherlands. You are driving in a highway at unknown km/h. The weather condition is overcast weather.
+        This is your front view; You see the following cars: A car 46.0 meters directly infront of you, A truck 22.0 meters directly infront of you, A car 47.0 meters directly infront of you. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
+        This is your rear view: You see the following: A car closely behind you.
+        """
+        Give your answer in one letter, after which you should provide thorough reasoning.
+        
+        Letter:A) Brake
+
+Reasoning:
+Based on the given context, there are no traffic signs or lights in sight, and there are no pedestrians or bicycles in sight. However, there are three vehicles in front of you, with the closest being only 22 meters away. Additionally, there is a car closely behind you. Therefore, it is important to slow down and maintain a safe distance from the vehicles in front of you to avoid a potential collision. Hence, the appropriate action to take in this situation is to brake.

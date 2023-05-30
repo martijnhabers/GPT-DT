@@ -1,0 +1,14 @@
+Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+
+        Context: 
+        """
+        Assume you are driving in The Netherlands. You are driving in a urban road at 40 km/h. The weather condition is sunny weather.
+        This is your front view; You see the following cars: A car 37.0 meters infront of you and to your left, A car 49.0 meters infront of you and to your left, A car 30.0 meters directly infront of you, A bus 11.0 meters infront of you and to your right. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
+        This is your rear view: You see the following: There are no significant objects behind you.
+        """
+        Give your answer in one letter, after which you should provide thorough reasoning.
+        
+        Letter:C) Do Nothing
+
+Reasoning: 
+Based on the given context, there are no immediate hazards or obstacles that require the driver to take any action. The driver is driving at a safe speed of 40 km/h in an urban road with good weather conditions. There are no traffic signs or lights in sight, and no pedestrians or bicycles in the vicinity. The cars and bus in front of the driver are at a safe distance, and there are no significant objects behind the driver. Therefore, the driver can continue driving at the same speed and maintain a safe distance from the other vehicles on the road.

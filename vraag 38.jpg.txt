@@ -1,0 +1,17 @@
+Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+
+        Context: 
+        """
+        Assume you are driving in The Netherlands. You are driving in a urban road at 30 km/h. The weather condition is rainy weather.
+        This is your front view; You see the following cars: A car 8.0 meters directly infront of you, A car 2.0 meters infront of you and to your left, A car 8.0 meters infront of you and to your left, A car 4.0 meters infront of you and to your left, A car approaching from 3.0 meters infront of you and to your left, A car 3.0 meters infront of you and to your left. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
+        This is your rear view: You see the following: There are no significant objects behind you.
+        """
+        Give your answer in one letter, after which you should provide thorough reasoning.
+        
+        Letter:A) Brake
+
+Reasoning:
+- There are multiple cars in front of you, which means you need to maintain a safe distance to avoid collision in case of sudden stops or turns.
+- The weather condition is rainy, which means the road is slippery and it takes longer to stop the car.
+- The car approaching from 3.0 meters in front of you and to your left is a potential hazard, as it may try to change lanes or turn without signaling.
+- Therefore, it is safer to brake and reduce your speed to maintain a safe distance from the cars in front of you and to be prepared for any unexpected situations.

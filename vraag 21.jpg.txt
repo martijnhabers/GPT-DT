@@ -1,0 +1,14 @@
+Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+
+        Context: 
+        """
+        Assume you are driving in The Netherlands. You are driving in a highway at 70 km/h. The weather condition is overcast weather.
+        This is your front view; You see the following cars: A car approaching from 44.0 meters infront of you and to your left, A car 49.0 meters directly infront of you, A car approaching from 27.0 meters infront of you and to your left, A car 55.0 meters directly infront of you. You see the following traffic signs: A "Roundabout mandatory" traffic sign, A "Speed limit (70km/h)" traffic sign. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
+        This is your rear view: You see the following: There are no significant objects behind you.
+        """
+        Give your answer in one letter, after which you should provide thorough reasoning.
+        
+        Letter:B
+
+Reasoning: 
+Based on the given context, there are no immediate dangers or obstacles that require sudden braking. However, there is a car approaching from the left at 44.0 meters and another car approaching from the left at 27.0 meters. It is important to reduce speed and be prepared to stop if necessary. The "Roundabout mandatory" traffic sign indicates that there is a roundabout ahead, which requires drivers to slow down and yield to traffic already in the roundabout. The "Speed limit (70km/h)" traffic sign indicates that the maximum speed limit is 70 km/h, which is the current speed of the vehicle. Therefore, it is recommended to let go of the accelerator and reduce speed to be prepared for any potential hazards ahead.

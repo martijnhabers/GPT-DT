@@ -19,21 +19,20 @@ import os
 # TODO: weg deel toevoegen --> waar de weg is/ hoe die loopt
 
 
-# Remove leftover images from previous run of code.
-if os.path.exists("tri-crop"):
-    shutil.rmtree("tri-crop")
-
-
 dir = os.getcwd()
-
-for f in os.listdir(dir + "/Crops"):
-    os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
 # image = "vraag 4.jpg"
 
 
 def run_program(image):
+    # Remove leftover images from previous run of code.
+    if os.path.exists("tri-crop"):
+        shutil.rmtree("tri-crop")
+
+    for f in os.listdir(dir + "/Crops"):
+        os.remove(os.path.join(dir + "/Crops", f))
+
     text_weighted = [
         ["a photo of a person", 0.25],
         ["a photo of a train", 0.4],
@@ -172,11 +171,10 @@ def run_program(image):
     print(prompt)
     print(response)
 
-    # text_file = open("Output.txt", "w")
-    # text_file.write(prompt)
-    # text_file.write("")
-    # text_file.write(response)
-    # text_file.close()
-    # df.to_csv("C:/Users/Mees/Desktop/dataframe_voor_depth.csv")
+    text_file = open(image + ".txt", "w")
+    text_file.write(prompt)
+    text_file.write("")
+    text_file.write(response)
+    text_file.close()
 
     return prompt, response, car_speed

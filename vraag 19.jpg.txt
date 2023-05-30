@@ -1,0 +1,18 @@
+Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+
+        Context: 
+        """
+        Assume you are driving in The Netherlands. You are driving in a highway at 10 km/h. The weather condition is sunny weather.
+        This is your front view; You see the following cars: A car 23.0 meters directly infront of you, A car 17.0 meters directly infront of you, A truck 12.0 meters infront of you and to your right, A car approaching from 24.0 meters infront of you and to your left, A car approaching from 30.0 meters infront of you and to your left. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
+        This is your rear view: You see the following: A car closely behind you, A car closely behind you.
+        """
+        Give your answer in one letter, after which you should provide thorough reasoning.
+        
+        Letter:A) Brake
+
+Reasoning:
+- Driving at 10 km/h on a highway is not allowed, as the minimum speed limit on highways in The Netherlands is 50 km/h.
+- There are cars closely behind you, which means you should not slow down abruptly without warning, as this could cause a rear-end collision.
+- There are several cars in front of you, which means you should maintain a safe following distance to avoid a collision in case the cars in front of you suddenly brake or slow down.
+- There are no traffic signs or traffic lights in sight, which means you should follow the general traffic rules and regulations, including maintaining a safe speed and distance.
+- Braking is the safest option in this scenario, as it allows you to slow down gradually and maintain a safe distance from the cars in front of you, while also giving the cars behind you enough time to react and slow down as well.

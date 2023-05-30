@@ -1,0 +1,14 @@
+Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+
+        Context: 
+        """
+        Assume you are driving in The Netherlands. You are driving in a residential road at 30 km/h. The weather condition is rainy weather.
+        This is your front view; You see the following cars: A car 44.0 meters infront of you and to your right, A car 43.0 meters infront of you and to your right. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
+        This is your rear view: You see the following: There are no significant objects behind you.
+        """
+        Give your answer in one letter, after which you should provide thorough reasoning.
+        
+        Letter:C
+
+Reasoning: 
+Based on the given context, there are no significant objects or hazards in sight that require immediate action. The car is already driving at the appropriate speed limit for the residential road and there are no traffic signs or lights indicating any changes. Additionally, there are no pedestrians or bicycles in sight. Therefore, the driver should continue driving at the same speed and maintain a safe distance from the cars in front of them.

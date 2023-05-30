@@ -1,0 +1,14 @@
+Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+
+        Context: 
+        """
+        Assume you are driving in The Netherlands. You are driving in a provincial road at 25 km/h. The weather condition is snowy weather.
+        This is your front view; You see the following cars: A truck approaching from 17.0 meters directly infront of you. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
+        This is your rear view: You see the following: There are no significant objects behind you.
+        """
+        Give your answer in one letter, after which you should provide thorough reasoning.
+        
+        Letter:A) Brake
+
+Reasoning: 
+Driving in snowy weather can be dangerous as it can reduce visibility and make the road slippery. Additionally, the truck approaching from 17.0 meters directly in front of you can be a potential hazard. Therefore, it is important to reduce your speed and maintain a safe distance from the truck. Braking will help you slow down and maintain a safe distance from the truck.

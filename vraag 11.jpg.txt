@@ -1,0 +1,13 @@
+Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+
+        Context: 
+        """
+        Assume you are driving in The Netherlands. You are driving in a highway at 60 km/h. The weather condition is overcast weather.
+        This is your front view; You see the following cars: A car approaching from 20.0 meters infront of you and to your left. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
+        This is your rear view: You see the following: There are no significant objects behind you.
+        """
+        Give your answer in one letter, after which you should provide thorough reasoning.
+        
+        Letter:C
+
+Reasoning: Based on the given context, there are no immediate hazards or obstacles that require the driver to take any action. The car in front is at a safe distance of 20 meters and there are no traffic signs or lights indicating any changes in speed or direction. Additionally, there are no pedestrians, bicyclists, or significant objects in sight. Therefore, the driver can continue driving at the current speed of 60 km/h without any need to brake or let go of the accelerator.

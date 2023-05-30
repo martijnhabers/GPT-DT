@@ -1,0 +1,14 @@
+Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+
+        Context: 
+        """
+        Assume you are driving in The Netherlands. You are driving in a highway at 90 km/h. The weather condition is rainy weather.
+        This is your front view; You see the following cars: A car 27.0 meters directly infront of you, A car 28.0 meters directly infront of you, A car 9.0 meters infront of you and to your right, A bus 9.0 meters infront of you and to your right. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
+        This is your rear view: You see the following: There are no significant objects behind you.
+        """
+        Give your answer in one letter, after which you should provide thorough reasoning.
+        
+        Letter:A) Brake
+
+Reasoning:
+According to Dutch traffic rules, the minimum safe following distance on a highway is 2 seconds. At a speed of 90 km/h, this translates to a distance of approximately 50 meters. However, in the given context, the closest car is only 9 meters in front of you, which is well below the safe following distance. Additionally, the weather condition is rainy, which means that the road surface is slippery and it takes longer to stop the vehicle. Therefore, it is necessary to slow down and increase the distance between your car and the cars in front of you to ensure safe driving. Hence, the correct answer is A) Brake.
