@@ -1,14 +1,11 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a residential road at 30 km/h. The weather condition is snowy weather.
+This is your front view: You see the following cars: A car 31.0 meters infront of you and to your left, A car 16.0 meters infront of you and to your right.You see the following pedestrians: A person 17.0 meters infront of you and to your right, A person 17.0 meters infront of you and to your right, A person 17.0 meters infront of you and to your right, A person 15.0 meters directly infront of you, A person 16.0 meters infront of you and to your right, A person 13.0 meters infront of you and to your right.  """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: A) Brake
 
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a residential road at 30 km/h. The weather condition is snowy weather.
-        This is your front view; You see the following cars: A car 31.0 meters infront of you and to your left, A car 16.0 meters infront of you and to your right. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: A person 17.0 meters infront of you and to your right, A person 17.0 meters infront of you and to your right, A person 17.0 meters infront of you and to your right, A person 15.0 meters directly infront of you, A person 16.0 meters infront of you and to your right, A person 13.0 meters infront of you and to your right. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:A) Brake
-
-Reasoning: 
-Driving in snowy weather can reduce the grip of the tires on the road, making it harder to stop the car quickly. Additionally, there are multiple pedestrians in front of the car, which increases the risk of an accident. Therefore, it is important to reduce the speed of the car and be prepared to stop quickly if necessary. The car in front of you is also very close, so it is important to maintain a safe following distance. Braking will help to reduce the speed of the car and increase the distance to the car in front of you, reducing the risk of a collision.
+Reasoning:
+Driving in snowy weather can reduce visibility and increase the stopping distance of the vehicle. In this scenario, there are multiple pedestrians in front of the vehicle, some of which are relatively close. As a driver, it is important to maintain a safe distance from pedestrians and be prepared to stop the vehicle if necessary. Therefore, it is recommended to brake the vehicle to ensure the safety of the pedestrians and the driver. Additionally, there are cars in front of the vehicle, which may require sudden braking, so it is better to be cautious and prepared.

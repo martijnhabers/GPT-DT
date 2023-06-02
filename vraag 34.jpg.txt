@@ -1,13 +1,11 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a highway at 60 km/h. The weather condition is foggy weather.
+This is your front view: You see the following cars: A car 32.0 meters directly infront of you, A bus 32.0 meters directly infront of you. """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: A) Brake
 
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a highway at 60 km/h. The weather condition is overcast weather.
-        This is your front view; You see the following cars: A car 32.0 meters directly infront of you, A bus 32.0 meters directly infront of you. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:C
-
-Reasoning: Based on the given context, there are no immediate hazards or obstacles that require the driver to take any action. The car is driving at a safe speed of 60 km/h and there are no traffic signs or lights that require the driver to slow down or stop. Additionally, there are no pedestrians, bicyclists, or significant objects in sight that require the driver to take any action. Therefore, the driver should continue driving at the current speed and maintain a safe distance from the vehicles in front of them.
+Reasoning:
+In the given context, the visibility is low due to foggy weather. As per Dutch traffic rules, the driver should maintain a safe distance from the vehicle in front of them. The safe distance is calculated based on the speed of the vehicle and the weather conditions. In this case, the distance between the car and the bus in front of the driver is only 32.0 meters, which is not a safe distance to maintain at a speed of 60 km/h in foggy weather. Therefore, the driver should apply the brakes to maintain a safe distance from the vehicles in front of them.

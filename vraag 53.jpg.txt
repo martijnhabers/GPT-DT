@@ -1,19 +1,15 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
-
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a urban road at 40 km/h. The weather condition is overcast weather.
-        This is your front view; You see the following cars: A car 44.0 meters directly infront of you, A car approaching from 14.0 meters infront of you and to your left, A car approaching from 50.0 meters directly infront of you, A car 35.0 meters directly infront of you, A car approaching from 52.0 meters directly infront of you, A car approaching from 45.0 meters directly infront of you, A car 48.0 meters directly infront of you. You see the following traffic signs: A "Roundabout mandatory" traffic sign, A "Bicycle lane" traffic sign. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: A bicyclist 28.0 meters infront of you and to your right, A bicyclist 40.0 meters infront of you and to your right, A bicyclist 31.0 meters infront of you and to your right. Additionally, you see: there are no more objects than the ones mentioned above.
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:A) Brake
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a urban road at 40 km/h. The weather condition is overcast weather.
+This is your front view: You see the following cars: A car 44.0 meters directly infront of you, A car on the adjacent lane approaching from 14.0 meters, A car on the adjacent lane approaching from 50.0 meters, A car 35.0 meters directly infront of you, A car on the adjacent lane approaching from 52.0 meters, A car on the adjacent lane approaching from 45.0 meters, A car 48.0 meters directly infront of you.You see the following traffic signs: A "Roundabout mandatory" traffic sign, A "Bicycle lane" traffic sign. You see the following bicyclist: A bicyclist 28.0 meters infront of you and to your right, A bicyclist 40.0 meters infront of you and to your right, A bicyclist 31.0 meters infront of you and to your right.  """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: A) Brake
 
 Reasoning:
-- There are multiple cars approaching from different directions and distances, which could potentially cause a hazard if any of them make sudden movements.
-- The "Roundabout mandatory" traffic sign indicates that there is a roundabout ahead, which requires drivers to slow down and potentially stop if there is traffic already on the roundabout.
-- The "Bicycle lane" traffic sign indicates that there may be bicyclists on the road, which require drivers to be cautious and give them enough space.
-- The overcast weather condition may affect visibility, making it harder to see any potential hazards.
-- The speed limit in urban roads in The Netherlands is usually 50 km/h, but the current speed of 40 km/h may still be too fast given the number of cars and bicyclists in the vicinity.
-- Therefore, it is safer to brake and slow down to a speed that allows for better control and reaction time in case any of the other vehicles or bicyclists make sudden movements.
+- The car directly in front of you is only 35 meters away, which is less than the recommended 2-second following distance at 40 km/h. Therefore, you should slow down and increase the distance between you and the car in front of you.
+- The "Roundabout mandatory" traffic sign indicates that there is a roundabout ahead, which requires you to slow down and yield to traffic already on the roundabout.
+- The "Bicycle lane" traffic sign indicates that there is a designated lane for bicycles, which means you should be aware of any bicyclists in the area and give them enough space.
+- There are multiple bicyclists in front of you and to your right, which means you should be cautious and give them enough space to maneuver.
+- The overcast weather condition may affect visibility, so it's important to be extra cautious and alert.

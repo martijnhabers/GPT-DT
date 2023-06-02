@@ -1,22 +1,17 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
-
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a urban road at 40 km/h. The weather condition is sunny weather.
-        This is your front view; You see the following cars: A car approaching from 4.0 meters infront of you and to your left, A car 3.0 meters infront of you and to your right, A car approaching from 4.0 meters infront of you and to your left, A car 2.0 meters infront of you and to your right, A truck 5.0 meters directly infront of you, A car approaching from 4.0 meters infront of you and to your left. You see the following traffic signs: A "Traffic signals" traffic sign, A "Stop" traffic sign, A "Priority road" traffic sign. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: A person 3.0 meters directly infront of you. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:A) Brake
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a urban road at 40 km/h. The weather condition is sunny weather.
+This is your front view: You see the following cars: A car on the adjacent lane approaching from 4.0 meters, A car 3.0 meters infront of you and to your right, A car on the adjacent lane approaching from 4.0 meters, A car 2.0 meters infront of you and to your right, A truck 5.0 meters directly infront of you, A car on the adjacent lane approaching from 4.0 meters.You see the following traffic signs: A "Traffic signals" traffic sign, A "Stop" traffic sign, A "Priority road" traffic sign. You see the following pedestrians: A person 3.0 meters directly infront of you.  """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: A) Brake
 
 Reasoning:
-- There is a car approaching from 4.0 meters in front of you and to your left, which means there is a risk of collision if you continue driving at the same speed.
-- There is a person 3.0 meters directly in front of you, which means you need to be prepared to stop in case the person crosses the road.
-- There is a "Stop" traffic sign, which means you need to come to a complete stop at the stop line or before entering the intersection.
-- There is a "Traffic signals" traffic sign, which means there may be traffic lights ahead that you need to obey.
-- There is a "Priority road" traffic sign, which means you need to give priority to vehicles coming from the right at intersections.
-- There are no traffic lights in sight, which means you need to pay extra attention to other traffic signs and signals.
-- There are no bicycles in sight, which means you don't need to worry about giving them extra space.
-- There are no significant objects behind you, which means you don't need to worry about vehicles approaching from behind.
-- Therefore, it is safest to brake and be prepared to stop at the stop line or before entering the intersection, and to give priority to vehicles coming from the right.
+- The "Traffic signals" traffic sign indicates that there may be traffic lights ahead, which could turn red at any moment. Therefore, it is important to be prepared to stop.
+- The "Stop" traffic sign indicates that there is a mandatory stop ahead. Therefore, it is necessary to slow down and be prepared to stop.
+- The "Priority road" traffic sign indicates that you are not on a priority road, which means that you should give priority to vehicles coming from the right. Therefore, it is important to be prepared to stop if necessary.
+- The car on the adjacent lane approaching from 4.0 meters and the car on the adjacent lane approaching from 4.0 meters are potential hazards, as they may change lanes or turn without warning. Therefore, it is important to be prepared to stop if necessary.
+- The truck 5.0 meters directly in front of you is a potential hazard, as it may suddenly brake or turn without warning. Therefore, it is important to be prepared to stop if necessary.
+- The person 3.0 meters directly in front of you is a pedestrian, and it is important to be prepared to stop if necessary to avoid hitting them. 
+- Overall, there are multiple potential hazards and traffic signs indicating the need to be prepared to stop, which is why the best option is to brake.

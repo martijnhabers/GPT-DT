@@ -1,19 +1,11 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
-
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a urban road at 40 km/h. The weather condition is rainy weather.
-        This is your front view; You see the following cars: A car approaching from 20.0 meters infront of you and to your left, A truck 69.0 meters directly infront of you, A car 41.0 meters directly infront of you, A car 32.0 meters directly infront of you, A car 15.0 meters infront of you and to your right, A truck 22.0 meters infront of you and to your left, A car 24.0 meters directly infront of you, A car 6.0 meters infront of you and to your right, A car 61.0 meters directly infront of you, A car 19.0 meters directly infront of you, A car 49.0 meters directly infront of you, A car approaching from 20.0 meters infront of you and to your left, A bus 22.0 meters infront of you and to your left. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:A) Brake
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a urban road at 40 km/h. The weather condition is rainy weather.
+This is your front view: You see the following cars: A car on the adjacent lane approaching from 20.0 meters, A truck 69.0 meters directly infront of you, A car 41.0 meters directly infront of you, A car 32.0 meters directly infront of you, A car 15.0 meters infront of you and to your right, A truck 22.0 meters infront of you and to your left, A car 24.0 meters directly infront of you, A car 6.0 meters infront of you and to your right, A car 61.0 meters directly infront of you, A car 19.0 meters directly infront of you, A car 49.0 meters directly infront of you, A car on the adjacent lane approaching from 20.0 meters, A bus 22.0 meters infront of you and to your left. """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: A) Brake
 
 Reasoning:
-- The car approaching from 20.0 meters in front of you and to your left may potentially cut in front of you, so it's best to be prepared to brake if necessary.
-- The rainy weather may cause the road to be slippery, so it's important to maintain a safe distance from the vehicles in front of you to avoid a collision.
-- The truck 69.0 meters directly in front of you may obstruct your view of the road ahead, so it's important to be prepared to brake if necessary.
-- The car 41.0 meters directly in front of you, the car 32.0 meters directly in front of you, the truck 22.0 meters in front of you and to your left, the car 24.0 meters directly in front of you, the car 61.0 meters directly in front of you, the car 19.0 meters directly in front of you, the car 49.0 meters directly in front of you, and the bus 22.0 meters in front of you and to your left are all vehicles that you should maintain a safe distance from to avoid a collision.
-- The car 15.0 meters in front of you and to your right and the car 6.0 meters in front of you and to your right are vehicles that you should also maintain a safe distance from to avoid a collision.
-- There are no traffic signs or traffic lights in sight, so you should be extra cautious and prepared to brake if necessary.
+According to the given context, the weather condition is rainy, which means the road surface is slippery, and it will take longer to stop the vehicle. Also, there are several vehicles in front of you, which means you need to maintain a safe distance to avoid any collision. Therefore, it is advisable to apply the brakes to slow down the vehicle and maintain a safe distance from the vehicles in front of you.

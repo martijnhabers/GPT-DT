@@ -1,14 +1,11 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a highway at unknown km/h. The weather condition is overcast weather.
+This is your front view: You see the following cars: A car 22.0 meters directly infront of you, A truck 18.0 meters infront of you and to your left, A truck 26.0 meters directly infront of you, A truck 50.0 meters infront of you and to your left.Additionally, you see: A digital traffic sign 22.0 meters infront of you and to your left .  """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: A) Brake
 
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a highway at unknown km/h. The weather condition is overcast weather.
-        This is your front view; You see the following cars: A car 22.0 meters directly infront of you, A truck 18.0 meters infront of you and to your left, A truck 26.0 meters directly infront of you, A truck 50.0 meters infront of you and to your left. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: A digital traffic sign 22.0 meters infront of you and to your left .
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:B
-
-Reasoning: 
-Since there are no traffic signs or lights in sight, and no pedestrians or bicycles in sight, the only relevant information is the presence of other vehicles on the road. The car and trucks in front of you are at a safe distance, so there is no need to brake. However, it is always a good idea to reduce speed when driving in overcast weather conditions, so letting go of the accelerator is a safe and appropriate action to take. The digital traffic sign in front of you may display important information, so reducing speed will give you more time to read and react to it.
+Reasoning:
+According to Dutch traffic rules, drivers are required to maintain a safe following distance from the vehicle in front of them. The recommended safe following distance is at least 2 seconds. In this scenario, there are multiple vehicles in front of the driver, and the distance between them is not specified. Additionally, there is a digital traffic sign in front of the driver, which could indicate a change in speed limit or other important information. Therefore, it is important for the driver to slow down and maintain a safe following distance to avoid any potential collisions or violations of traffic rules. Hence, the appropriate action would be to brake.

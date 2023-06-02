@@ -1,14 +1,11 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a residential road at 30 km/h. The weather condition is overcast weather.
+This is your front view: You see the following cars: A car 20.0 meters directly infront of you, A car 6.0 meters infront of you and to your left, A car 34.0 meters directly infront of you, A car 27.0 meters directly infront of you, A car 21.0 meters infront of you and to your right, A car 29.0 meters directly infront of you, A car 24.0 meters infront of you and to your right.You see the following bicyclist: A bicyclist 12.0 meters infront of you and to your right. Additionally, you see: A bicycle 12.0 meters infront of you and to your right .  """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: A) Brake
 
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a residential road at 30 km/h. The weather condition is overcast weather.
-        This is your front view; You see the following cars: A car 20.0 meters directly infront of you, A car 6.0 meters infront of you and to your left, A car 34.0 meters directly infront of you, A car 27.0 meters directly infront of you, A car 21.0 meters infront of you and to your right, A car 29.0 meters directly infront of you, A car 24.0 meters infront of you and to your right. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: A bicyclist 12.0 meters infront of you and to your right. Additionally, you see: A parked bicycle 12.0 meters infront of you and to your right .
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:B
-
-Reasoning: 
-Based on the given context, there are several cars in front of you, a bicyclist and a parked bicycle to your right. It is important to maintain a safe distance from the cars in front of you and be prepared to slow down or stop if necessary. As there are no traffic signs or lights in sight, it is important to be aware of your surroundings and adjust your speed accordingly. Letting go of the accelerator will allow you to slow down and maintain a safe distance from the cars in front of you and the bicyclist to your right. Additionally, it is important to be aware of the parked bicycle and adjust your speed accordingly to avoid any potential collisions.
+Reasoning:
+According to Dutch traffic rules, a driver must maintain a safe following distance from the vehicle in front of them. The recommended safe following distance is at least 2 seconds. In this scenario, there are multiple vehicles and a bicyclist in close proximity to the driver, which increases the risk of a collision. Therefore, the driver should brake to maintain a safe following distance and avoid a potential accident. Additionally, the overcast weather condition may affect visibility, making it even more important to maintain a safe following distance.

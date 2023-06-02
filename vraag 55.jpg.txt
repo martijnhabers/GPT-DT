@@ -1,14 +1,11 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a residential road at 30 km/h. The weather condition is overcast weather.
+This is your front view: You see the following cars: A car 19.0 meters directly infront of you, A car on the adjacent lane approaching from 18.0 meters, A car 10.0 meters infront of you and to your right, A car on the adjacent lane approaching from 35.0 meters, A car on the adjacent lane approaching from 28.0 meters, A car on the adjacent lane approaching from 12.0 meters, A car 16.0 meters infront of you and to your right, A truck 16.0 meters infront of you and to your right. """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: A) Brake
 
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a residential road at 30 km/h. The weather condition is overcast weather.
-        This is your front view; You see the following cars: A car 19.0 meters directly infront of you, A car approaching from 18.0 meters infront of you and to your left, A car 10.0 meters infront of you and to your right, A car approaching from 35.0 meters directly infront of you, A car approaching from 28.0 meters directly infront of you, A car approaching from 12.0 meters infront of you and to your left, A car 16.0 meters infront of you and to your right, A truck 16.0 meters infront of you and to your right. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:B
-
-Reasoning: 
-Based on the given context, there are several cars in front of you, some of which are approaching. It is important to maintain a safe distance from the cars in front of you to avoid any potential collisions. As there are no traffic signs or lights in sight, it is important to be cautious and aware of your surroundings. Since you are driving at a speed of 30 km/h, it is safe to let go of the accelerator and slow down to maintain a safe distance from the cars in front of you. Additionally, the weather condition is overcast, which may affect visibility, so it is important to be extra cautious and alert. Therefore, the correct answer is B) Let go of the accelerator.
+Reasoning:
+According to Dutch traffic rules, a driver must maintain a safe following distance from the vehicle in front of them. The recommended safe following distance is at least 2 seconds. In this scenario, there are several vehicles in close proximity to the driver, including a car only 10 meters in front of them. Therefore, the driver should brake to increase the distance between their vehicle and the one in front of them. Additionally, the presence of overcast weather may reduce visibility and increase the stopping distance required, making it even more important to maintain a safe following distance.

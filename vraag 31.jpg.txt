@@ -1,14 +1,11 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
-
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a urban road at 35 km/h. The weather condition is overcast weather.
-        This is your front view; You see the following cars: A car approaching from 57.0 meters directly infront of you. You see the following traffic signs: A "Pedestrian crossing" traffic sign. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:A) Brake
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a urban road at 35 km/h. The weather condition is overcast weather.
+This is your front view: You see the following cars: A car on the adjacent lane approaching from 57.0 meters.You see the following traffic signs: A "Pedestrian crossing" traffic sign.  """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: A) Brake
 
 Reasoning:
-According to Dutch traffic rules, when approaching a pedestrian crossing, the driver must give priority to pedestrians who are already on the crossing or who are about to enter it. In this scenario, there is a "Pedestrian crossing" traffic sign, which means that there may be pedestrians crossing or about to cross the road. Therefore, it is important to slow down and be prepared to stop if necessary. Additionally, there is a car approaching from directly in front of you, which further increases the need to slow down and be prepared to stop. The overcast weather condition may also affect visibility, making it harder to see pedestrians or other potential hazards. Therefore, it is recommended to brake in this scenario to ensure the safety of all road users.
+According to Dutch traffic rules, when approaching a pedestrian crossing, the driver must give priority to pedestrians who are already on the crossing or who are about to enter it. Therefore, it is important to slow down and be prepared to stop if necessary. In this scenario, there is a pedestrian crossing sign, which means that there may be pedestrians crossing or about to cross the road. Additionally, there is a car approaching from the adjacent lane, which may also be slowing down or stopping for the pedestrian crossing. Therefore, it is important to brake to ensure the safety of pedestrians and other drivers. The overcast weather condition may also affect visibility, making it even more important to slow down and be cautious.

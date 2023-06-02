@@ -1,14 +1,11 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a urban road at 50 km/h. The weather condition is overcast weather.
+This is your front view: You see the following cars: A car 16.0 meters infront of you and to your right, A car 23.0 meters infront of you and to your right, A car on the adjacent lane approaching from 40.0 meters, A car 42.0 meters infront of you and to your right, A car on the adjacent lane approaching from 44.0 meters, A car on the adjacent lane approaching from 30.0 meters, A car 26.0 meters infront of you and to your right, A car 43.0 meters infront of you and to your right, A car 43.0 meters infront of you and to your right. """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: A) Brake
 
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a urban road at 50 km/h. The weather condition is overcast weather.
-        This is your front view; You see the following cars: A car 16.0 meters infront of you and to your right, A car 23.0 meters infront of you and to your right, A car approaching from 40.0 meters infront of you and to your left, A car 42.0 meters infront of you and to your right, A car approaching from 44.0 meters directly infront of you, A car approaching from 30.0 meters infront of you and to your left, A car 26.0 meters infront of you and to your right, A car 43.0 meters infront of you and to your right, A car 43.0 meters infront of you and to your right. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:C
-
-Reasoning: 
-Based on the given context, there are no immediate hazards or obstacles that require the driver to take any action. The road conditions are normal, and there are no traffic signs or lights that require the driver to slow down or stop. There are no pedestrians or bicycles in sight, and there are no significant objects behind the driver. Therefore, the driver can continue driving at the current speed of 50 km/h without any need to brake or let go of the accelerator.
+Reasoning:
+Based on the given context, there are several cars in front of and approaching the vehicle from adjacent lanes. It is important to maintain a safe distance from the cars in front and to be aware of the approaching cars from the adjacent lanes. The overcast weather condition may also affect visibility. Therefore, it is recommended to brake to reduce the speed and maintain a safe distance from the cars in front. This will also allow the driver to have more time to react to any sudden changes in the traffic situation.

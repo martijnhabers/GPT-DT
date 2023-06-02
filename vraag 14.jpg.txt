@@ -1,14 +1,10 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a residential road at 30 km/h. The weather condition is sunny weather.
+This is your front view:  """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: C
 
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a residential road at 30 km/h. The weather condition is sunny weather.
-        This is your front view; You see the following cars: There are no cars in sight. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:C
-
-Reasoning: 
-Based on the given context, there are no obstacles or hazards in sight, and you are driving at the appropriate speed limit for a residential road. Therefore, there is no need to brake or let go of the accelerator. Doing nothing is the correct action to take in this scenario. However, it is important to remain vigilant and aware of your surroundings, as unexpected hazards can arise at any time.
+Reasoning: Based on the given context, there is no immediate danger or obstacle in front of the vehicle that requires the driver to take any action. The driver is already driving at the appropriate speed limit for a residential road and the weather condition is favorable. Therefore, the driver can continue driving without any need to brake or let go of the accelerator.

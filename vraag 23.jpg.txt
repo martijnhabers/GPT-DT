@@ -1,13 +1,11 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a highway at 80 km/h. The weather condition is overcast weather.
+This is your front view: You see the following cars: A car 16.0 meters infront of you and to your right, A car 56.0 meters infront of you and to your right, A car on the adjacent lane approaching from 34.0 meters, A car 61.0 meters infront of you and to your right, A car 65.0 meters infront of you and to your right. """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: B
 
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a highway at 80 km/h. The weather condition is overcast weather.
-        This is your front view; You see the following cars: A car 16.0 meters infront of you and to your right, A car 56.0 meters infront of you and to your right, A car approaching from 34.0 meters infront of you and to your left, A car 61.0 meters infront of you and to your right, A car 65.0 meters infront of you and to your right. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:C
-
-Reasoning: Based on the given context, there are no immediate hazards or obstacles that require the driver to take any action. The driver is already driving at a safe speed of 80 km/h and there are no traffic signs or lights that require the driver to slow down or stop. There are also no pedestrians or bicycles in sight. The cars in front of the driver are at a safe distance and there are no significant objects behind the driver. Therefore, the driver can continue driving at the same speed and take no action.
+Reasoning:
+Based on the given context, there are no immediate hazards or obstacles that require sudden braking. However, it is important to maintain a safe distance from the cars in front of you to avoid collision in case of sudden stops. Therefore, it is recommended to let go of the accelerator and maintain a safe distance from the cars in front of you. Additionally, it is important to keep an eye on the car approaching from the adjacent lane and adjust your speed accordingly to avoid collision.

@@ -1,20 +1,16 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
-
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a urban road at 20 km/h. The weather condition is overcast weather.
-        This is your front view; You see the following cars: A car approaching from 30.0 meters directly infront of you, A car 16.0 meters directly infront of you, A car approaching from 51.0 meters directly infront of you. You see the following traffic signs: A "Bicycle lane" traffic sign, A "Back of traffic sign" traffic sign, A "Roundabout mandatory" traffic sign. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: A parked bicycle 33.0 meters infront of you and to your left , A stop sign 18.0 meters infront of you and to your right .
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:A) Brake
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a urban road at 20 km/h. The weather condition is overcast weather.
+This is your front view: You see the following cars: A car on the adjacent lane approaching from 30.0 meters, A car 16.0 meters directly infront of you, A car on the adjacent lane approaching from 51.0 meters.You see the following traffic signs: A "Stop" traffic sign, A "Bicycle lane" traffic sign. Additionally, you see: A bicycle 33.0 meters infront of you and to your left .  """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: A) Brake
 
 Reasoning:
-- A car is approaching from 16.0 meters directly in front of you, which is a very close distance. Therefore, you should slow down or stop to avoid a collision.
-- There is a stop sign 18.0 meters in front of you and to your right, which means you should come to a complete stop before proceeding.
-- There is a parked bicycle 33.0 meters in front of you and to your left, which could potentially obstruct your path. Slowing down or stopping would give you more time to assess the situation and avoid any accidents.
-- The weather condition is overcast, which could affect visibility and increase the risk of accidents. Slowing down or stopping would give you more time to react to any unexpected situations.
-- There are no traffic lights in sight, which means you should pay extra attention to other traffic signs and road markings. The "Roundabout mandatory" traffic sign indicates that you should be prepared to enter a roundabout, which requires you to slow down and yield to other traffic.
-- The "Bicycle lane" traffic sign indicates that there may be bicycles on the road, so you should be extra cautious and give them enough space.
-- The "Back of traffic sign" traffic sign is not relevant to your immediate driving situation, but you should still be aware of it and follow its instructions if necessary.
+- The "Stop" traffic sign indicates that you must come to a complete stop before the stop line or crosswalk. Therefore, you need to brake to comply with this traffic sign.
+- The car directly in front of you is only 16.0 meters away, which is a short distance. You need to be prepared to stop suddenly if the car in front of you stops or slows down unexpectedly.
+- The bicycle on your left is also relatively close at 33.0 meters. You need to be cautious and prepared to brake in case the cyclist makes a sudden move.
+- The overcast weather condition may affect visibility, so it's important to drive at a safe speed and be prepared to stop suddenly if necessary.
+- The "Bicycle lane" traffic sign indicates that there may be cyclists on the road, so you need to be extra cautious and prepared to brake if necessary.
+- The car approaching from the adjacent lane at 30.0 meters and the one approaching from 51.0 meters are not an immediate threat, but you still need to be aware of their presence and adjust your speed accordingly.

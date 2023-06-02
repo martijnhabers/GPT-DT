@@ -1,14 +1,11 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a urban road at 40 km/h. The weather condition is sunny weather.
+This is your front view: You see the following cars: A car on the adjacent lane approaching from 17.0 meters, A car 21.0 meters infront of you and to your left, A car on the adjacent lane approaching from 32.0 meters, A car on the adjacent lane approaching from 24.0 meters, A car on the adjacent lane approaching from 29.0 meters, A car on the adjacent lane approaching from 32.0 meters, A car on the adjacent lane approaching from 59.0 meters.You see the following pedestrians: A person 14.0 meters infront of you and to your left. You see the following bicyclist: A bicyclist 13.0 meters infront of you and to your right. Additionally, you see: A bicycle 14.0 meters infront of you and to your left .  """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: A) Brake
 
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a urban road at 40 km/h. The weather condition is sunny weather.
-        This is your front view; You see the following cars: A car approaching from 17.0 meters infront of you and to your left, A car 21.0 meters infront of you and to your left, A car approaching from 32.0 meters directly infront of you, A car approaching from 24.0 meters infront of you and to your left, A car approaching from 29.0 meters infront of you and to your left, A car approaching from 32.0 meters directly infront of you, A car approaching from 59.0 meters directly infront of you. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: A person 14.0 meters infront of you and to your left. You see the following bicyclist: A bicyclist 13.0 meters infront of you and to your right. Additionally, you see: A parked bicycle 14.0 meters infront of you and to your left .
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:B
-
-Reasoning: 
-Based on the given context, there are no immediate hazards that require braking (option A). However, there is a parked bicycle in front of you, which may require you to slow down or stop. Therefore, it is best to let go of the accelerator (option B) to be prepared to react to any potential hazards. The speed limit in urban areas in The Netherlands is usually 50 km/h, and you are currently driving at 40 km/h, which is within the limit. Additionally, there are no traffic signs or lights in sight, so there are no specific instructions to follow. The presence of a pedestrian and a bicyclist in front of you also requires you to be cautious and prepared to slow down or stop if necessary.
+Reasoning:
+According to the given context, there are several cars approaching from adjacent lanes at varying distances, a pedestrian and a bicyclist in close proximity. As a driver, it is important to maintain a safe distance from other vehicles and to be prepared to stop if necessary. Therefore, it is advisable to brake in this situation to ensure the safety of all road users. Additionally, the speed limit in urban areas in The Netherlands is usually 50 km/h, so driving at 40 km/h is already a cautious approach.

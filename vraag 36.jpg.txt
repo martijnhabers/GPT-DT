@@ -1,14 +1,15 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a urban road at 15 km/h. The weather condition is overcast weather.
+This is your front view: You see the following cars: A car 3.0 meters directly infront of you, A car 6.0 meters infront of you and to your right, A car 6.0 meters infront of you and to your right, A car 5.0 meters infront of you and to your right, A car 5.0 meters directly infront of you.You see the following traffic lights: A Red traffic light, A Red traffic light, A Yellow traffic light, A Green traffic light. Additionally, you see: A digital traffic sign 6.0 meters infront of you and to your left , A digital traffic sign 6.0 meters directly infront of you , A digital traffic sign 6.0 meters directly infront of you , A digital traffic sign 6.0 meters infront of you and to your right .  """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: A) Brake
 
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a urban road at 15 km/h. The weather condition is overcast weather.
-        This is your front view; You see the following cars: A car 3.0 meters directly infront of you, A car 6.0 meters infront of you and to your right, A car 6.0 meters infront of you and to your right, A car 5.0 meters infront of you and to your right, A car 5.0 meters directly infront of you. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: A Red traffic light, A Red traffic light, A Yellow traffic light, A Green traffic light. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: A digital traffic sign 6.0 meters infront of you and to your left , A digital traffic sign 6.0 meters directly infront of you , A digital traffic sign 6.0 meters directly infront of you , A digital traffic sign 6.0 meters infront of you and to your right .
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:A) Brake
-
-Reasoning: 
-There are two red traffic lights in front of you, which means you should stop. Additionally, there are no traffic signs indicating otherwise. The digital traffic signs do not provide any information that would allow you to continue driving. Therefore, you should brake to come to a complete stop before the traffic lights.
+Reasoning:
+- There are three red traffic lights, which means you must stop your vehicle.
+- The speed limit in urban areas is usually 50 km/h, and you are only driving at 15 km/h, so you have plenty of time to stop.
+- The overcast weather condition may affect visibility, so it's better to be cautious and brake earlier than usual.
+- The presence of other cars around you means that sudden braking may cause a collision, so you should brake gradually and give a signal to warn other drivers. 
+- The digital traffic signs may provide additional information, but since we don't know what they say, it's better to prioritize the traffic lights.

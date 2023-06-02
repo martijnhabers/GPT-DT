@@ -1,14 +1,11 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a urban road at 30 km/h. The weather condition is foggy weather.
+This is your front view: You see the following cars: A car 28.0 meters infront of you and to your left, A car 36.0 meters infront of you and to your left, A car 19.0 meters infront of you and to your left, A truck 22.0 meters infront of you and to your right, A car 22.0 meters infront of you and to your left, A car on the adjacent lane approaching from 37.0 meters, A car 38.0 meters directly infront of you, A car 22.0 meters infront of you and to your right, A car 17.0 meters infront of you and to your left, A bus 22.0 meters infront of you and to your right. """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: A) Brake
 
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a urban road at 30 km/h. The weather condition is rainy weather.
-        This is your front view; You see the following cars: A car 28.0 meters infront of you and to your left, A car 36.0 meters infront of you and to your left, A car 19.0 meters infront of you and to your left, A truck 22.0 meters infront of you and to your right, A car 22.0 meters infront of you and to your left, A car approaching from 37.0 meters directly infront of you, A car 38.0 meters directly infront of you, A car 22.0 meters infront of you and to your right, A car 17.0 meters infront of you and to your left, A bus 22.0 meters infront of you and to your right. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:B
-
-Reasoning: 
-In this scenario, you are driving in an urban road at 30 km/h with rainy weather. You see several cars in front of you, and there are no traffic signs or lights in sight. You should let go of the accelerator and reduce your speed to maintain a safe distance from the cars in front of you. The recommended safe distance in rainy weather is at least 2 seconds behind the vehicle in front of you. By letting go of the accelerator, you can slow down and maintain a safe distance from the other cars on the road. Additionally, you should be prepared to brake if necessary, especially if any of the cars in front of you suddenly stop or slow down.
+Reasoning:
+In this scenario, the weather condition is foggy, which means visibility is reduced. There are multiple vehicles in front of you, some of which are very close. Therefore, it is important to maintain a safe distance from the vehicles in front of you to avoid any potential collisions. As per Dutch traffic rules, the minimum safe distance between two vehicles is the distance that can be covered in two seconds. In this scenario, it is difficult to determine the exact distance between the vehicles, but it is clear that some of them are too close. Therefore, it is necessary to slow down and maintain a safe distance from the vehicles in front of you. Hence, the correct answer is A) Brake.

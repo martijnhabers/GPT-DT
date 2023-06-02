@@ -1,15 +1,18 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a highway at 100 km/h. The weather condition is overcast weather.
+This is your front view: You see the following cars: A car 22.0 meters infront of you and to your left, A car 26.0 meters directly infront of you, A car on the adjacent lane approaching from 38.0 meters, A car 30.0 meters directly infront of you, A car 41.0 meters infront of you and to your right, A car 35.0 meters infront of you and to your right, A car 35.0 meters infront of you and to your right, A car 42.0 meters infront of you and to your right, A car 32.0 meters infront of you and to your right, A car 35.0 meters infront of you and to your right, A car 44.0 meters infront of you and to your right, A car 44.0 meters infront of you and to your right, A car 46.0 meters infront of you and to your right, A car on the adjacent lane approaching from 33.0 meters.You see the following traffic lights: A  traffic light. Additionally, you see: A digital traffic sign 44.0 meters infront of you and to your right , A digital traffic sign 32.0 meters infront of you and to your left , A digital traffic sign 42.0 meters directly infront of you .  """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: A) Brake
 
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a highway at 100 km/h. The weather condition is overcast weather.
-        This is your front view; You see the following cars: A car 22.0 meters infront of you and to your left, A car 26.0 meters directly infront of you, A car approaching from 38.0 meters infront of you and to your left, A car 30.0 meters directly infront of you, A car 41.0 meters infront of you and to your right, A car 35.0 meters infront of you and to your right, A car 35.0 meters infront of you and to your right, A car 42.0 meters infront of you and to your right, A car 32.0 meters infront of you and to your right, A car 35.0 meters infront of you and to your right, A car 44.0 meters infront of you and to your right, A car 44.0 meters infront of you and to your right, A car 46.0 meters infront of you and to your right, A car approaching from 33.0 meters directly infront of you. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: A  traffic light. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: A digital traffic sign 44.0 meters infront of you and to your right , A digital traffic sign 32.0 meters infront of you and to your left , A digital traffic sign 42.0 meters directly infront of you .
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:A) Brake
+Reasoning:
+Based on the given context, there are several factors that suggest the need to brake:
 
-Reasoning: 
+1. The car directly in front of you is only 26.0 meters away, which is a relatively short distance at a speed of 100 km/h.
+2. There are several cars in front of you and to your right, which could potentially cause a traffic jam or accident.
+3. There is a traffic light ahead, which may turn red and require you to stop.
+4. There are digital traffic signs ahead, which may indicate a need to slow down or stop.
 
-Based on the given context, there are several cars in front of you, some of which are approaching you from the left side. Additionally, there are digital traffic signs ahead of you, which may indicate a change in speed limit or other important information. Therefore, it is important to slow down and be prepared to react to any changes in the traffic situation. As a result, the appropriate action in this scenario would be to brake.
+Therefore, it is safest to brake in order to maintain a safe distance from the car in front of you and to be prepared for any potential hazards ahead.

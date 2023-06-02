@@ -1,13 +1,11 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a highway at 80 km/h. The weather condition is sunny weather.
+This is your front view: You see the following cars: A car 44.0 meters directly infront of you, A car 55.0 meters infront of you and to your left, A car on the adjacent lane approaching from 27.0 meters, A truck 23.0 meters directly infront of you, A car on the adjacent lane approaching from 40.0 meters, A car on the adjacent lane approaching from 50.0 meters, A truck 40.0 meters infront of you and to your left. """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: A) Brake
 
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a highway at 80 km/h. The weather condition is sunny weather.
-        This is your front view; You see the following cars: A car 44.0 meters directly infront of you, A car 55.0 meters infront of you and to your left, A car approaching from 27.0 meters infront of you and to your left, A truck 23.0 meters directly infront of you, A car approaching from 40.0 meters infront of you and to your left, A car approaching from 50.0 meters infront of you and to your left, A truck 40.0 meters infront of you and to your left. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:C
-
-Reasoning: Based on the given context, there are no immediate hazards or obstacles that require the driver to take any action. The driver is already driving at a safe speed of 80 km/h and there are no traffic signs or lights that require the driver to slow down or stop. Additionally, there are no pedestrians or bicyclists in sight, and the objects in front of the driver are at a safe distance. Therefore, the driver should continue driving at the same speed and maintain a safe distance from the other vehicles on the road.
+Reasoning:
+Based on the given context, there are several cars and trucks in close proximity to the driver's vehicle. The car directly in front of the driver is only 44.0 meters away, which is a relatively short distance at a speed of 80 km/h. Additionally, there are several cars approaching from the adjacent lanes, which could potentially cause the driver to swerve or brake suddenly. Therefore, it is important for the driver to slow down and maintain a safe distance from the other vehicles on the road. Braking is the safest option in this scenario to avoid any potential collisions.

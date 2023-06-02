@@ -1,14 +1,11 @@
-Choose to A) Brake B) Let go of the accelerator or C) Do Nothing based on the given context.
-
-        Context: 
-        """
-        Assume you are driving in The Netherlands. You are driving in a urban road at 30 km/h. The weather condition is overcast weather.
-        This is your front view; You see the following cars: A car approaching from 4.0 meters infront of you and to your right. You see the following traffic signs: There are no traffic signs in sight. You see the following traffic lights: There are no traffic lights in sight. You see the following pedestrians: There are no pedestrians in sight. You see the following bicyclist: There are no bicycles in sight. Additionally, you see: there are no more objects than the ones mentioned above.
-        This is your rear view: You see the following: There are no significant objects behind you.
-        """
-        Give your answer in one letter, after which you should provide thorough reasoning.
-        
-        Letter:A) Brake
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a urban road at 30 km/h. The weather condition is overcast weather.
+This is your front view: You see the following cars: A car on the adjacent lane approaching from 4.0 meters. """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: A) Brake.
 
 Reasoning: 
-As a car is approaching from 4.0 meters in front of you and to your right, it is important to slow down and be prepared to stop if necessary. The speed limit is 30 km/h, which is a relatively low speed, but it is still important to be cautious and aware of other vehicles on the road. Additionally, the weather condition is overcast, which can affect visibility and make it more difficult to see other vehicles or obstacles on the road. Therefore, it is best to brake and be prepared to stop if necessary to avoid a potential collision.
+As per the Dutch traffic rules, a driver must maintain a safe distance from the vehicle in front of them. The recommended safe distance is at least 2 seconds. In this scenario, a car is approaching from the adjacent lane at a distance of 4.0 meters, which is less than the recommended safe distance. Therefore, it is necessary to brake to maintain a safe distance and avoid any potential collision. Additionally, the weather condition is overcast, which may affect visibility, making it even more important to maintain a safe distance.
