@@ -36,20 +36,17 @@ def run_program(image):
     text_weighted = [
         ["a photo of a person", 0.25],
         ["a photo of a train", 0.4],
+        ["a photo of a railroad crossing", 0.4],
         ["a photo of a boat", 0.4],
         ["a photo of a traffic light", 0.45],
         ["a photo of a stop sign", 0.4],
-        ["a photo of a cat", 0.4],
-        ["a photo of a dog", 0.4],
-        ["a photo of a horse", 0.4],
-        ["a photo of a sheep", 0.4],
-        ["a photo of a cow", 0.4],
+        ["a photo of a animal", 0.4],
         ["a photo of a traffic cone", 0.4],
         ["a photo of a traffic sign", 0.35],
         ["a photo of a ball", 0.4],
         ["a photo of a tractor", 0.4],
         # ["a photo of a variable speed sign", 0.15],
-        ["a photo of a digital traffic sign", 0.35],
+        ["a photo of a digital traffic sign", 0.4],
     ]
 
     weather_list = [
@@ -96,7 +93,9 @@ def run_program(image):
     # saves to tri-crop/predict/crops/rear-view
     # saves to tri-crop/predict/crops/speed
     tri_crop_results = yolo_tri_crop("images/" + image)
-
+    
+    filename, extension = os.path.splitext(image)
+    image = filename + ".jpg"
     # detects number with OCR in file, specified by its path
     car_speed = easyocr_detect(
         os.path.join(dir, "tri-crop/predict/crops/speed/" + image)
@@ -158,18 +157,18 @@ def run_program(image):
             Braking(row, df)
 
         # change extention from jpg to png for depth estimation
-    filename, extension = os.path.splitext(image)
     depth_df_file = filename + ".csv"
+    image_input = filename + ".jpeg"
 
     if os.path.exists("Depth_map_csv/" + depth_df_file):
         depth_df = pd.read_csv("Depth_map_csv/" + depth_df_file)
         df = depth_estimation(df, depth_df)
 
     else:
-        depth_df = create_depth_map(image)
+        depth_df = create_depth_map(image_input)
         df = depth_estimation(df, depth_df)
 
-    df = position(df, image, 0.375, 0.625)
+    df = position(df, image_input, 0.375, 0.625)
     prompt = generate_prompt(df, car_speed, location, weather, compare=True)
 
     # print(prompt)
@@ -181,4 +180,6 @@ def run_program(image):
     # text_file.write(response)
     # text_file.close()
 
-    return prompt, car_speed
+    return prompt, car_speed, df, location, weather
+
+prompt, car_speed, df, location, weather = run_program("Vraag 10.jpeg")

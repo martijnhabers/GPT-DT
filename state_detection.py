@@ -318,8 +318,8 @@ def Braking(row, df):
 
 
 classes_rem = {
-    0: "not braking",
-    1: "braking",
+    0: "Not braking",
+    1: "Braking",
 }
 
 
