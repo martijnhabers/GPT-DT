@@ -276,6 +276,27 @@ def Traffic_light(row, df):
 
 model = keras.models.load_model("models/model_remv1.keras")
 
+device = "cpu"
+model_kind, preprocess = clip.load("ViT-B/32", device=device)
+
+
+def kind_of_niet(row, df):
+    img = df.loc[row, "foto_naam"]
+    image = preprocess(Image.open(img)).unsqueeze(0).to(device)
+    # opties = ["a picture of a red trafficlight", "a picture of a yellow traffic light", "a picture of a green trafficlight"]
+    opties = ["a child", "an adult"]
+    text = clip.tokenize(opties).to(device)
+
+    with torch.no_grad():
+        # image_features = model_kind.encode_image(image)
+        # text_features = model_kind.encode_text(text)
+
+        logits_per_image, logits_per_text = model_kind(image, text)
+        probs = logits_per_image.softmax(dim=-1).cpu().numpy()
+        prediction_kind = opties[np.argmax(probs)]
+    df.loc[row, "class_naam"] = prediction_kind
+    return df
+
 
 def Braking(row, df):
     brake_crop = df.iloc[row]["foto_naam"]
