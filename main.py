@@ -221,6 +221,7 @@ for row in range(len(truth.index)):
     tru_row = truth.loc[row]
     # res_row = results.loc[row]
 
+
     image = tru_row["Filename"]
     prompt, response, car_speed, df, location, weather = run_program(image)
     resp_char = response.strip(" \n\t")[0]
