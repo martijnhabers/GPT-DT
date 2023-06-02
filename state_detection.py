@@ -176,35 +176,64 @@ def Traffic_sign(row, df):
     df.loc[row, "state"] = classes[int(pred)]
     return df
 
+
 def round_up_to_odd(f):
-        f = int(np.ceil(f))
-        return f + 1 if f % 2 == 0 else f
+    f = int(np.ceil(f))
+    return f + 1 if f % 2 == 0 else f
+
 
 def Traffic_light(row, df):
-    
     img = df.iloc[row]["foto_naam"]
     image = cv2.imread(img, cv2.IMREAD_GRAYSCALE)
     height, width = image.shape
-        
-    binary_1 = round_up_to_odd(width/2)
-    binary_2 = -25
-    
+
+    binary_1 = round_up_to_odd(width / 2)
+    binary_2 = -20
+
     bounding_boxes = [
-        (width*0.25, height*0.15, width*0.75, height*0.45),  # Bounding box coordinates for location 1
-        (width*0.25, height*0.45, width*0.75, height*0.65),  # Bounding box coordinates for location 2
-        (width*0.25, height*0.65, width*0.75, height*0.85)   # Bounding box coordinates for location 3
+        (
+            width * 0.25,
+            height * 0.15,
+            width * 0.75,
+            height * 0.45,
+        ),  # Bounding box coordinates for location 1
+        (
+            width * 0.25,
+            height * 0.45,
+            width * 0.75,
+            height * 0.65,
+        ),  # Bounding box coordinates for location 2
+        (
+            width * 0.25,
+            height * 0.65,
+            width * 0.75,
+            height * 0.85,
+        ),  # Bounding box coordinates for location 3
     ]
     image = cv2.GaussianBlur(image, (5, 5), 0)
     image = cv2.adaptiveThreshold(
-        image, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, binary_1, binary_2
+        image,
+        255,
+        cv2.ADAPTIVE_THRESH_MEAN_C,
+        cv2.THRESH_BINARY_INV,
+        binary_1,
+        binary_2,
     )
     img_show = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    
-    rood = img_show[int(bounding_boxes[0][1]):int(bounding_boxes[0][3]), int(bounding_boxes[0][0]): int(bounding_boxes[0][2])]
-    geel = img_show[int(bounding_boxes[1][1]):int(bounding_boxes[1][3]), int(bounding_boxes[1][0]): int(bounding_boxes[1][2])]
-    groen = img_show[int(bounding_boxes[2][1]):int(bounding_boxes[2][3]), int(bounding_boxes[2][0]): int(bounding_boxes[2][2])]
 
-    
+    rood = img_show[
+        int(bounding_boxes[0][1]) : int(bounding_boxes[0][3]),
+        int(bounding_boxes[0][0]) : int(bounding_boxes[0][2]),
+    ]
+    geel = img_show[
+        int(bounding_boxes[1][1]) : int(bounding_boxes[1][3]),
+        int(bounding_boxes[1][0]) : int(bounding_boxes[1][2]),
+    ]
+    groen = img_show[
+        int(bounding_boxes[2][1]) : int(bounding_boxes[2][3]),
+        int(bounding_boxes[2][0]) : int(bounding_boxes[2][2]),
+    ]
+
     # plt.imshow(img_show)
     # plt.title(rood)
     # plt.show()
@@ -217,30 +246,56 @@ def Traffic_light(row, df):
     # plt.imshow(groen)
     # plt.title("groen")
     # plt.show()
-    # Count the number of black pixels for red    
+    # Count the number of black pixels for red
     _, binary_rood = cv2.threshold(rood, 1, 255, cv2.THRESH_BINARY)
     black_pixels_rood = np.count_nonzero(binary_rood == 0)
-    
-    # Count the number of black pixels for yellow    
+
+    # Count the number of black pixels for yellow
     _, binary_geel = cv2.threshold(geel, 1, 255, cv2.THRESH_BINARY)
     black_pixels_geel = np.count_nonzero(binary_geel == 0)
-    
-    # Count the number of black pixels for green    
+
+    # Count the number of black pixels for green
     _, binary_groen = cv2.threshold(groen, 1, 255, cv2.THRESH_BINARY)
     black_pixels_groen = np.count_nonzero(binary_groen == 0)
 
     if black_pixels_rood > black_pixels_geel and black_pixels_rood > black_pixels_groen:
         # print("licht is rood")
         df.loc[row, "state"] = "Red"
-    elif black_pixels_geel > black_pixels_rood and black_pixels_geel > black_pixels_groen:
+    elif (
+        black_pixels_geel > black_pixels_rood and black_pixels_geel > black_pixels_groen
+    ):
         # print("licht is geel")
         df.loc[row, "state"] = "Yellow"
-    elif black_pixels_groen > black_pixels_geel and black_pixels_groen > black_pixels_rood:
+    elif (
+        black_pixels_groen > black_pixels_geel
+        and black_pixels_groen > black_pixels_rood
+    ):
         # print("licht is groen")
         df.loc[row, "state"] = "Green"
-    
+
 
 model = keras.models.load_model("models/model_remv1.keras")
+
+device = "cpu"
+model_kind, preprocess = clip.load("ViT-B/32", device=device)
+
+
+def kind_of_niet(row, df):
+    img = df.loc[row, "foto_naam"]
+    image = preprocess(Image.open(img)).unsqueeze(0).to(device)
+    # opties = ["a picture of a red trafficlight", "a picture of a yellow traffic light", "a picture of a green trafficlight"]
+    opties = ["a child", "an adult"]
+    text = clip.tokenize(opties).to(device)
+
+    with torch.no_grad():
+        # image_features = model_kind.encode_image(image)
+        # text_features = model_kind.encode_text(text)
+
+        logits_per_image, logits_per_text = model_kind(image, text)
+        probs = logits_per_image.softmax(dim=-1).cpu().numpy()
+        prediction_kind = opties[np.argmax(probs)]
+    df.loc[row, "class_naam"] = prediction_kind
+    return df
 
 
 def Braking(row, df):
@@ -263,8 +318,8 @@ def Braking(row, df):
 
 
 classes_rem = {
-    0: "not braking",
-    1: "braking",
+    0: "Not braking",
+    1: "Braking",
 }
 
 
