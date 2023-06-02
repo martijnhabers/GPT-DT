@@ -1,0 +1,8 @@
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a residential road at 50 km/h. The weather condition is sunny weather.
+This is your front view: You see the following cars: A car 8.0 meters infront of you and to your right driving the speed limit, A car 4.0 meters infront of you and to your right driving the speed limit, A car 3.0 meters infront of you and to your left, A car 3.0 meters infront of you and to your right driving the speed limit, A car 4.0 meters infront of you and to your right driving the speed limit, A car 8.0 meters infront of you and to your right driving the speed limit. """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: 

@@ -1,0 +1,8 @@
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a provincial road at 50 km/h. The weather condition is heavy rainy weather.
+This is your front view: You see the following cars: A car on the adjacent lane approaching from 33.0 meters, A car on the adjacent lane approaching from 27.0 meters, A car on the adjacent lane approaching from 57.0 meters.You see the following traffic signs: A "Keep left" traffic sign, A "Right-of-way at intersection" traffic sign.  """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: 

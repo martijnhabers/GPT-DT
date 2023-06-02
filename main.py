@@ -36,25 +36,29 @@ def run_program(image):
     text_weighted = [
         ["a photo of a person", 0.25],
         ["a photo of a train", 0.4],
-        ["a photo of a railroad crossing", 0.4],
+        ["a photo of a railroad crossing", 0.1],
         ["a photo of a boat", 0.4],
         ["a photo of a traffic light", 0.45],
         ["a photo of a stop sign", 0.4],
         ["a photo of a animal", 0.4],
         ["a photo of a traffic cone", 0.4],
         ["a photo of a traffic sign", 0.35],
-        ["a photo of a ball", 0.4],
-        ["a photo of a tractor", 0.4],
+        ["a photo of a soccorball", 0.3],
+        ["a photo of a Farm vehicle", 0.5],
         # ["a photo of a variable speed sign", 0.15],
         ["a photo of a digital traffic sign", 0.4],
+        # ["a photo of a road blockages", 0.1],        
     ]
 
     weather_list = [
         "a picture of snowy weather",
         "a picture of foggy weather",
         "a picture of sunny weather",
-        "a picture of rainy weather",
+        "a picture of slightly rainy weather",
+        "a picture of heavy rainy weather",
         "a picture of overcast weather",
+        "a picture of cloudy weather",
+        
     ]
 
     location_list = [
@@ -158,7 +162,7 @@ def run_program(image):
 
         # change extention from jpg to png for depth estimation
     depth_df_file = filename + ".csv"
-    image_input = filename + ".jpeg"
+    image_input = filename + extension
 
     if os.path.exists("Depth_map_csv/" + depth_df_file):
         depth_df = pd.read_csv("Depth_map_csv/" + depth_df_file)
@@ -182,4 +186,25 @@ def run_program(image):
 
     return prompt, car_speed, df, location, weather
 
-prompt, car_speed, df, location, weather = run_program("Vraag 10.jpeg")
+
+image_in = "Vraag 30.jpeg"
+prompt, car_speed, df, location, weather = run_program(image_in)
+
+# for file_name in os.listdir("images"):
+#     if file_name.endswith(".jpeg"):
+#         image_in = file_name
+#         prompt, car_speed, df, location, weather = run_program(image_in)
+        
+#         prompt_plek  = "prompts/" + image_in + ".txt"
+        
+#         with open(prompt_plek, "w") as file:
+#             file.write(str(prompt))
+        
+    
+    
+    
+    
+    
+    
+    
+    

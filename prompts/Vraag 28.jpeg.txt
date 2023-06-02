@@ -1,0 +1,8 @@
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a urban road at 30 km/h. The weather condition is sunny weather.
+This is your front view: You see the following cars: A car 11.0 meters infront of you and to your right driving the speed limit, A car on the adjacent lane approaching from 39.0 meters, A car on the adjacent lane approaching from 17.0 meters, A truck 17.0 meters infront of you and to your left.You see the following pedestrians:  an adult 34.0 meters directly infront of you,  an adult 21.0 meters infront of you and to your right,  an adult 12.0 meters infront of you and to your right. You see the following bicyclist: A bicyclist 20.0 meters infront of you and to your right.  """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: 

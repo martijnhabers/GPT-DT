@@ -1,0 +1,8 @@
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a residential road at 60 km/h. The weather condition is slightly rainy weather.
+This is your front view: Additionally, you see: A motorcycle 25.0 meters directly infront of you .  """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: 

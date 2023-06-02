@@ -1,0 +1,8 @@
+Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
+Context:
+            
+"""
+Assume you are driving in The Netherlands. You are driving in a highway at 10 km/h. The weather condition is overcast weather.
+This is your front view: You see the following cars: A car 64.0 meters directly infront of you driving the speed limit. """
+Give your answer in one letter, after which you should provide thorough reasoning.
+Letter: 
