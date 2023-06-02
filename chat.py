@@ -200,7 +200,16 @@ def generate_prompt(df, speed, location, weather, compare=False):
                 )
 
             elif df.loc[a, "state"][:4] == "back":
-                CARS.append("A %s %s" % (class_naam, df.loc[a, "position"]))
+                if df.loc[a, "state"][5:] == "Braking":
+                    CARS.append(
+                        "A %s braking %s"
+                        % (df.loc[a, "class_naam"], df.loc[a, "position"])
+                    )
+                else:
+                    CARS.append(
+                        "A %s %s driving the speed limit"
+                        % (df.loc[a, "class_naam"], df.loc[a, "position"])
+                    )
 
             else:
                 CARS.append(
