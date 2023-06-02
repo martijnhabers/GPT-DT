@@ -219,7 +219,8 @@ for row in range(len(truth.index)):
             "Length of ground truth is not the same as the number of images"
         )
     tru_row = truth.loc[row]
-    res_row = results.loc[row]
+    # res_row = results.loc[row]
+
 
     image = tru_row["Filename"]
     prompt, response, car_speed, df, location, weather = run_program(image)
@@ -234,11 +235,11 @@ for row in range(len(truth.index)):
     else:
         resp_word = "unknown"
 
-    res_row["Answer(letter)"] = resp_char
-    res_row["Speed"] = car_speed
-    res_row["Location"] = location
-    res_row["Weather"] = weather
-    res_row["Answer(word)"] = resp_word
+    results.loc[row, "Answer(letter)"] = resp_char
+    results.loc[row, "Speed"] = car_speed
+    results.loc[row, "Location"] = location[13:]
+    results.loc[row, "Weather"] = weather[13:]
+    results.loc[row, "Answer(word)"] = resp_word
 
 end_time = time.time()
 elapsed_time = end_time - start_time
