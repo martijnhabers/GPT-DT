@@ -262,7 +262,6 @@ def generate_prompt(df, speed, location, weather, compare=False):
     location = location[13:]
 
     if compare == True:
-        # ------------------------------------------- NO IF EMPTY ---------------------------------
         prompt1 = f'''Choose to either A) Brake B) Let go of the accelerator or C) Do nothing based on the given context.
 Context:
             
