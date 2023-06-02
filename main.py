@@ -171,6 +171,7 @@ def run_program(image):
 
     df = position(df, image, 0.375, 0.625)
     prompt = generate_prompt(df, car_speed, location, weather, compare=True)
+    response = make_api_call(prompt)
 
     # print(prompt)
     # print(response)
@@ -181,4 +182,4 @@ def run_program(image):
     # text_file.write(response)
     # text_file.close()
 
-    return prompt, car_speed
+    return prompt, response, car_speed

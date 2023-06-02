@@ -190,45 +190,38 @@ def generate_prompt(df, speed, location, weather, compare=False):
 
     # CHOPPING DATAFRAME IN ITEMS
     for a in range(0, len(df.index)):
-        if (
-            df.loc[a, "class_naam"] == "car"
-            or df.loc[a, "class_naam"] == "truck"
-            or df.loc[a, "class_naam"] == "bus"
-        ):
+        class_naam = df.loc[a, "class_naam"]
+
+        if class_naam == "car" or class_naam == "truck" or class_naam == "bus":
             if df.loc[a, "state"][:5] == "front":
                 CARS.append(
                     "A %s on the adjacent lane approaching from %s"
-                    % (df.loc[a, "class_naam"], df.loc[a, "position"])
+                    % (class_naam, df.loc[a, "position"])
                 )
 
             elif df.loc[a, "state"][:4] == "back":
-                CARS.append(
-                    "A %s %s" % (df.loc[a, "class_naam"], df.loc[a, "position"])
-                )
+                CARS.append("A %s %s" % (class_naam, df.loc[a, "position"]))
 
             else:
                 CARS.append(
-                    "A %s %s" % (df.loc[a, "class_naam"], df.loc[a, "position"])
+                    "A %s %s" % (class_naam, df.loc[a, "position"])
                 )  # SIDE OF THE CAR
 
-        elif df.loc[a, "class_naam"] == "traffic light":
-            TL.append("A %s %s" % (df.loc[a, "state"], df.loc[a, "class_naam"]))
+        elif class_naam == "traffic light":
+            TL.append("A %s %s" % (df.loc[a, "state"], class_naam))
 
-        elif df.loc[a, "class_naam"] == "traffic sign":
+        elif class_naam == "traffic sign":
             if df.loc[a, "state"] == "Back of traffic sign":
                 break
             TS.append('A "%s" traffic sign' % (df.loc[a, "state"]))
 
-        elif df.loc[a, "class_naam"] == "stop sign":
+        elif class_naam == "stop sign":
             TS.append('A "Stop" traffic sign')
 
-        elif (
-            df.loc[a, "class_naam"] == "a child"
-            or df.loc[a, "class_naam"] == "an adult"
-        ):
-            PERSON.append(" %s %s" % (df.loc[a, "class_naam"], df.loc[a, "position"]))
+        elif class_naam == "a child" or class_naam == "an adult":
+            PERSON.append(" %s %s" % (class_naam, df.loc[a, "position"]))
 
-        elif df.loc[a, "class_naam"] == "bicyclist":
+        elif class_naam == "bicyclist":
             if df.loc[a, "state"] == "front":
                 BICYCLES.append(
                     "A bicyclist approaching from %s" % (df.loc[a, "position"])
@@ -243,7 +236,7 @@ def generate_prompt(df, speed, location, weather, compare=False):
                 )  # SIDE OF THE BICYCLE
 
         else:
-            OTHERS.append("A %s %s " % (df.loc[a, "class_naam"], df.loc[a, "position"]))
+            OTHERS.append("A %s %s " % (class_naam, df.loc[a, "position"]))
 
     # --------------------------------------ChatGPT-------------------------------------------------
 
@@ -293,7 +286,7 @@ Letter: '''
             prompt7 = f"Additionally, you see: {', '.join(OTHERS)}. "
         if bool(REAR) == True:
             prompt8 = (
-                f"This is your rear view: You see the following: {', '.join(REAR)}. "
+                f"You see behind you in your rear view mirror: {', '.join(REAR)}. "
             )
 
         prompt = (
@@ -329,3 +322,22 @@ Letter: '''
 @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
 def completion_with_backoff(**kwargs):
     return openai.ChatCompletion.create(**kwargs)
+
+
+def make_api_call(prompt):
+    completion = completion_with_backoff(
+        model="gpt-3.5-turbo",
+        temperature=0,
+        stop=None,
+        max_tokens=1024,
+        n=1,
+        messages=[
+            {
+                "role": "system",
+                "content": "You are ChatGPT, a large language model trained by OpenAI. You are taking the dutch driving exam and wil be presented with what you see around you. Answer as concisely as possible and only take the dutch traffic rules in to consideration.",
+            },
+            {"role": "user", "content": prompt},
+        ],
+    )
+    response = completion["choices"][0]["message"]["content"].strip()
+    return response
