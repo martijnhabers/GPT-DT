@@ -30,7 +30,8 @@ for f in os.listdir(dir + "/Crops"):
     os.remove(os.path.join(dir + "/Crops", f))
 
 # Set name of image file to analyse
-# image = "vraag 4.jpg"
+image = "vraag 34.jpg"
+
 
 
 def run_program(image):
@@ -47,7 +48,7 @@ def run_program(image):
         ["a photo of a cow", 0.4],
         ["a photo of a traffic cone", 0.4],
         ["a photo of a traffic sign", 0.35],
-        ["a photo of a ball", 0.4],
+        ["a photo of a football", 0.2],
         ["a photo of a tractor", 0.4],
         # ["a photo of a variable speed sign", 0.15],
         ["a photo of a digital traffic sign", 0.35],
@@ -148,6 +149,9 @@ def run_program(image):
         elif str(df.iloc[row]["class_naam"]) == "traffic light":
             Traffic_light(row, df)
 
+        elif str(df.loc[row, "class_naam"]) == "person":
+             kind_of_niet(row, df)
+
         elif (
             str(df.iloc[row]["state"]) == "back"
             and str(df.iloc[row]["class_naam"]) == "car"
@@ -162,9 +166,9 @@ def run_program(image):
         depth_df = pd.read_csv("Depth_map_csv/" + depth_df_file)
         df = depth_estimation(df, depth_df)
 
-    else:
-        depth_df = create_depth_map(image)
-        df = depth_estimation(df, depth_df)
+    # else:
+    depth_df = create_depth_map(image)
+    df = depth_estimation(df, depth_df)
 
     df = position(df, image, 0.375, 0.625)
     prompt, response = ChatGPT(df, car_speed, location, weather, compare=True)
@@ -179,4 +183,6 @@ def run_program(image):
     # text_file.close()
     # df.to_csv("C:/Users/Mees/Desktop/dataframe_voor_depth.csv")
 
-    return prompt, response, car_speed
+    return prompt, response, car_speed, df
+
+prompt, response, car_speed, df = run_program(image)

@@ -89,17 +89,17 @@ def position(df, image_path, v1, v2):
             if df.loc[i, "width_position"] == "Left":
                 df.loc[i, "position"] = (
                     str(df.loc[i, "height_position"])
-                    + " meters infront of you and to your left"
+                    + " meters infront of you and to your left and driving the speedlimit"
                 )
             if df.loc[i, "width_position"] == "Middle":
                 df.loc[i, "position"] = (
                     str(df.loc[i, "height_position"])
-                    + " meters directly infront of you"
+                    + " meters directly infront of you and driving the speedlimit"
                 )
             if df.loc[i, "width_position"] == "Right":
                 df.loc[i, "position"] = (
                     str(df.loc[i, "height_position"])
-                    + " meters infront of you and to your right"
+                    + " meters infront of you and to your right and driving the speedlimit"
                 )
 
                 # if df.loc[i, 'height_position'] == "a few meters away":
@@ -226,8 +226,8 @@ def ChatGPT(df, speed, location, weather, compare=False):
         elif df.loc[a, "class_naam"] == "traffic sign":
             TS.append('A "%s" traffic sign' % (df.loc[a, "state"]))
 
-        elif df.loc[a, "class_naam"] == "person":
-            PERSON.append("A person %s" % df.loc[a, "position"])
+        elif df.loc[a, "class_naam"] == "a child" or df.loc[a, "class_naam"] == "an adult":
+            PERSON.append("%s %s" %(df.loc[a, "class_naam"], df.loc[a, "position"]))
 
         elif df.loc[a, "class_naam"] == "bicyclist":
             if df.loc[a, "state"] == "front":
@@ -297,40 +297,17 @@ def ChatGPT(df, speed, location, weather, compare=False):
 
     else:
         prompt = f'''
-        Assume you are driving in {country}. You are driving in {location} at {speed} km/h. The weather condition is {weather}.
-        """This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}.
-        This is your rear view: You see the following: {', '.join(REAR)}.
-        Given the described situation above, what would you do: "A) Brake", "B) Let go of the gas pedal" or "C) Do nothing". 
-        Consider the following:
+Assume you are driving in {country}. You are driving in {location} at {speed} km/h. 
+"""This is your front view; You see the following cars: {', '.join(CARS)}. You see the following traffic signs: {', '.join(TS)}. You see the following traffic lights: {', '.join(TL)}. You see the following pedestrians: {', '.join(PERSON)}. You see the following bicyclist: {', '.join(BICYCLES)}. Additionally, you see: {', '.join(OTHERS)}.
+This is your rear view: You see the following: {', '.join(REAR)}.
+Based on this information: should you: A) brake, B) reduce some speed or C) continue driving your speed?
+    
         
-        A) Brake = drastically reducing speed for urgent danger.
-            -When you’re driving the maximum allowed speed, you usually should brake if you encounter:
-                -Weaker road users, like children or pedestrians.
-                -There is oncoming traffic on narrow roads.
-                -You’re driving past road work or other obstacles.
-                -You’re on a chaotic or dangerous intersection.
-                -You’re in a busy residential area, or near a school.
-                -You’re nearing a sharp or dangerous turn.
-                -Large speed differences between you and other road users.
-                -For yellow and red traffic lights.
         
-        B) Let go of the gas pedal = reducing some speed.
-            -When you don’t have a full overview of the situation.
-            -When there is no danger.
-            -If the speed limit changes.
-        
-        C) Do Nothing = continue driving your current speed.
-            -If there is no direct danger.
-            -If there is a proper amount of distance between you and other road users.
-        """
-        
-        Show me all possible answers in the following format:
-            A)...
-            B)...
-            C)...
-        Then, choose one of them. Show me your choice and give a thorough reasoning on why you chose this. Use the following format:
-            Answer: ...
-            Reasoni ng: ...'''
+            letter: ...
+            Reasoning: ...
+            
+            Answer:'''
 
     # Generate a response ChatGPT
     completion = openai.Completion.create(

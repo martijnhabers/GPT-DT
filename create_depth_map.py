@@ -6,12 +6,12 @@ import os
 import pandas as pd
 
 repo = "isl-org/ZoeDepth"
-model_zoe_nk = torch.hub.load(repo, "ZoeD_NK", pretrained=True)
+model_zoe_Nk = torch.hub.load(repo, "ZoeD_NK", pretrained=True)
 
 
 ##### sample prediction
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-zoe = model_zoe_nk.to(DEVICE)
+zoe = model_zoe_Nk.to(DEVICE)
 
 
 def create_depth_map(image_input):
@@ -31,5 +31,5 @@ def create_depth_map(image_input):
     return depth_df
 
 
-# image_input = "vraag 5.jpg"
+# image_input = "vraag 21.jpg"
 # depth_map = create_depth_map(image_input)

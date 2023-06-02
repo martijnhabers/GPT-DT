@@ -261,6 +261,28 @@ def Braking(row, df):
     df.loc[row, "state"] = df.loc[row, "state"] + " " + classes_rem[int(pred)]
     return df
 
+device =  "cpu"
+model_kind, preprocess = clip.load("ViT-B/32", device=device)
+
+def kind_of_niet(row,df):
+
+    img = df.loc[row, 'foto_naam']
+    image = preprocess(Image.open(img)).unsqueeze(0).to(device)
+    #opties = ["a picture of a red trafficlight", "a picture of a yellow traffic light", "a picture of a green trafficlight"]
+    opties = ["a child", 'an adult']
+    text = clip.tokenize(opties).to(device)
+
+    with torch.no_grad():
+        # image_features = model_kind.encode_image(image)
+        # text_features = model_kind.encode_text(text)
+        
+        logits_per_image, logits_per_text = model_kind(image, text)
+        probs = logits_per_image.softmax(dim=-1).cpu().numpy()
+        prediction_kind = opties[ np.argmax(probs)]
+    df.loc[row, 'class_naam'] = prediction_kind
+    return df
+
+
 
 classes_rem = {
     0: "not braking",
@@ -322,26 +344,3 @@ classes = {
 
 # df.to_csv("C:/Users/emmah/Desktop/dataframe_voor_depth.csv")
 
-
-""""
-                            nieuwe "tabel" met naam crop en huidige class
-
-
-alles P< 0.6 --> clip. 
-clip --> update tabel met nieuwe zero shot voorspelling
-
-
-
-alles door clip voor de state van het object
-
-states:
-    auto: voorkant, achterkant - remmen, niet
-    stoplicht: rood, groen, oranje
-    fiets: voorkant, zijkant, achterkant
-    verkeersbord:
-
---> toevoegen aan de tabel. 
-
-class, x, y h, w, P, class naam, crop naam. 
-
-"""

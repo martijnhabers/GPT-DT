@@ -5,7 +5,6 @@ model = torch.hub.load(
     "yolov5", "custom", path="models/Yolov5_orientation", source="local"
 )
 
-
 def vehicle_detection(image):
     results = model(image)
 
