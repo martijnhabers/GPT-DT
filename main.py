@@ -181,7 +181,4 @@ def run_program(image):
     # text_file.write(response)
     # text_file.close()
 
-    return prompt, car_speed, df, location, weather
-
-
-prompt, car_speed, df, location, weather = run_program("Vraag 10.jpeg")
+    return prompt, response, car_speed, df, location, weather
