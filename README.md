@@ -22,3 +22,19 @@ Insert your API key for OpenAI inside the chat.py file.
 
 
 Create a folder with the name of "Crops" in the working directory
+
+
+Running main.py will run through all the images in the /images folder. The results are then saved in the /results folder. The results are given in the following format:
+
+* crops
+* - folder including crops detected from all the found objects in the image
+* df
+* - folder including the completed dataframe including all information from running the model
+* texts
+* - Folder containing all the prompts and responses from each question
+* tri-crop
+* - The split
+* confusion.png
+* - A confusion matrix based on all the results of the model
+* results.csv
+* - Csv file containing the results from all the images
