@@ -33,7 +33,7 @@ Running main.py will run through all the images in the /images folder. The resul
 * texts
 * - Folder containing all the prompts and responses from each question
 * tri-crop
-* - The split
+* - Folder including per question crops of the front view, rear view, and speedometer.
 * confusion.png
 * - A confusion matrix based on all the results of the model
 * results.csv
